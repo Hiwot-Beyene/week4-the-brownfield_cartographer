@@ -1,0 +1,29 @@
+# Environment and secrets (do not commit)
+.env
+
+# Virtual environments
+.venv/
+venv/
+env/
+.cartography/cloned/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+*.bin
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/

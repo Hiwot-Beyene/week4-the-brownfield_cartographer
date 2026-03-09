@@ -1,0 +1,35 @@
+[project]
+name = "brownfield-cartographer"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2.12",
+  "networkx>=3.5",
+  "tree-sitter",
+  "tree-sitter-python>=0.22.0",
+  "tree-sitter-javascript>=0.22.0",
+  "tree-sitter-yaml>=0.0.6",
+  "tree-sitter-typescript>=0.21.0",
+  "pytest>=8.4",
+  "sqlglot",
+  "pyyaml",
+  "numpy",
+  "scipy",
+  "chromadb",
+  "sentence-transformers",
+  "python-dotenv",
+  "httpx",
+  "scikit-learn",
+  "fastapi",
+  "uvicorn[standard]",
+  "langgraph",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pythonpath = ["."]
+
+[dependency-groups]
+dev = ["pytest>=8.4"]
+
