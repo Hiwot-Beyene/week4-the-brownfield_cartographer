@@ -14,10 +14,10 @@ __pycache__/
 dist/
 build/
 
-# DB, vector store, and cloned remote repos; JSON artifacts stay and are overwritten by latest analysis
-.cartography/cartographer.db
-.cartography/chroma/
-.cartography/cloned/
+# Generated surveyor output (re-run surveyor to regenerate)
+.cartography/
+# Large reference/sample file at repo root (if present)
+/module_graph.json
 
 # IDE / OS
 .idea/
