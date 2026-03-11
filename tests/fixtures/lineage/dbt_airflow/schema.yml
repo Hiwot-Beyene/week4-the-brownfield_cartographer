@@ -1,0 +1,8 @@
+version: 2
+sources:
+  - name: raw_events
+    tables:
+      - name: events
+models:
+  - name: stg_events
+    description: Staging events
