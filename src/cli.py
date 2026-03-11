@@ -4,6 +4,7 @@ import argparse
 import sys
 
 from src.orchestrator import analyze
+from src.agents.hydrologist import run_hydrologist
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -31,12 +32,27 @@ def main(argv: list[str] | None = None) -> int:
         help="Clone depth for remote repos (default: 1); use 0 for full history",
     )
 
+    lineage_p = sub.add_parser("lineage", help="Run Phase 2 Hydrologist (data lineage)")
+    lineage_p.add_argument(
+        "repo",
+        help="Local path to the repository to analyze for lineage",
+    )
+
     args = parser.parse_args(argv)
 
     if args.cmd == "analyze":
         depth = args.depth if args.depth > 0 else None
         out = analyze(args.repo, branch=args.branch, clone_depth=depth)
         print(out)
+        return 0
+
+    if args.cmd == "lineage":
+        from pathlib import Path
+        # Write lineage_graph.json to project .cartography (cwd) so latest analysis is kept there
+        project_root = Path.cwd().resolve()
+        graph = run_hydrologist(Path(args.repo), project_data_dir=project_root)
+        out_path = project_root / ".cartography" / "lineage_graph.json"
+        print(str(out_path))
         return 0
 
     return 2
