@@ -6,7 +6,22 @@ from typing import Callable, Mapping
 
 import ast
 
+from src.analyzers.grammars import get_language
 from src.models.module import ClassRef, Evidence, FunctionRef, ImportRef, ModuleNode
+
+
+def _load_grammar_or_raise(lang: str) -> object:
+    """Load grammar for validation; raise if unavailable."""
+    g = get_language(lang)
+    if g is None:
+        raise RuntimeError(f"grammar not available: {lang}")
+    return g
+
+
+def _sql_grammar_ok() -> object:
+    """SQL uses sqlglot, not tree-sitter; satisfy validator."""
+    return True
+
 
 @dataclass(frozen=True)
 class LanguageSpec:
@@ -24,15 +39,15 @@ class LanguageRouter:
 
     @staticmethod
     def default() -> "LanguageRouter":
-        # Phase 1 supported scope.
+        # Phase 1 supported scope; load_grammar wires tree-sitter (or no-op for SQL).
         ext = {
-            ".py": LanguageSpec(language="python"),
-            ".sql": LanguageSpec(language="sql"),
-            ".yml": LanguageSpec(language="yaml"),
-            ".yaml": LanguageSpec(language="yaml"),
-            ".js": LanguageSpec(language="javascript"),
-            ".ts": LanguageSpec(language="typescript"),
-            ".tsx": LanguageSpec(language="typescript"),
+            ".py": LanguageSpec(language="python", load_grammar=lambda: _load_grammar_or_raise("python")),
+            ".sql": LanguageSpec(language="sql", load_grammar=_sql_grammar_ok),
+            ".yml": LanguageSpec(language="yaml", load_grammar=lambda: _load_grammar_or_raise("yaml")),
+            ".yaml": LanguageSpec(language="yaml", load_grammar=lambda: _load_grammar_or_raise("yaml")),
+            ".js": LanguageSpec(language="javascript", load_grammar=lambda: _load_grammar_or_raise("javascript")),
+            ".ts": LanguageSpec(language="typescript", load_grammar=lambda: _load_grammar_or_raise("typescript")),
+            ".tsx": LanguageSpec(language="typescript", load_grammar=lambda: _load_grammar_or_raise("typescript")),
         }
         return LanguageRouter(ext)
 
@@ -90,19 +105,67 @@ def analyze_file_best_effort(router: LanguageRouter, path: Path) -> object | Non
     return object()
 
 
+def _sql_tables_referenced(path: Path) -> list[str]:
+    """Extract table/reference names from a SQL file via reusable AST service."""
+    from src.analyzers.multilang_ast import extract_structural
+
+    ext = extract_structural(path, "sql")
+    return ext.tables_referenced if not ext.error else []
+
+
+def _yaml_structural_keys(path: Path) -> list[str]:
+    """Extract top-level config keys from YAML via reusable AST service (tree-sitter or PyYAML fallback)."""
+    from src.analyzers.multilang_ast import extract_structural
+
+    ext = extract_structural(path, "yaml")
+    return ext.structural_keys if not ext.error else []
+
+
+def _js_ts_imports(path: Path, language: str) -> list[ImportRef]:
+    """Extract import declarations from JS/TS via reusable AST service (tree-sitter)."""
+    from src.analyzers.multilang_ast import extract_structural
+
+    path_str = str(path)
+    ext = extract_structural(path, language)
+    if ext.error:
+        return []
+    return [
+        ImportRef(
+            raw=raw,
+            evidence=Evidence(source_file=path_str, start_line=start_line, end_line=end_line, method="static"),
+        )
+        for raw, start_line, end_line in ext.imports_raw
+    ]
+
+
 def analyze_module(path: Path, router: LanguageRouter | None = None) -> ModuleNode:
     """
     Phase 1 best-effort module analyzer.
 
     Uses LanguageRouter to set language from file extension (.py, .sql, .yml, .yaml, .js, .ts, .tsx).
-    Full extraction (imports, functions, classes) is implemented for Python only; other languages
-    get the correct language label and empty structural fields.
+    Full extraction (imports, functions, classes) for Python; SQL -> tables_referenced;
+    YAML -> structural_keys; JS/TS -> imports via tree-sitter.
     """
     path = path.resolve()
     suffix = path.suffix.lower()
     router = router or LanguageRouter.default()
     spec = router.route(path)
     language = spec.language if spec else "unknown"
+
+    if suffix == ".sql":
+        tables = _sql_tables_referenced(path)
+        return ModuleNode(path=str(path), language=language, tables_referenced=tables)
+
+    if suffix in (".yml", ".yaml"):
+        keys = _yaml_structural_keys(path)
+        return ModuleNode(path=str(path), language=language, structural_keys=keys)
+
+    if suffix in (".js", ".ts", ".tsx"):
+        try:
+            imp = _js_ts_imports(path, "typescript" if suffix != ".js" else "javascript")
+            return ModuleNode(path=str(path), language=language, imports=imp)
+        except Exception:
+            return ModuleNode(path=str(path), language=language)
 
     if suffix != ".py":
         return ModuleNode(path=str(path), language=language)

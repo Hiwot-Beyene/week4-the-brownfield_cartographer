@@ -6,6 +6,7 @@ merges into DataLineageGraph, and writes .cartography/lineage_graph.json.
 
 from __future__ import annotations
 
+import json
 import logging
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -40,6 +41,7 @@ def run_hydrologist(repo_root: Path, project_data_dir: Path | None = None) -> "D
 
     all_nodes: list = []
     all_edges: list = []
+    sql_summaries: list = []
     skipped = 0
 
     for path in hydrologist_files:
@@ -58,9 +60,10 @@ def run_hydrologist(repo_root: Path, project_data_dir: Path | None = None) -> "D
                 )
         elif path.suffix.lower() == ".sql":
             try:
-                nodes, edges = analyze_sql_lineage(path)
+                nodes, edges, summary = analyze_sql_lineage(path)
                 all_nodes.extend(nodes)
                 all_edges.extend(edges)
+                sql_summaries.append(summary)
             except Exception as e:
                 skipped += 1
                 logger.warning(
@@ -98,6 +101,16 @@ def run_hydrologist(repo_root: Path, project_data_dir: Path | None = None) -> "D
         out_path = repo_root / ".cartography" / "lineage_graph.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     graph.write_json(out_path)
+    # Write SQL lineage summary for visibility (dialects, statement counts, tables per file)
+    if sql_summaries:
+        summary_path = out_path.parent / "sql_lineage_summary.json"
+        try:
+            summary_path.write_text(
+                json.dumps({"files": sql_summaries}, indent=2),
+                encoding="utf-8",
+            )
+        except OSError as err:
+            logger.warning("could not write sql_lineage_summary.json: %s", err)
     return graph
 
 
