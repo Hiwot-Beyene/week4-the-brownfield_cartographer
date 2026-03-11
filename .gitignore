@@ -5,6 +5,7 @@
 .venv/
 venv/
 env/
+.cartography/cloned/
 
 # Python
 __pycache__/

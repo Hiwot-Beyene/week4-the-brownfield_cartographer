@@ -89,13 +89,17 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.cmd == "analyze":
         depth = args.depth if args.depth > 0 else None
-        out = analyze(
-            args.repo,
-            branch=args.branch,
-            clone_depth=depth,
-            output_dir=Path(args.output_dir) if getattr(args, "output_dir", None) else None,
-            skip_lineage=getattr(args, "skip_lineage", False),
-        )
+        try:
+            out = analyze(
+                args.repo,
+                branch=args.branch,
+                clone_depth=depth,
+                output_dir=Path(args.output_dir) if getattr(args, "output_dir", None) else None,
+                skip_lineage=getattr(args, "skip_lineage", False),
+            )
+        except ValueError as e:
+            logger.error("analyze: %s", e)
+            return 1
         if args.verbose:
             logger.info("Survey complete. Output: %s", out)
         print(out)
