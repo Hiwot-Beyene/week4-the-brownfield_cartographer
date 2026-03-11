@@ -90,6 +90,96 @@ def high_velocity_core(counts: dict[str, int]) -> list[str]:
     return core[:max_core] if len(core) > max_core else core
 
 
+def mark_dead_code_candidates(
+    modules: list[ModuleNode],
+    g: nx.DiGraph,
+    pagerank_by_path: dict[str, float],
+    velocity_counts: dict[str, int],
+    repo_root: Path,
+    *,
+    pagerank_threshold: float = 0.001,
+    velocity_threshold: int = 0,
+) -> None:
+    """
+    Set is_dead_code_candidate on modules that have no inbound references (exported but never imported)
+    and optionally low PageRank / zero velocity. Mutates modules in place.
+    """
+    repo_root = Path(repo_root).resolve()
+    path_to_velocity: dict[str, int] = dict(velocity_counts)
+    for k in list(path_to_velocity):
+        try:
+            path_to_velocity[str(Path(k).relative_to(repo_root))] = path_to_velocity[k]
+        except ValueError:
+            pass
+    for m in modules:
+        in_degree = g.in_degree(m.path)
+        has_exports = bool(m.public_functions or m.classes)
+        is_likely_entry = "__main__" in m.path or m.path.endswith("__main__.py")
+        pr = pagerank_by_path.get(m.path) or 0.0
+        vel = path_to_velocity.get(m.path, 0) or 0
+        try:
+            vel = path_to_velocity.get(str(Path(m.path).relative_to(repo_root)), vel)
+        except ValueError:
+            pass
+        if is_likely_entry:
+            m.is_dead_code_candidate = False
+            continue
+        if in_degree == 0 and has_exports:
+            m.is_dead_code_candidate = True
+        elif pr < pagerank_threshold and vel <= velocity_threshold and has_exports:
+            m.is_dead_code_candidate = True
+        elif m.is_dead_code_candidate is None and in_degree > 0:
+            m.is_dead_code_candidate = False
+
+
+def survey_summary(
+    modules: list[ModuleNode],
+    g: nx.DiGraph,
+    sccs: list[list[str]],
+    velocity_counts: dict[str, int],
+    pagerank_by_path: dict[str, float],
+    repo_root: Path,
+    top_n: int = 10,
+) -> dict:
+    """
+    High-level summary for downstream agents and users: top high-impact (PageRank), high-velocity, and risky modules.
+    """
+    repo_root = Path(repo_root).resolve()
+    path_to_velocity: dict[str, int] = {}
+    for k, v in velocity_counts.items():
+        path_to_velocity[k] = v
+        try:
+            path_to_velocity[str(Path(k).relative_to(repo_root))] = v
+        except ValueError:
+            pass
+
+    def _vel(m: ModuleNode) -> int:
+        v = path_to_velocity.get(m.path)
+        if v is not None:
+            return v
+        try:
+            return path_to_velocity.get(str(Path(m.path).relative_to(repo_root)), 0)
+        except ValueError:
+            return 0
+
+    by_pagerank = sorted(modules, key=lambda m: -(pagerank_by_path.get(m.path) or 0))
+    by_velocity = sorted(modules, key=lambda m: -_vel(m))
+    dead = [m.path for m in modules if m.is_dead_code_candidate]
+    in_scc = set()
+    for comp in sccs:
+        for p in comp:
+            in_scc.add(p)
+    risky = [m.path for m in modules if m.is_dead_code_candidate or m.path in in_scc]
+
+    return {
+        "high_impact": [m.path for m in by_pagerank[:top_n]],
+        "high_velocity": [m.path for m in by_velocity[:top_n]],
+        "dead_code_candidates": dead[:top_n * 2],
+        "in_strongly_connected_components": list(in_scc)[:top_n * 3],
+        "risky": list(dict.fromkeys(risky))[:top_n * 2],
+    }
+
+
 def extract_git_velocity(repo_root: Path, days: int = 90) -> dict[str, int]:
     """
     Compute per-file change frequency for the last `days` days via git log --numstat.
@@ -274,8 +364,9 @@ def _write_all_json_artifacts(
     repo_root: Path,
     pagerank_by_path: dict[str, float],
     sccs: list[list[str]],
+    summary: dict,
 ) -> None:
-    """Overwrite all four .cartography JSON files. Call at end of run to guarantee they are updated."""
+    """Overwrite .cartography JSON files (hashes, modules, module_graph, git_velocity, survey_summary)."""
     cartography_dir.mkdir(parents=True, exist_ok=True)
     # 1. file_hashes.json
     (cartography_dir / "file_hashes.json").write_text(
@@ -303,6 +394,11 @@ def _write_all_json_artifacts(
             indent=2,
             sort_keys=True,
         ) + "\n",
+        encoding="utf-8",
+    )
+    # 5. survey_summary.json (high-impact, high-velocity, risky modules)
+    (cartography_dir / "survey_summary.json").write_text(
+        json.dumps(summary, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
 
@@ -381,7 +477,11 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> Pa
         if old_hashes.get(str(f)) == h and str(f) in cached_modules:
             m = cached_modules[str(f)]
         else:
-            m = analyze_module(f, router=router)
+            try:
+                m = analyze_module(f, router=router)
+            except Exception as e:
+                logging.getLogger(__name__).warning("surveyor_skip path=%s error=%s", f, e)
+                continue
         path_key = str(Path(m.path).resolve())
         if path_key in seen_module_paths:
             continue
@@ -398,6 +498,9 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> Pa
     velocity_days = 90
     velocity_counts = extract_git_velocity(repo_root, days=velocity_days)
     velocity_core = high_velocity_core(velocity_counts)
+
+    mark_dead_code_candidates(modules, g, pr, velocity_counts, repo_root)
+    summary = survey_summary(modules, g, sccs, velocity_counts, pr, repo_root)
 
     # Persist to SQLite then vector store (separate try/except so one can succeed if the other fails)
     from src.store import (
@@ -451,6 +554,7 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> Pa
         repo_root,
         pr,
         sccs,
+        summary,
     )
     out_path = cartography_dir / "module_graph.json"
     return out_path

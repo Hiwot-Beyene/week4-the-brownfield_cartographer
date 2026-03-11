@@ -36,9 +36,11 @@ def run_hydrologist(repo_root: Path, project_data_dir: Path | None = None) -> "D
     files = discover_files(repo_root, rules, exts=HYDROLOGIST_EXTS)
     # Filter to Hydrologist-relevant extensions only (discover_files already applied ignore/sensitive)
     hydrologist_files = [f for f in files if f.suffix.lower() in HYDROLOGIST_EXTS]
+    logger.info("lineage: discovered %d files to analyze", len(hydrologist_files))
 
     all_nodes: list = []
     all_edges: list = []
+    skipped = 0
 
     for path in hydrologist_files:
         if path.suffix.lower() == ".py":
@@ -47,6 +49,7 @@ def run_hydrologist(repo_root: Path, project_data_dir: Path | None = None) -> "D
                 all_nodes.extend(nodes)
                 all_edges.extend(edges)
             except Exception as e:
+                skipped += 1
                 logger.warning(
                     "hydrologist_skip path=%s analyzer=PythonDataFlow error=%s",
                     path,
@@ -59,6 +62,7 @@ def run_hydrologist(repo_root: Path, project_data_dir: Path | None = None) -> "D
                 all_nodes.extend(nodes)
                 all_edges.extend(edges)
             except Exception as e:
+                skipped += 1
                 logger.warning(
                     "hydrologist_skip path=%s analyzer=SQLLineage error=%s",
                     path,
@@ -71,12 +75,16 @@ def run_hydrologist(repo_root: Path, project_data_dir: Path | None = None) -> "D
                 all_nodes.extend(nodes)
                 all_edges.extend(edges)
             except Exception as e:
+                skipped += 1
                 logger.warning(
                     "hydrologist_skip path=%s analyzer=DAGConfig error=%s",
                     path,
                     e,
                     exc_info=False,
                 )
+
+    if skipped:
+        logger.info("lineage: skipped %d file(s) due to errors", skipped)
 
     # Lazy import to avoid circular dependency until graph exists
     from src.graph.lineage_graph import DataLineageGraph

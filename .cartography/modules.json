@@ -121,7 +121,7 @@
         "raw": "from cyclopts import App"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/bin/dbt-create-staging-models.py",
@@ -298,7 +298,7 @@
         "raw": "from trino.auth import OAuth2Authentication"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/bin/dbt-local-dev.py",
@@ -502,7 +502,7 @@
         "raw": "from boto3 import client, resource"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/bin/utils/chunk_tracking_logs_by_day.py",
@@ -582,7 +582,7 @@
         "raw": "from cyclopts import App, Parameter"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/bin/uv-operations.py",
@@ -780,7 +780,7 @@
         "raw": "from dagster._core.storage.event_log.base import EventRecordsFilter"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_deployments/reconcile_edxorg_partitions.py",
@@ -928,7 +928,7 @@
         "raw": "from ol_orchestrate.lib.glue_helper import get_dbt_model_as_dataframe"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/b2b_organization/b2b_organization/assets/data_export.py",
@@ -1118,7 +1118,7 @@
         "raw": "from ol_orchestrate.lib.glue_helper import get_dbt_model_as_dataframe"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/b2b_organization/b2b_organization/sensors/b2b_organization.py",
@@ -1279,7 +1279,7 @@
         "raw": "from ol_orchestrate.lib.utils import compute_zip_content_hash"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/canvas/canvas/assets/canvas.py",
@@ -1406,7 +1406,7 @@
         "raw": "from canvas.sensors.canvas import canvas_google_sheet_course_id_sensor"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/canvas/canvas/definitions.py",
@@ -1492,7 +1492,7 @@
         "raw": "from google.oauth2 import service_account"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/canvas/canvas/lib/canvas.py",
@@ -1621,7 +1621,7 @@
         "raw": "from pydantic import Field, PrivateAttr"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/canvas/canvas/resources/api_client_factory.py",
@@ -1675,7 +1675,7 @@
         "raw": "from canvas.lib.canvas import fetch_canvas_course_ids_from_google_sheet"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/canvas/canvas/sensors/canvas.py",
@@ -1867,7 +1867,7 @@
         "raw": "from loads import edxorg_s3_pipeline, edxorg_s3_source_instance"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/data_loading/data_loading/defs/edxorg_s3_ingest/dagster_assets.py",
@@ -1986,7 +1986,7 @@
         "raw": "from ol_orchestrate.lib.constants import EDXORG_DB_TABLES"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/data_loading/data_loading/defs/edxorg_s3_ingest/loads.py",
@@ -2179,7 +2179,7 @@
         "raw": "from ol_orchestrate.resources.secrets.vault import Vault"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/data_platform/data_platform/definitions.py",
@@ -2362,7 +2362,7 @@
         "raw": "from ol_orchestrate.resources.openedx import OpenEdxApiClientFactory"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/edxorg/edxorg/assets/edxorg_api.py",
@@ -2606,7 +2606,7 @@
         "raw": "from edxorg.lib.edxorg import build_mapping_key, categorize_archive_element, parse_archive_path"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/edxorg/edxorg/assets/edxorg_archive.py",
@@ -2851,7 +2851,7 @@
         "raw": "from upath import UPath"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/edxorg/edxorg/assets/openedx_course_archives.py",
@@ -3100,7 +3100,7 @@
         "raw": "from edxorg.ops.object_storage import S3DownloadConfig, S3UploadConfig, download_files_from_s3, upload_files_to_s3"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/edxorg/edxorg/definitions.py",
@@ -3208,7 +3208,7 @@
         "raw": "from upath import UPath"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/edxorg/edxorg/io_managers/gcs.py",
@@ -3253,7 +3253,7 @@
         "raw": "from edxorg.ops.edx_gcs_courses import download_edx_gcs_course_data, upload_edx_gcs_course_data_to_s3"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/edxorg/edxorg/jobs/edx_gcs_courses.py",
@@ -3295,7 +3295,7 @@
         "raw": "from edxorg.assets.edxorg_archive import edxorg_raw_data_archive, process_edxorg_archive_bundle, raw_archive_asset_key"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/edxorg/edxorg/jobs/retrieve_edx_exports.py",
@@ -3350,7 +3350,7 @@
         "raw": "from collections.abc import Sequence"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/edxorg/edxorg/lib/edxorg.py",
@@ -3475,7 +3475,7 @@
         "raw": "from pydantic import Field"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/edxorg/edxorg/ops/edx_gcs_courses.py",
@@ -3584,7 +3584,7 @@
         "raw": "from pydantic import Field"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/edxorg/edxorg/ops/object_storage.py",
@@ -3709,7 +3709,7 @@
         "raw": "from edxorg.lib.edxorg import categorize_archive_element, parse_archive_path"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/edxorg/edxorg_tests/test_edxorg_lib.py",
@@ -3843,7 +3843,7 @@
         "raw": "from lakehouse.assets.lakehouse.dbt import full_dbt_project"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/lakehouse/lakehouse/assets/instructor_onboarding.py",
@@ -3974,7 +3974,7 @@
         "raw": "from ol_orchestrate.lib.constants import DAGSTER_ENV"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/lakehouse/lakehouse/assets/lakehouse/dbt.py",
@@ -4061,7 +4061,7 @@
         "raw": "from lakehouse.resources.superset_api import SupersetApiClientFactory"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/lakehouse/lakehouse/assets/superset.py",
@@ -4233,7 +4233,7 @@
         "raw": "from lakehouse.resources.superset_api import SupersetApiClientFactory"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/lakehouse/lakehouse/definitions.py",
@@ -4383,7 +4383,7 @@
         "raw": "from pydantic.functional_validators import model_validator"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/lakehouse/lakehouse/resources/airbyte.py",
@@ -4494,7 +4494,7 @@
         "raw": "from pydantic import Field, PrivateAttr"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/lakehouse/lakehouse/resources/superset_api.py",
@@ -4569,7 +4569,7 @@
         "raw": "from dagster import sensor, asset, DynamicPartitionsDefinition"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/learning_resources/learning_resources/assets/open_learning_library.py",
@@ -4656,7 +4656,7 @@
         "raw": "from ol_orchestrate.resources.oauth import OAuthApiClientFactory"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/learning_resources/learning_resources/assets/sloan_api.py",
@@ -4824,7 +4824,7 @@
         "raw": "from learning_resources.lib.video_processing import compress_video, generate_video_thumbnail"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/learning_resources/learning_resources/assets/video_shorts.py",
@@ -5023,7 +5023,7 @@
         "raw": "from learning_resources.sensors.video_shorts import video_shorts_discovery_sensor"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/learning_resources/learning_resources/definitions.py",
@@ -5166,7 +5166,7 @@
         "raw": "from google.oauth2 import service_account"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/learning_resources/learning_resources/lib/google_sheets.py",
@@ -5271,7 +5271,7 @@
         "raw": "from dagster import OpExecutionContext"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/learning_resources/learning_resources/lib/video_processing.py",
@@ -5348,7 +5348,7 @@
         "raw": "from learning_resources.assets.video_shorts import sheets_api_key"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/learning_resources/learning_resources/sensors/video_shorts.py",
@@ -5555,7 +5555,7 @@
         "raw": "from legacy_openedx.schedules.open_edx import mitxonline_edx_daily_schedule, residential_edx_daily_schedule, xpro_edx_daily_schedule"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/legacy_openedx/legacy_openedx/definitions.py",
@@ -5619,7 +5619,7 @@
         "raw": "from legacy_openedx.ops.open_edx import course_enrollments, course_roles, enrolled_users, export_edx_courses, export_edx_forum_database, list_courses, student_submissions, upload_extracted_data, user_roles, write_course_list_csv"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/legacy_openedx/legacy_openedx/jobs/open_edx.py",
@@ -5892,7 +5892,7 @@
         "raw": "from pypika import Table, Tables"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/legacy_openedx/legacy_openedx/ops/open_edx.py",
@@ -6090,7 +6090,7 @@
         "raw": "from pydantic import Field"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/legacy_openedx/legacy_openedx/resources/healthchecks.py",
@@ -6151,7 +6151,7 @@
         "raw": "from pymysql.cursors import DictCursor"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/legacy_openedx/legacy_openedx/resources/mysql_db.py",
@@ -6213,7 +6213,7 @@
         "raw": "from dagster import Field, InitResourceContext, String, resource"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/legacy_openedx/legacy_openedx/resources/sqlite_db.py",
@@ -6259,7 +6259,7 @@
         "raw": "from dagster import RunRequest, schedule"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/legacy_openedx/legacy_openedx/schedules/open_edx.py",
@@ -6501,7 +6501,7 @@
         "raw": "from upath import UPath"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/openedx/openedx/assets/openedx.py",
@@ -6676,7 +6676,7 @@
         "raw": "from openedx.sensors.openedx import course_run_sensor, course_version_sensor"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/openedx/openedx/components/openedx_deployment.py",
@@ -6825,7 +6825,7 @@
         "raw": "from openedx.jobs.normalize_logs import jsonify_tracking_logs, normalize_tracking_logs"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/openedx/openedx/definitions.py",
@@ -6898,7 +6898,7 @@
         "raw": "from openedx.ops.normalize_logs import jsonify_log_data, load_files_to_table, transform_log_data, write_file_to_s3"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/openedx/openedx/jobs/normalize_logs.py",
@@ -6962,7 +6962,7 @@
         "raw": "from dagster import AssetsDefinition, AssetSpec, PartitionsDefinition"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/openedx/openedx/lib/assets_helper.py",
@@ -7100,7 +7100,7 @@
         "raw": "from pydantic import Field"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/openedx/openedx/ops/normalize_logs.py",
@@ -7218,7 +7218,7 @@
         "raw": "from dagster import RunRequest, schedule"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/openedx/openedx/schedules/open_edx.py",
@@ -7367,7 +7367,7 @@
         "raw": "from openedx.partitions.openedx import OPENEDX_COURSE_RUN_PARTITIONS"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/openedx/openedx/sensors/openedx.py",
@@ -7519,7 +7519,7 @@
         "raw": "from student_risk_probability.lib.helper import risk_probability, scaled_features"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/student_risk_probability/student_risk_probability/assets/risk_probability.py",
@@ -7696,7 +7696,7 @@
         "raw": "from sklearn.preprocessing import RobustScaler"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_projects/student_risk_probability/student_risk_probability/lib/helper.py",
@@ -7924,7 +7924,7 @@
         "raw": "from ol_orchestrate.resources.secrets.vault import Vault"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/io_managers/filepath.py",
@@ -7973,7 +7973,7 @@
         "raw": "from pyarrow import concat_tables, parquet"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/lib/arrow_helper.py",
@@ -8015,7 +8015,7 @@
         "raw": "from dagster import AutomationCondition"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/lib/automation_policies.py",
@@ -8125,7 +8125,7 @@
         "raw": "from ol_orchestrate.io_managers.filepath import LocalFileObjectIOManager, S3FileObjectIOManager"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/lib/dagster_helpers.py",
@@ -8220,7 +8220,7 @@
         "raw": "from dagster import usable_as_dagster_type"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/lib/dagster_types/files.py",
@@ -8284,7 +8284,7 @@
         "raw": "from pathlib import Path"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/lib/file_rendering.py",
@@ -8344,7 +8344,7 @@
         "raw": "from pyiceberg.catalog.glue import GlueCatalog"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/lib/glue_helper.py",
@@ -8395,7 +8395,7 @@
         "raw": "from dagster import failure_hook, success_hook"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/lib/hooks.py",
@@ -8500,7 +8500,7 @@
         "raw": "from xml.etree.ElementTree import ElementTree"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/lib/openedx.py",
@@ -8767,7 +8767,7 @@
         "raw": "from sqlalchemy import event, inspect"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/lib/postgres/event_log.py",
@@ -8893,7 +8893,7 @@
         "raw": "from sqlalchemy import event, inspect"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/lib/postgres/run_storage.py",
@@ -9010,7 +9010,7 @@
         "raw": "from sqlalchemy import event, inspect"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/lib/postgres/schedule_storage.py",
@@ -9078,7 +9078,7 @@
         "raw": "from ol_orchestrate.resources.secrets.vault import Vault"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/lib/utils.py",
@@ -9147,7 +9147,7 @@
         "raw": "import yaml"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/lib/yaml_config_helper.py",
@@ -9282,7 +9282,7 @@
         "raw": "from pydantic import Field, PrivateAttr"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/resources/api_client.py",
@@ -9388,7 +9388,7 @@
         "raw": "from ol_orchestrate.resources.secrets.vault import Vault"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/resources/api_client_factory.py",
@@ -9440,7 +9440,7 @@
         "raw": "from pyathena.cursor import DictCursor"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/resources/athena_db.py",
@@ -9491,7 +9491,7 @@
         "raw": "from google.oauth2 import service_account"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/resources/bigquery_db.py",
@@ -9573,7 +9573,7 @@
         "raw": "from ol_orchestrate.resources.api_client import BaseApiClient"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/resources/canvas_api.py",
@@ -9645,7 +9645,7 @@
         "raw": "from pydantic import Field, PrivateAttr"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/resources/gcp_gcs.py",
@@ -9708,7 +9708,7 @@
         "raw": "from ol_orchestrate.resources.secrets.vault import Vault"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/resources/github.py",
@@ -9789,7 +9789,7 @@
         "raw": "from ol_orchestrate.resources.api_client import BaseApiClient"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/resources/learn_api.py",
@@ -9909,7 +9909,7 @@
         "raw": "from ol_orchestrate.resources.secrets.vault import Vault"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/resources/oauth.py",
@@ -10029,7 +10029,7 @@
         "raw": "from ol_orchestrate.resources.secrets.vault import Vault"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/resources/openedx.py",
@@ -10125,7 +10125,7 @@
         "raw": "from pydantic import Field"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/resources/outputs.py",
@@ -10196,7 +10196,7 @@
         "raw": "from dagster import Field, InitResourceContext, Int, String, resource"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/resources/postgres_db.py",
@@ -10309,7 +10309,7 @@
         "raw": "from pydantic import PrivateAttr"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/resources/secrets/vault.py",
@@ -10403,7 +10403,7 @@
         "raw": "from ol_orchestrate.resources.gcp_gcs import GCSConnection"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/packages/ol-orchestrate-lib/src/ol_orchestrate/sensors/object_storage.py",
@@ -22140,7 +22140,7 @@
         "raw": "from ol_superset.commands.validate import validate"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/src/ol_superset/ol_superset/cli.py",
@@ -22258,7 +22258,7 @@
         "raw": "from ol_superset.lib.utils import confirm_action"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/src/ol_superset/ol_superset/commands/apply_rls.py",
@@ -22336,7 +22336,7 @@
         "raw": "from rich.table import Table"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/src/ol_superset/ol_superset/commands/dedupe.py",
@@ -22432,7 +22432,7 @@
         "raw": "from ol_superset.lib.utils import count_assets, get_assets_dir, run_sup_command"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/src/ol_superset/ol_superset/commands/export.py",
@@ -22528,7 +22528,7 @@
         "raw": "from ol_superset.lib.utils import get_assets_dir"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/src/ol_superset/ol_superset/commands/lock.py",
@@ -22633,7 +22633,7 @@
         "raw": "from ol_superset.lib.utils import check_git_status, confirm_action, count_assets, get_assets_dir, run_sup_command"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/src/ol_superset/ol_superset/commands/promote.py",
@@ -22729,7 +22729,7 @@
         "raw": "from ol_superset.lib.utils import get_assets_dir"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/src/ol_superset/ol_superset/commands/refresh.py",
@@ -22807,7 +22807,7 @@
         "raw": "from ol_superset.lib.utils import confirm_action, count_assets, get_assets_dir, run_sup_command"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/src/ol_superset/ol_superset/commands/sync.py",
@@ -22876,7 +22876,7 @@
         "raw": "from ol_superset.lib.utils import count_assets, get_assets_dir"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/src/ol_superset/ol_superset/commands/validate.py",
@@ -22967,7 +22967,7 @@
         "raw": "import yaml"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/src/ol_superset/ol_superset/lib/database_mapping.py",
@@ -23144,7 +23144,7 @@
         "raw": "import yaml"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/src/ol_superset/ol_superset/lib/superset_api.py",
@@ -23330,7 +23330,7 @@
         "raw": "from pathlib import Path"
       }
     ],
-    "is_dead_code_candidate": null,
+    "is_dead_code_candidate": true,
     "language": "python",
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/src/ol_superset/ol_superset/lib/utils.py",
@@ -23412,6 +23412,3408 @@
     "last_modified": null,
     "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/src/ol_superset/sync_config.yml",
     "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [],
+    "is_dead_code_candidate": null,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/__init__.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [],
+    "is_dead_code_candidate": null,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/__init__.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 7,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/hydrologist.py",
+          "start_line": 7
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 9,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/hydrologist.py",
+          "start_line": 9
+        },
+        "raw": "import logging"
+      },
+      {
+        "evidence": {
+          "end_line": 10,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/hydrologist.py",
+          "start_line": 10
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 11,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/hydrologist.py",
+          "start_line": 11
+        },
+        "raw": "from typing import TYPE_CHECKING"
+      },
+      {
+        "evidence": {
+          "end_line": 13,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/hydrologist.py",
+          "start_line": 13
+        },
+        "raw": "from src.analyzers.file_discovery import discover_files"
+      },
+      {
+        "evidence": {
+          "end_line": 14,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/hydrologist.py",
+          "start_line": 14
+        },
+        "raw": "from src.analyzers.ignore_rules import IgnoreRules"
+      },
+      {
+        "evidence": {
+          "end_line": 15,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/hydrologist.py",
+          "start_line": 15
+        },
+        "raw": "from src.analyzers.python_data_flow import analyze_python_data_flow"
+      },
+      {
+        "evidence": {
+          "end_line": 16,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/hydrologist.py",
+          "start_line": 16
+        },
+        "raw": "from src.analyzers.sql_lineage import analyze_sql_lineage"
+      },
+      {
+        "evidence": {
+          "end_line": 17,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/hydrologist.py",
+          "start_line": 17
+        },
+        "raw": "from src.analyzers.dag_config_parser import analyze_dag_config"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/hydrologist.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 101,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/hydrologist.py",
+          "start_line": 26
+        },
+        "name": "run_hydrologist"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 3
+        },
+        "raw": "import hashlib"
+      },
+      {
+        "evidence": {
+          "end_line": 4,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 4
+        },
+        "raw": "import json"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 5
+        },
+        "raw": "import logging"
+      },
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 6
+        },
+        "raw": "import subprocess"
+      },
+      {
+        "evidence": {
+          "end_line": 7,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 7
+        },
+        "raw": "import sys"
+      },
+      {
+        "evidence": {
+          "end_line": 8,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 8
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 9,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 9
+        },
+        "raw": "from typing import Optional"
+      },
+      {
+        "evidence": {
+          "end_line": 11,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 11
+        },
+        "raw": "import networkx"
+      },
+      {
+        "evidence": {
+          "end_line": 12,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 12
+        },
+        "raw": "from networkx.readwrite import json_graph"
+      },
+      {
+        "evidence": {
+          "end_line": 14,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 14
+        },
+        "raw": "from src.models.module import ModuleNode"
+      },
+      {
+        "evidence": {
+          "end_line": 15,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 15
+        },
+        "raw": "from src.analyzers.file_discovery import discover_files"
+      },
+      {
+        "evidence": {
+          "end_line": 16,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 16
+        },
+        "raw": "from src.analyzers.ignore_rules import IgnoreRules"
+      },
+      {
+        "evidence": {
+          "end_line": 17,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 17
+        },
+        "raw": "from src.analyzers.tree_sitter_analyzer import GrammarValidationError, LanguageRouter, analyze_module, validate_required_grammars"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 35,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 20
+        },
+        "name": "build_module_graph"
+      },
+      {
+        "evidence": {
+          "end_line": 40,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 38
+        },
+        "name": "compute_pagerank"
+      },
+      {
+        "evidence": {
+          "end_line": 47,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 43
+        },
+        "name": "compute_sccs"
+      },
+      {
+        "evidence": {
+          "end_line": 69,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 50
+        },
+        "name": "extract_git_velocity_from_numstat"
+      },
+      {
+        "evidence": {
+          "end_line": 90,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 72
+        },
+        "name": "high_velocity_core"
+      },
+      {
+        "evidence": {
+          "end_line": 132,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 93
+        },
+        "name": "mark_dead_code_candidates"
+      },
+      {
+        "evidence": {
+          "end_line": 180,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 135
+        },
+        "name": "survey_summary"
+      },
+      {
+        "evidence": {
+          "end_line": 213,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 183
+        },
+        "name": "extract_git_velocity"
+      },
+      {
+        "evidence": {
+          "end_line": 298,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 265
+        },
+        "name": "build_knowledge_graph_payload"
+      },
+      {
+        "evidence": {
+          "end_line": 353,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 301
+        },
+        "name": "write_module_graph_json"
+      },
+      {
+        "evidence": {
+          "end_line": 560,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
+          "start_line": 414
+        },
+        "name": "run_surveyor"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [],
+    "is_dead_code_candidate": null,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/__init__.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/dag_config_parser.py",
+          "start_line": 6
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 8,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/dag_config_parser.py",
+          "start_line": 8
+        },
+        "raw": "import ast"
+      },
+      {
+        "evidence": {
+          "end_line": 9,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/dag_config_parser.py",
+          "start_line": 9
+        },
+        "raw": "import logging"
+      },
+      {
+        "evidence": {
+          "end_line": 10,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/dag_config_parser.py",
+          "start_line": 10
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 11,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/dag_config_parser.py",
+          "start_line": 11
+        },
+        "raw": "from typing import Any"
+      },
+      {
+        "evidence": {
+          "end_line": 13,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/dag_config_parser.py",
+          "start_line": 13
+        },
+        "raw": "import yaml"
+      },
+      {
+        "evidence": {
+          "end_line": 15,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/dag_config_parser.py",
+          "start_line": 15
+        },
+        "raw": "from src.models.knowledge_graph import DatasetNode"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/dag_config_parser.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 118,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/dag_config_parser.py",
+          "start_line": 107
+        },
+        "name": "analyze_dag_config"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/file_discovery.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/file_discovery.py",
+          "start_line": 3
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 4,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/file_discovery.py",
+          "start_line": 4
+        },
+        "raw": "from typing import Iterable"
+      },
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/file_discovery.py",
+          "start_line": 6
+        },
+        "raw": "from src.analyzers.ignore_rules import IgnoreRules"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/file_discovery.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 30,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/file_discovery.py",
+          "start_line": 12
+        },
+        "name": "discover_files"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [
+      {
+        "bases": [],
+        "evidence": {
+          "end_line": 69,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/ignore_rules.py",
+          "start_line": 18
+        },
+        "name": "IgnoreRules"
+      }
+    ],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/ignore_rules.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/ignore_rules.py",
+          "start_line": 3
+        },
+        "raw": "from dataclasses import dataclass"
+      },
+      {
+        "evidence": {
+          "end_line": 4,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/ignore_rules.py",
+          "start_line": 4
+        },
+        "raw": "from fnmatch import fnmatch"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/ignore_rules.py",
+          "start_line": 5
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/ignore_rules.py",
+          "start_line": 6
+        },
+        "raw": "from typing import Iterable"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/ignore_rules.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [
+      {
+        "bases": [],
+        "evidence": {
+          "end_line": 10,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/logging.py",
+          "start_line": 7
+        },
+        "name": "SkippedSensitiveFileEvent"
+      }
+    ],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/logging.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/logging.py",
+          "start_line": 3
+        },
+        "raw": "from dataclasses import dataclass"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/logging.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 15,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/logging.py",
+          "start_line": 13
+        },
+        "name": "skipped_sensitive_file"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [
+      {
+        "bases": [],
+        "evidence": {
+          "end_line": 15,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/parse_cache.py",
+          "start_line": 13
+        },
+        "name": "_Key"
+      },
+      {
+        "bases": [],
+        "evidence": {
+          "end_line": 39,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/parse_cache.py",
+          "start_line": 18
+        },
+        "name": "ParseCache"
+      }
+    ],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/parse_cache.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/parse_cache.py",
+          "start_line": 3
+        },
+        "raw": "from collections import OrderedDict"
+      },
+      {
+        "evidence": {
+          "end_line": 4,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/parse_cache.py",
+          "start_line": 4
+        },
+        "raw": "from dataclasses import dataclass"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/parse_cache.py",
+          "start_line": 5
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/parse_cache.py",
+          "start_line": 6
+        },
+        "raw": "from typing import Generic, TypeVar"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/parse_cache.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 7,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/python_data_flow.py",
+          "start_line": 7
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 9,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/python_data_flow.py",
+          "start_line": 9
+        },
+        "raw": "import ast"
+      },
+      {
+        "evidence": {
+          "end_line": 10,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/python_data_flow.py",
+          "start_line": 10
+        },
+        "raw": "import logging"
+      },
+      {
+        "evidence": {
+          "end_line": 11,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/python_data_flow.py",
+          "start_line": 11
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 12,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/python_data_flow.py",
+          "start_line": 12
+        },
+        "raw": "from typing import Any"
+      },
+      {
+        "evidence": {
+          "end_line": 14,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/python_data_flow.py",
+          "start_line": 14
+        },
+        "raw": "from src.models.knowledge_graph import DatasetNode"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/python_data_flow.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 118,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/python_data_flow.py",
+          "start_line": 88
+        },
+        "name": "analyze_python_data_flow"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/sql_lineage.py",
+          "start_line": 6
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 8,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/sql_lineage.py",
+          "start_line": 8
+        },
+        "raw": "import logging"
+      },
+      {
+        "evidence": {
+          "end_line": 9,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/sql_lineage.py",
+          "start_line": 9
+        },
+        "raw": "import re"
+      },
+      {
+        "evidence": {
+          "end_line": 10,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/sql_lineage.py",
+          "start_line": 10
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 11,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/sql_lineage.py",
+          "start_line": 11
+        },
+        "raw": "from typing import Any"
+      },
+      {
+        "evidence": {
+          "end_line": 13,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/sql_lineage.py",
+          "start_line": 13
+        },
+        "raw": "import sqlglot"
+      },
+      {
+        "evidence": {
+          "end_line": 14,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/sql_lineage.py",
+          "start_line": 14
+        },
+        "raw": "from sqlglot import exp"
+      },
+      {
+        "evidence": {
+          "end_line": 16,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/sql_lineage.py",
+          "start_line": 16
+        },
+        "raw": "from src.models.knowledge_graph import DatasetNode"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/sql_lineage.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 148,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/sql_lineage.py",
+          "start_line": 39
+        },
+        "name": "analyze_sql_lineage"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [
+      {
+        "bases": [],
+        "evidence": {
+          "end_line": 17,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/tree_sitter_analyzer.py",
+          "start_line": 12
+        },
+        "name": "LanguageSpec"
+      },
+      {
+        "bases": [],
+        "evidence": {
+          "end_line": 41,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/tree_sitter_analyzer.py",
+          "start_line": 20
+        },
+        "name": "LanguageRouter"
+      },
+      {
+        "bases": [
+          "Exception"
+        ],
+        "evidence": {
+          "end_line": 49,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/tree_sitter_analyzer.py",
+          "start_line": 45
+        },
+        "name": "GrammarValidationError"
+      }
+    ],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/tree_sitter_analyzer.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/tree_sitter_analyzer.py",
+          "start_line": 3
+        },
+        "raw": "from dataclasses import dataclass"
+      },
+      {
+        "evidence": {
+          "end_line": 4,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/tree_sitter_analyzer.py",
+          "start_line": 4
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/tree_sitter_analyzer.py",
+          "start_line": 5
+        },
+        "raw": "from typing import Callable, Mapping"
+      },
+      {
+        "evidence": {
+          "end_line": 7,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/tree_sitter_analyzer.py",
+          "start_line": 7
+        },
+        "raw": "import ast"
+      },
+      {
+        "evidence": {
+          "end_line": 9,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/tree_sitter_analyzer.py",
+          "start_line": 9
+        },
+        "raw": "from src.models.module import ClassRef, Evidence, FunctionRef, ImportRef, ModuleNode"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/tree_sitter_analyzer.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 72,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/tree_sitter_analyzer.py",
+          "start_line": 52
+        },
+        "name": "validate_required_grammars"
+      },
+      {
+        "evidence": {
+          "end_line": 90,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/tree_sitter_analyzer.py",
+          "start_line": 75
+        },
+        "name": "analyze_file_best_effort"
+      },
+      {
+        "evidence": {
+          "end_line": 185,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/tree_sitter_analyzer.py",
+          "start_line": 93
+        },
+        "name": "analyze_module"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/cli.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/cli.py",
+          "start_line": 3
+        },
+        "raw": "import argparse"
+      },
+      {
+        "evidence": {
+          "end_line": 4,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/cli.py",
+          "start_line": 4
+        },
+        "raw": "import logging"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/cli.py",
+          "start_line": 5
+        },
+        "raw": "import sys"
+      },
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/cli.py",
+          "start_line": 6
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 8,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/cli.py",
+          "start_line": 8
+        },
+        "raw": "from src.orchestrator import analyze"
+      },
+      {
+        "evidence": {
+          "end_line": 9,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/cli.py",
+          "start_line": 9
+        },
+        "raw": "from src.agents.hydrologist import run_hydrologist"
+      },
+      {
+        "evidence": {
+          "end_line": 10,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/cli.py",
+          "start_line": 10
+        },
+        "raw": "from src.repo_resolver import resolve_repo"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/cli.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 121,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/cli.py",
+          "start_line": 15
+        },
+        "name": "main"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [],
+    "is_dead_code_candidate": null,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/__init__.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [
+      {
+        "bases": [],
+        "evidence": {
+          "end_line": 16,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/knowledge_graph.py",
+          "start_line": 12
+        },
+        "name": "KnowledgeGraph"
+      }
+    ],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/knowledge_graph.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/knowledge_graph.py",
+          "start_line": 3
+        },
+        "raw": "from dataclasses import dataclass"
+      },
+      {
+        "evidence": {
+          "end_line": 4,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/knowledge_graph.py",
+          "start_line": 4
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/knowledge_graph.py",
+          "start_line": 6
+        },
+        "raw": "import networkx"
+      },
+      {
+        "evidence": {
+          "end_line": 8,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/knowledge_graph.py",
+          "start_line": 8
+        },
+        "raw": "from src.agents.surveyor import write_module_graph_json"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/knowledge_graph.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [
+      {
+        "bases": [],
+        "evidence": {
+          "end_line": 277,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/lineage_graph.py",
+          "start_line": 93
+        },
+        "name": "DataLineageGraph"
+      }
+    ],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 7,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/lineage_graph.py",
+          "start_line": 7
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 9,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/lineage_graph.py",
+          "start_line": 9
+        },
+        "raw": "import json"
+      },
+      {
+        "evidence": {
+          "end_line": 10,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/lineage_graph.py",
+          "start_line": 10
+        },
+        "raw": "import logging"
+      },
+      {
+        "evidence": {
+          "end_line": 11,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/lineage_graph.py",
+          "start_line": 11
+        },
+        "raw": "from collections import deque"
+      },
+      {
+        "evidence": {
+          "end_line": 12,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/lineage_graph.py",
+          "start_line": 12
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 13,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/lineage_graph.py",
+          "start_line": 13
+        },
+        "raw": "from typing import Any"
+      },
+      {
+        "evidence": {
+          "end_line": 15,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/lineage_graph.py",
+          "start_line": 15
+        },
+        "raw": "import networkx"
+      },
+      {
+        "evidence": {
+          "end_line": 24,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/lineage_graph.py",
+          "start_line": 17
+        },
+        "raw": "from src.models.knowledge_graph import ConsumesEdge, DatasetNode, LineageEdgeSchema, LineageNodeSchema, ProducesEdge, TransformationNode"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/graph/lineage_graph.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [],
+    "is_dead_code_candidate": null,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/__init__.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 28,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 10
+        },
+        "name": "DatasetNode"
+      },
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 49,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 31
+        },
+        "name": "FunctionNode"
+      },
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 70,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 52
+        },
+        "name": "TransformationNode"
+      },
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 82,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 73
+        },
+        "name": "ImportEdge"
+      },
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 93,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 85
+        },
+        "name": "ProducesEdge"
+      },
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 104,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 96
+        },
+        "name": "ConsumesEdge"
+      },
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 119,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 107
+        },
+        "name": "LineageEdgeSchema"
+      },
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 131,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 122
+        },
+        "name": "LineageNodeSchema"
+      },
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 142,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 134
+        },
+        "name": "CallsEdge"
+      },
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 153,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 145
+        },
+        "name": "ConfiguresEdge"
+      },
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 175,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 156
+        },
+        "name": "KnowledgeGraphSnapshot"
+      }
+    ],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 3
+        },
+        "raw": "from typing import Literal, Optional"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 5
+        },
+        "raw": "from pydantic import BaseModel, Field"
+      },
+      {
+        "evidence": {
+          "end_line": 7,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+          "start_line": 7
+        },
+        "raw": "from src.models.module import ModuleNode"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/knowledge_graph.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/lineage.py",
+          "start_line": 6
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 13,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/lineage.py",
+          "start_line": 8
+        },
+        "raw": "from src.models.knowledge_graph import ConsumesEdge, DatasetNode, ProducesEdge, TransformationNode"
+      }
+    ],
+    "is_dead_code_candidate": null,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/lineage.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 19,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/module.py",
+          "start_line": 11
+        },
+        "name": "Evidence"
+      },
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 28,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/module.py",
+          "start_line": 22
+        },
+        "name": "ImportRef"
+      },
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 37,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/module.py",
+          "start_line": 31
+        },
+        "name": "FunctionRef"
+      },
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 47,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/module.py",
+          "start_line": 40
+        },
+        "name": "ClassRef"
+      },
+      {
+        "bases": [
+          "BaseModel"
+        ],
+        "evidence": {
+          "end_line": 73,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/module.py",
+          "start_line": 50
+        },
+        "name": "ModuleNode"
+      }
+    ],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/module.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/module.py",
+          "start_line": 3
+        },
+        "raw": "from typing import Literal, Optional"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/module.py",
+          "start_line": 5
+        },
+        "raw": "from pydantic import BaseModel, Field"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/models/module.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/orchestrator.py",
+          "start_line": 6
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 8,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/orchestrator.py",
+          "start_line": 8
+        },
+        "raw": "import shutil"
+      },
+      {
+        "evidence": {
+          "end_line": 9,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/orchestrator.py",
+          "start_line": 9
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 11,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/orchestrator.py",
+          "start_line": 11
+        },
+        "raw": "from src.agents.surveyor import run_surveyor"
+      },
+      {
+        "evidence": {
+          "end_line": 12,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/orchestrator.py",
+          "start_line": 12
+        },
+        "raw": "from src.agents.hydrologist import run_hydrologist"
+      },
+      {
+        "evidence": {
+          "end_line": 13,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/orchestrator.py",
+          "start_line": 13
+        },
+        "raw": "from src.repo_resolver import resolve_repo"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/orchestrator.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 60,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/orchestrator.py",
+          "start_line": 38
+        },
+        "name": "analyze"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 8,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/repo_resolver.py",
+          "start_line": 8
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 10,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/repo_resolver.py",
+          "start_line": 10
+        },
+        "raw": "import re"
+      },
+      {
+        "evidence": {
+          "end_line": 11,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/repo_resolver.py",
+          "start_line": 11
+        },
+        "raw": "import subprocess"
+      },
+      {
+        "evidence": {
+          "end_line": 12,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/repo_resolver.py",
+          "start_line": 12
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 13,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/repo_resolver.py",
+          "start_line": 13
+        },
+        "raw": "from typing import Optional"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/repo_resolver.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 29,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/repo_resolver.py",
+          "start_line": 20
+        },
+        "name": "is_remote_repo"
+      },
+      {
+        "evidence": {
+          "end_line": 83,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/repo_resolver.py",
+          "start_line": 51
+        },
+        "name": "clone_or_update_remote"
+      },
+      {
+        "evidence": {
+          "end_line": 123,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/repo_resolver.py",
+          "start_line": 86
+        },
+        "name": "resolve_repo"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 17,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/__init__.py",
+          "start_line": 9
+        },
+        "raw": "from src.store.sqlite_store import get_data_dir, get_repo_id, init_db, insert_analysis, get_analyses, get_modules, get_import_edges"
+      },
+      {
+        "evidence": {
+          "end_line": 22,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/__init__.py",
+          "start_line": 18
+        },
+        "raw": "from src.store.vector_store import init_vector_store, add_modules_to_vector_store, search_modules"
+      }
+    ],
+    "is_dead_code_candidate": null,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/__init__.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 9,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 9
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 11,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 11
+        },
+        "raw": "import hashlib"
+      },
+      {
+        "evidence": {
+          "end_line": 12,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 12
+        },
+        "raw": "import math"
+      },
+      {
+        "evidence": {
+          "end_line": 13,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 13
+        },
+        "raw": "import os"
+      },
+      {
+        "evidence": {
+          "end_line": 14,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 14
+        },
+        "raw": "import sqlite3"
+      },
+      {
+        "evidence": {
+          "end_line": 15,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 15
+        },
+        "raw": "from datetime import datetime, timezone"
+      },
+      {
+        "evidence": {
+          "end_line": 16,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 16
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 17,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 17
+        },
+        "raw": "from typing import Optional"
+      },
+      {
+        "evidence": {
+          "end_line": 19,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 19
+        },
+        "raw": "from src.models.module import ModuleNode"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 65,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 46
+        },
+        "name": "get_data_dir"
+      },
+      {
+        "evidence": {
+          "end_line": 76,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 74
+        },
+        "name": "get_repo_id"
+      },
+      {
+        "evidence": {
+          "end_line": 165,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 117
+        },
+        "name": "init_db"
+      },
+      {
+        "evidence": {
+          "end_line": 221,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 168
+        },
+        "name": "insert_analysis"
+      },
+      {
+        "evidence": {
+          "end_line": 249,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 224
+        },
+        "name": "get_analyses"
+      },
+      {
+        "evidence": {
+          "end_line": 268,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 252
+        },
+        "name": "get_modules"
+      },
+      {
+        "evidence": {
+          "end_line": 285,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/sqlite_store.py",
+          "start_line": 271
+        },
+        "name": "get_import_edges"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/vector_store.py",
+          "start_line": 6
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 8,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/vector_store.py",
+          "start_line": 8
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 9,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/vector_store.py",
+          "start_line": 9
+        },
+        "raw": "from typing import TYPE_CHECKING, Any, Optional"
+      },
+      {
+        "evidence": {
+          "end_line": 11,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/vector_store.py",
+          "start_line": 11
+        },
+        "raw": "from src.store.sqlite_store import get_data_dir"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/vector_store.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 47,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/vector_store.py",
+          "start_line": 24
+        },
+        "name": "init_vector_store"
+      },
+      {
+        "evidence": {
+          "end_line": 108,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/vector_store.py",
+          "start_line": 67
+        },
+        "name": "add_modules_to_vector_store"
+      },
+      {
+        "evidence": {
+          "end_line": 145,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/store/vector_store.py",
+          "start_line": 111
+        },
+        "name": "search_modules"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/lineage/dbt_airflow/minimal_dag.py",
+          "start_line": 1
+        },
+        "raw": "from airflow import DAG"
+      },
+      {
+        "evidence": {
+          "end_line": 2,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/lineage/dbt_airflow/minimal_dag.py",
+          "start_line": 2
+        },
+        "raw": "from airflow.operators.python import PythonOperator"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/lineage/dbt_airflow/minimal_dag.py",
+          "start_line": 3
+        },
+        "raw": "from datetime import datetime"
+      }
+    ],
+    "is_dead_code_candidate": null,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/lineage/dbt_airflow/minimal_dag.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [],
+    "is_dead_code_candidate": null,
+    "language": "yaml",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/lineage/dbt_airflow/schema.yml",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/lineage/python/dynamic_ref.py",
+          "start_line": 1
+        },
+        "raw": "import pandas"
+      }
+    ],
+    "is_dead_code_candidate": null,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/lineage/python/dynamic_ref.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/lineage/python/read_csv_literal.py",
+          "start_line": 1
+        },
+        "raw": "import pandas"
+      }
+    ],
+    "is_dead_code_candidate": null,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/lineage/python/read_csv_literal.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/lineage/python/read_sql_variable.py",
+          "start_line": 1
+        },
+        "raw": "import pandas"
+      }
+    ],
+    "is_dead_code_candidate": null,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/lineage/python/read_sql_variable.py",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [],
+    "is_dead_code_candidate": null,
+    "language": "sql",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/lineage/sql/cte_and_join.sql",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [],
+    "is_dead_code_candidate": null,
+    "language": "sql",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/lineage/sql/insert_select.sql",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [],
+    "is_dead_code_candidate": null,
+    "language": "sql",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/lineage/sql/simple_select.sql",
+    "public_functions": [],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [
+      {
+        "bases": [],
+        "evidence": {
+          "end_line": 17,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/sample_module.py",
+          "start_line": 16
+        },
+        "name": "Base"
+      },
+      {
+        "bases": [
+          "Base"
+        ],
+        "evidence": {
+          "end_line": 22,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/sample_module.py",
+          "start_line": 20
+        },
+        "name": "Child"
+      }
+    ],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/sample_module.py",
+          "start_line": 1
+        },
+        "raw": "import os"
+      },
+      {
+        "evidence": {
+          "end_line": 2,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/sample_module.py",
+          "start_line": 2
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 4,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/sample_module.py",
+          "start_line": 4
+        },
+        "raw": "from  import sibling"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/sample_module.py",
+          "start_line": 5
+        },
+        "raw": "from parent import thing"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/sample_module.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 13,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/fixtures/sample_module.py",
+          "start_line": 12
+        },
+        "name": "public_fn"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_analyze_module.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_analyze_module.py",
+          "start_line": 3
+        },
+        "raw": "from pathlib import Path"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_analyze_module.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 32,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_analyze_module.py",
+          "start_line": 6
+        },
+        "name": "test_analyze_module_extracts_imports_functions_classes"
+      },
+      {
+        "evidence": {
+          "end_line": 47,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_analyze_module.py",
+          "start_line": 35
+        },
+        "name": "test_analyze_module_sets_language_from_extension"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_dag_config.py",
+          "start_line": 3
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_dag_config.py",
+          "start_line": 5
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 7,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_dag_config.py",
+          "start_line": 7
+        },
+        "raw": "import pytest"
+      },
+      {
+        "evidence": {
+          "end_line": 9,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_dag_config.py",
+          "start_line": 9
+        },
+        "raw": "from src.analyzers.dag_config_parser import analyze_dag_config"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_dag_config.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 24,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_dag_config.py",
+          "start_line": 14
+        },
+        "name": "test_analyze_minimal_dag_returns_task_nodes_and_edges"
+      },
+      {
+        "evidence": {
+          "end_line": 36,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_dag_config.py",
+          "start_line": 27
+        },
+        "name": "test_analyze_schema_yml_returns_models_and_sources"
+      },
+      {
+        "evidence": {
+          "end_line": 49,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_dag_config.py",
+          "start_line": 39
+        },
+        "name": "test_analyze_invalid_yaml_skipped_no_crash"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_data_lineage_graph.py",
+          "start_line": 3
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_data_lineage_graph.py",
+          "start_line": 5
+        },
+        "raw": "import json"
+      },
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_data_lineage_graph.py",
+          "start_line": 6
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 8,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_data_lineage_graph.py",
+          "start_line": 8
+        },
+        "raw": "import pytest"
+      },
+      {
+        "evidence": {
+          "end_line": 10,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_data_lineage_graph.py",
+          "start_line": 10
+        },
+        "raw": "from src.graph.lineage_graph import DataLineageGraph"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_data_lineage_graph.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 26,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_data_lineage_graph.py",
+          "start_line": 13
+        },
+        "name": "test_merge_adds_all_nodes_and_edges"
+      },
+      {
+        "evidence": {
+          "end_line": 36,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_data_lineage_graph.py",
+          "start_line": 29
+        },
+        "name": "test_find_sources_returns_in_degree_zero"
+      },
+      {
+        "evidence": {
+          "end_line": 46,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_data_lineage_graph.py",
+          "start_line": 39
+        },
+        "name": "test_find_sinks_returns_out_degree_zero"
+      },
+      {
+        "evidence": {
+          "end_line": 56,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_data_lineage_graph.py",
+          "start_line": 49
+        },
+        "name": "test_blast_radius_returns_downstream_dependents"
+      },
+      {
+        "evidence": {
+          "end_line": 69,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_data_lineage_graph.py",
+          "start_line": 59
+        },
+        "name": "test_blast_radius_with_cycle_terminates"
+      },
+      {
+        "evidence": {
+          "end_line": 77,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_data_lineage_graph.py",
+          "start_line": 72
+        },
+        "name": "test_blast_radius_no_outgoing_returns_empty_or_self"
+      },
+      {
+        "evidence": {
+          "end_line": 90,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_data_lineage_graph.py",
+          "start_line": 80
+        },
+        "name": "test_read_json_roundtrip"
+      },
+      {
+        "evidence": {
+          "end_line": 104,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_data_lineage_graph.py",
+          "start_line": 93
+        },
+        "name": "test_write_json_deterministic_and_valid"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_file_discovery.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_file_discovery.py",
+          "start_line": 3
+        },
+        "raw": "from pathlib import Path"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_file_discovery.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 23,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_file_discovery.py",
+          "start_line": 6
+        },
+        "name": "test_file_discovery_respects_ignore_rules"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_git_velocity.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_git_velocity.py",
+          "start_line": 3
+        },
+        "raw": "from pathlib import Path"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_git_velocity.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 11,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_git_velocity.py",
+          "start_line": 6
+        },
+        "name": "test_extract_git_velocity_returns_empty_when_not_a_git_repo"
+      },
+      {
+        "evidence": {
+          "end_line": 29,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_git_velocity.py",
+          "start_line": 14
+        },
+        "name": "test_extract_git_velocity_parses_numstat"
+      },
+      {
+        "evidence": {
+          "end_line": 43,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_git_velocity.py",
+          "start_line": 32
+        },
+        "name": "test_high_velocity_core_80_20"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_grammar_loading.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_grammar_loading.py",
+          "start_line": 3
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_grammar_loading.py",
+          "start_line": 5
+        },
+        "raw": "import pytest"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_grammar_loading.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 16,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_grammar_loading.py",
+          "start_line": 8
+        },
+        "name": "test_startup_grammar_validation_lists_missing"
+      },
+      {
+        "evidence": {
+          "end_line": 32,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_grammar_loading.py",
+          "start_line": 19
+        },
+        "name": "test_missing_grammar_gracefully_skips_file"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_graph_analytics.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_graph_analytics.py",
+          "start_line": 3
+        },
+        "raw": "import networkx"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_graph_analytics.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 25,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_graph_analytics.py",
+          "start_line": 6
+        },
+        "name": "test_pagerank_stable_ordering_and_scc_detection"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_hydrologist.py",
+          "start_line": 3
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_hydrologist.py",
+          "start_line": 5
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 7,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_hydrologist.py",
+          "start_line": 7
+        },
+        "raw": "import pytest"
+      },
+      {
+        "evidence": {
+          "end_line": 9,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_hydrologist.py",
+          "start_line": 9
+        },
+        "raw": "from src.agents.hydrologist import run_hydrologist"
+      },
+      {
+        "evidence": {
+          "end_line": 10,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_hydrologist.py",
+          "start_line": 10
+        },
+        "raw": "from src.graph.lineage_graph import DataLineageGraph"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_hydrologist.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 18,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_hydrologist.py",
+          "start_line": 13
+        },
+        "name": "test_run_hydrologist_uses_discovery_and_returns_graph"
+      },
+      {
+        "evidence": {
+          "end_line": 29,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_hydrologist.py",
+          "start_line": 21
+        },
+        "name": "test_run_hydrologist_skips_invalid_python_and_completes"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_ignore_rules.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_ignore_rules.py",
+          "start_line": 3
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_ignore_rules.py",
+          "start_line": 5
+        },
+        "raw": "import pytest"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_ignore_rules.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 29,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_ignore_rules.py",
+          "start_line": 25
+        },
+        "name": "test_default_ignore_and_sensitive_rules"
+      },
+      {
+        "evidence": {
+          "end_line": 40,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_ignore_rules.py",
+          "start_line": 32
+        },
+        "name": "test_unignore_overrides_exclude"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_language_router.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_language_router.py",
+          "start_line": 3
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_language_router.py",
+          "start_line": 5
+        },
+        "raw": "import pytest"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_language_router.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 31,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_language_router.py",
+          "start_line": 22
+        },
+        "name": "test_language_router_routes_by_extension"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_module_graph.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_module_graph.py",
+          "start_line": 3
+        },
+        "raw": "import json"
+      },
+      {
+        "evidence": {
+          "end_line": 4,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_module_graph.py",
+          "start_line": 4
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_module_graph.py",
+          "start_line": 6
+        },
+        "raw": "import networkx"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_module_graph.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 36,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_module_graph.py",
+          "start_line": 9
+        },
+        "name": "test_build_module_graph_edges"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 1,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_parse_cache.py",
+          "start_line": 1
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_parse_cache.py",
+          "start_line": 3
+        },
+        "raw": "from pathlib import Path"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_parse_cache.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 14,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_parse_cache.py",
+          "start_line": 6
+        },
+        "name": "test_parse_cache_hits_by_path_and_hash"
+      },
+      {
+        "evidence": {
+          "end_line": 28,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_parse_cache.py",
+          "start_line": 17
+        },
+        "name": "test_parse_cache_eviction_lru"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_python_data_flow.py",
+          "start_line": 3
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_python_data_flow.py",
+          "start_line": 5
+        },
+        "raw": "import logging"
+      },
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_python_data_flow.py",
+          "start_line": 6
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 8,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_python_data_flow.py",
+          "start_line": 8
+        },
+        "raw": "import pytest"
+      },
+      {
+        "evidence": {
+          "end_line": 10,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_python_data_flow.py",
+          "start_line": 10
+        },
+        "raw": "from src.analyzers.python_data_flow import analyze_python_data_flow"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_python_data_flow.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 21,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_python_data_flow.py",
+          "start_line": 15
+        },
+        "name": "test_analyze_read_csv_literal_returns_dataset"
+      },
+      {
+        "evidence": {
+          "end_line": 32,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_python_data_flow.py",
+          "start_line": 24
+        },
+        "name": "test_analyze_dynamic_ref_logs_and_no_edge"
+      },
+      {
+        "evidence": {
+          "end_line": 42,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_python_data_flow.py",
+          "start_line": 35
+        },
+        "name": "test_analyze_invalid_python_skipped_no_crash"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_repo_resolver.py",
+          "start_line": 3
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_repo_resolver.py",
+          "start_line": 5
+        },
+        "raw": "import tempfile"
+      },
+      {
+        "evidence": {
+          "end_line": 6,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_repo_resolver.py",
+          "start_line": 6
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 8,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_repo_resolver.py",
+          "start_line": 8
+        },
+        "raw": "import pytest"
+      },
+      {
+        "evidence": {
+          "end_line": 10,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_repo_resolver.py",
+          "start_line": 10
+        },
+        "raw": "from src.repo_resolver import is_remote_repo, resolve_repo"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_repo_resolver.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 16,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_repo_resolver.py",
+          "start_line": 13
+        },
+        "name": "test_is_remote_repo_github_https"
+      },
+      {
+        "evidence": {
+          "end_line": 21,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_repo_resolver.py",
+          "start_line": 19
+        },
+        "name": "test_is_remote_repo_github_ssh"
+      },
+      {
+        "evidence": {
+          "end_line": 26,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_repo_resolver.py",
+          "start_line": 24
+        },
+        "name": "test_is_remote_repo_generic_git"
+      },
+      {
+        "evidence": {
+          "end_line": 33,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_repo_resolver.py",
+          "start_line": 29
+        },
+        "name": "test_is_remote_repo_local_paths"
+      },
+      {
+        "evidence": {
+          "end_line": 43,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_repo_resolver.py",
+          "start_line": 36
+        },
+        "name": "test_resolve_repo_local_path"
+      },
+      {
+        "evidence": {
+          "end_line": 49,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_repo_resolver.py",
+          "start_line": 46
+        },
+        "name": "test_resolve_repo_local_path_cwd"
+      },
+      {
+        "evidence": {
+          "end_line": 56,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_repo_resolver.py",
+          "start_line": 52
+        },
+        "name": "test_resolve_repo_empty_raises"
+      },
+      {
+        "evidence": {
+          "end_line": 61,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_repo_resolver.py",
+          "start_line": 59
+        },
+        "name": "test_resolve_repo_nonexistent_local_raises"
+      }
+    ],
+    "purpose_statement": null
+  },
+  {
+    "change_velocity_30d": null,
+    "classes": [],
+    "complexity_score": null,
+    "domain_cluster": null,
+    "imports": [
+      {
+        "evidence": {
+          "end_line": 3,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_sql_lineage.py",
+          "start_line": 3
+        },
+        "raw": "from __future__ import annotations"
+      },
+      {
+        "evidence": {
+          "end_line": 5,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_sql_lineage.py",
+          "start_line": 5
+        },
+        "raw": "from pathlib import Path"
+      },
+      {
+        "evidence": {
+          "end_line": 7,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_sql_lineage.py",
+          "start_line": 7
+        },
+        "raw": "import pytest"
+      },
+      {
+        "evidence": {
+          "end_line": 9,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_sql_lineage.py",
+          "start_line": 9
+        },
+        "raw": "from src.analyzers.sql_lineage import analyze_sql_lineage"
+      }
+    ],
+    "is_dead_code_candidate": true,
+    "language": "python",
+    "last_modified": null,
+    "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_sql_lineage.py",
+    "public_functions": [
+      {
+        "evidence": {
+          "end_line": 19,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_sql_lineage.py",
+          "start_line": 14
+        },
+        "name": "test_analyze_simple_select_returns_from_table"
+      },
+      {
+        "evidence": {
+          "end_line": 29,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_sql_lineage.py",
+          "start_line": 22
+        },
+        "name": "test_analyze_cte_and_join_returns_all_tables"
+      },
+      {
+        "evidence": {
+          "end_line": 39,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_sql_lineage.py",
+          "start_line": 32
+        },
+        "name": "test_analyze_insert_select_returns_input_output_tables"
+      },
+      {
+        "evidence": {
+          "end_line": 47,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_sql_lineage.py",
+          "start_line": 42
+        },
+        "name": "test_analyze_bigquery_dialect"
+      },
+      {
+        "evidence": {
+          "end_line": 60,
+          "method": "static",
+          "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/tests/unit/test_sql_lineage.py",
+          "start_line": 50
+        },
+        "name": "test_analyze_invalid_sql_skipped_no_crash"
+      }
+    ],
     "purpose_statement": null
   }
 ]
