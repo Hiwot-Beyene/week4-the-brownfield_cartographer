@@ -8,6 +8,7 @@ and produces a living, queryable knowledge graph".
 from __future__ import annotations
 
 import re
+import shutil
 import subprocess
 from pathlib import Path
 from typing import Optional
@@ -57,7 +58,9 @@ def clone_or_update_remote(
 ) -> Path:
     """
     Clone the remote URL into dest, or pull if dest already exists and is a git repo.
+    If dest exists but is not a git repo (e.g. empty or failed clone), remove it and clone fresh.
     Returns dest (path to repo root).
+    Raises ValueError with git stderr message if clone fails.
     """
     dest = Path(dest).resolve()
     if dest.exists() and (dest / ".git").is_dir():
@@ -72,14 +75,23 @@ def clone_or_update_remote(
         except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
             pass  # use existing clone
         return dest
-    dest.mkdir(parents=True, exist_ok=True)
+    # Dest exists but is not a git repo: remove so clone can create it (git requires non-existing or empty)
+    if dest.exists():
+        try:
+            shutil.rmtree(dest)
+        except OSError as e:
+            raise ValueError(f"Cannot clear existing clone path {dest}: {e}") from e
+    dest.parent.mkdir(parents=True, exist_ok=True)
     args = ["git", "clone"]
     if depth is not None:
         args.extend(["--depth", str(depth)])
     if branch:
         args.extend(["--branch", branch])
     args.extend([url.strip(), str(dest)])
-    subprocess.run(args, capture_output=True, text=True, timeout=300, check=True)
+    result = subprocess.run(args, capture_output=True, text=True, timeout=300)
+    if result.returncode != 0:
+        err = (result.stderr or result.stdout or "").strip() or f"exit code {result.returncode}"
+        raise ValueError(f"git clone failed: {err}")
     return dest
 
 

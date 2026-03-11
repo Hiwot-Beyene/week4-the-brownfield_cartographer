@@ -34,16 +34,16 @@
     "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_deployments/local/dagster.yaml"
   ],
   "high_velocity": [
-    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/cli.py",
-    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/__init__.py",
-    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/__init__.py",
-    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/hydrologist.py",
-    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/agents/surveyor.py",
-    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/__init__.py",
-    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/dag_config_parser.py",
-    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/file_discovery.py",
-    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/ignore_rules.py",
-    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/src/analyzers/logging.py"
+    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/.gemini/config.yaml",
+    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/.github/workflows/project_automation.yaml",
+    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/.github/workflows/publish_dbt_docs.yaml",
+    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/.pre-commit-config.yaml",
+    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/bin/dbt-create-staging-models.py",
+    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/bin/dbt-local-dev.py",
+    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/bin/utils/chunk_tracking_logs_by_day.py",
+    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/bin/uv-operations.py",
+    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/build.yaml",
+    "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_deployments/local/dagster.yaml"
   ],
   "in_strongly_connected_components": [],
   "risky": [
