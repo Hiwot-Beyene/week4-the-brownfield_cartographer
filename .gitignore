@@ -14,10 +14,7 @@ __pycache__/
 dist/
 build/
 
-# Generated surveyor output (re-run surveyor to regenerate)
-.cartography/
-# Large reference/sample file at repo root (if present)
-/module_graph.json
+*.bin
 
 # IDE / OS
 .idea/

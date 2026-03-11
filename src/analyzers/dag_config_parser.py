@@ -32,6 +32,7 @@ def _analyze_airflow_dag(path: Path) -> tuple[list[Any], list[Any]]:
     var_to_task_id: dict[str, str] = {}  # variable name -> full task id
 
     dag_id = f"dag:{path_str}"
+    # First pass: DAG node and task nodes (Assign with Operator)
     for node in ast.walk(tree):
         if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
             if node.func.id == "DAG":
@@ -41,21 +42,21 @@ def _analyze_airflow_dag(path: Path) -> tuple[list[Any], list[Any]]:
             for t in node.targets:
                 if isinstance(t, ast.Name) and isinstance(node.value, ast.Call):
                     call = node.value
-                    if isinstance(call.func, ast.Attribute):
-                        if "Operator" in call.func.attr:
-                            task_id = None
-                            for kw in call.keywords:
-                                if kw.arg == "task_id" and isinstance(kw.value, ast.Constant):
-                                    task_id = kw.value.value
-                                    break
-                            if task_id:
-                                tid = f"task:{path_str}:{task_id}"
-                                var_to_task_id[t.id] = tid
-                                nodes.append({"id": tid, "type": "transformation", "task_id": task_id})
-        # a >> b
+                    attr_or_id = (call.func.attr if isinstance(call.func, ast.Attribute) else getattr(call.func, "id", "")) or ""
+                    if "Operator" in attr_or_id:
+                        task_id = None
+                        for kw in call.keywords:
+                            if kw.arg == "task_id" and isinstance(kw.value, ast.Constant):
+                                task_id = kw.value.value
+                                break
+                        if task_id:
+                            tid = f"task:{path_str}:{task_id}"
+                            var_to_task_id[t.id] = tid
+                            nodes.append({"id": tid, "type": "transformation", "task_id": task_id})
+    # Second pass: >> / set_downstream edges (need var_to_task_id populated)
+    for node in ast.walk(tree):
         if isinstance(node, ast.BinOp) and isinstance(node.op, ast.BitOr):
-            left = node.left
-            right = node.right
+            left, right = node.left, node.right
             if isinstance(left, ast.Name) and isinstance(right, ast.Name):
                 lid = var_to_task_id.get(left.id)
                 rid = var_to_task_id.get(right.id)

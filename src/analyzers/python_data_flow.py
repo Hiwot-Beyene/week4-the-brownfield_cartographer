@@ -106,5 +106,13 @@ def analyze_python_data_flow(path: Path) -> tuple[list[Any], list[Any]]:
         nodes.append(DatasetNode(name=name_or_path, storage_type=storage_type))
         trans_id = f"transformation:{path_str}:{line}"
         nodes.append({"id": trans_id, "type": "transformation"})
-        edges.append({"source": trans_id, "target": name_or_path})
+        edges.append({
+            "source": trans_id,
+            "target": name_or_path,
+            "edge_type": "PRODUCES",
+            "is_write": True,
+            "transformation_type": "python_data_flow",
+            "source_file": path_str,
+            "line_range": (line, line),
+        })
     return nodes, edges

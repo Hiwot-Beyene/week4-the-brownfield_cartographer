@@ -104,6 +104,33 @@ class ConsumesEdge(BaseModel):
     dataset: str
 
 
+class LineageEdgeSchema(BaseModel):
+    """
+    Serializable lineage edge with optional metadata for round-trip and query helpers.
+    Used by the graph service for add_edge and JSON persist/load.
+    """
+
+    source: str
+    target: str
+    edge_type: Literal["CONSUMES", "PRODUCES"]
+    transformation_type: Optional[str] = None
+    source_file: Optional[str] = None
+    line_range: Optional[tuple[int, int]] = None
+    is_write: Optional[bool] = None  # True for PRODUCES, False for CONSUMES when present
+
+
+class LineageNodeSchema(BaseModel):
+    """
+    Serializable lineage node for round-trip. id is the graph node id; type discriminates dataset vs transformation.
+    """
+
+    id: str
+    type: Literal["dataset", "transformation"]
+    name: Optional[str] = None  # for dataset
+    storage_type: Optional[str] = None  # for dataset
+    extra: Optional[dict] = None
+
+
 class CallsEdge(BaseModel):
     """
     CALLS edge: function -> function.
