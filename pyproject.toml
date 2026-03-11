@@ -7,6 +7,8 @@ dependencies = [
   "networkx==3.5",
   "tree-sitter",
   "pytest==8.4.2",
+  "sqlglot",
+  "pyyaml",
 ]
 
 [tool.pytest.ini_options]

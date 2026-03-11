@@ -11,3 +11,6 @@ chromadb
 sentence-transformers
 # Load CARTOGRAPHER_DATA_DIR from .env (optional)
 python-dotenv
+# Phase 2 Hydrologist: SQL lineage, DAG config
+sqlglot
+pyyaml
