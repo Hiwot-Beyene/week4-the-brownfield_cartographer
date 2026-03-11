@@ -1,0 +1,13 @@
+# Dependencies for brownfield-cartographer (Phase 1).
+# Install: pip install -r requirements.txt (uses latest available).
+pydantic
+networkx
+numpy
+scipy
+tree-sitter
+pytest
+# Central store: SQLite (stdlib), Chroma + embeddings for vector search
+chromadb
+sentence-transformers
+# Load CARTOGRAPHER_DATA_DIR from .env (optional)
+python-dotenv

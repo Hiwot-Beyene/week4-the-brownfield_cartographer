@@ -1,0 +1,31 @@
+# Environment and secrets (do not commit)
+.env
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# DB, vector store, and cloned remote repos; JSON artifacts stay and are overwritten by latest analysis
+.cartography/cartographer.db
+.cartography/chroma/
+.cartography/cloned/
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/

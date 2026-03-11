@@ -1,0 +1,5 @@
+pydantic==2.12.4
+networkx==3.5
+tree-sitter
+pytest==8.4.2
+
