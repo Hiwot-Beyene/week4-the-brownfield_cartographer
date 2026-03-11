@@ -137,8 +137,10 @@ get_highest_from_branches() {
 check_existing_branches() {
     local specs_dir="$1"
 
-    # Fetch all remotes to get latest branch info (suppress errors if no remotes)
-    git fetch --all --prune 2>/dev/null || true
+    # Fetch all remotes to get latest branch info (suppress errors if no remotes).
+    # IMPORTANT: Suppress both stdout and stderr so command substitution callers
+    # only capture the numeric return value from this function.
+    git fetch --all --prune >/dev/null 2>&1 || true
 
     # Get highest number from ALL branches (not just matching short name)
     local highest_branch=$(get_highest_from_branches)

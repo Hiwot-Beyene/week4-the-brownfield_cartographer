@@ -1,0 +1,31 @@
+# Environment and secrets (do not commit)
+.env
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Generated surveyor output (re-run surveyor to regenerate)
+.cartography/
+# Large reference/sample file at repo root (if present)
+/module_graph.json
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
