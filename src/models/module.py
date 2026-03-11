@@ -72,3 +72,7 @@ class ModuleNode(BaseModel):
     public_functions: list[FunctionRef] = Field(default_factory=list)
     classes: list[ClassRef] = Field(default_factory=list)
 
+    # Multi-language structural extraction (tree-sitter / sqlglot).
+    tables_referenced: list[str] = Field(default_factory=list)  # SQL: table/list names
+    structural_keys: list[str] = Field(default_factory=list)  # YAML: top-level keys
+

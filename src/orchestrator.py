@@ -19,6 +19,7 @@ _CARTOGRAPHY_JSON_ARTIFACTS = (
     "module_graph.json",
     "survey_summary.json",
     "lineage_graph.json",
+    "sql_lineage_summary.json",
 )
 
 
