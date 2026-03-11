@@ -10,7 +10,7 @@
 ### Session 2026-03-10
 
 - Q: Production-grade LanguageRouter + grammar handling? → A: Use a single authoritative extension→(language, grammar, queries) mapping that is easy to extend; validate required grammars at startup and clearly report missing grammars; if a grammar is missing/unavailable at runtime, log and skip that file type without crashing; prefer pip/uv-installed grammar packages and pin/lock them for reproducible installs.
-- **Implementation note (Phase 1)**: Python extraction is implemented via the stdlib `ast` module; the LanguageRouter maps `.py`, `.sql`, `.yml`/`.yaml`, `.js`, `.ts`/`.tsx` for future tree-sitter grammars. Full tree-sitter grammar installation and extraction for SQL/YAML/JS/TS can be added in a follow-up; non-Python files currently receive a minimal ModuleNode with `language="unknown"`. Git velocity: `extract_git_velocity(repo_root, days=90)` runs `git log --numstat` and writes `.cartography/git_velocity.json`; default 90 days aligns with the challenge question *"What has changed most frequently in the last 90 days?"*.
+- **Implementation note (Phase 1)**: Python extraction is implemented via the stdlib `ast` module; the LanguageRouter maps `.py`, `.sql`, `.yml`/`.yaml`, `.js`, `.ts`/`.tsx`. Non-Python files receive a minimal ModuleNode with the **correct language label** (e.g. `language="sql"`, `language="yaml"`) from the router; full structural extraction (imports, functions, classes) is Python-only. Git velocity: `extract_git_velocity(repo_root, days=90)` runs `git log --numstat` and writes `.cartography/git_velocity.json`; default 90 days aligns with the challenge question *"What has changed most frequently in the last 90 days?"*.
 - **Local and remote repositories**: The system ingests any GitHub repository (or local path) per the challenge mission. The CLI `analyze` command accepts either a local directory path or a Git URL (e.g. `https://github.com/owner/repo`). Remote URLs are cloned (or updated) into a configurable clone directory (under the data dir by default); analysis then runs on the resolved local path. Options: `--branch` for remote ref, `--depth N` for shallow clone (default 1; use `--depth 0` for full history).
 
 ## User Scenarios & Testing *(mandatory)*
@@ -118,10 +118,13 @@ As an FDE, I want the Surveyor to compute change velocity from version control h
 - **ModuleNode**: A structured representation of a source file/module, including identity, extracted symbols, and import relationships.
 - **Module Import Graph**: A directed graph representing module-to-module import relationships, with derived analytics (PageRank, SCCs).
 - **Git Velocity Summary / Git velocity map**: Per-file change frequencies over a configurable time window (default 90 days) plus an identified high-velocity core; persisted as `.cartography/git_velocity.json` with `days`, `per_file`, and `high_velocity_core`.
-- **Central store (production)**: To avoid overwriting when analyzing multiple repositories or re-running the same repo, each run is persisted to a central store:
-  - **SQLite** (`cartographer.db`): versioned analyses keyed by `repo_id` and `run_at`; tables `analyses`, `modules`, `import_edges` for querying across runs/repos.
-  - **Vector store (Chroma)**: embeddings of module documents (path + function/class names, and later purpose text) for semantic search. Optional; degrades gracefully if Chroma/sentence-transformers are unavailable.
-  - Data directory defaults to `~/.brownfield-cartographer` (override with `CARTOGRAPHER_DATA_DIR`). Local `.cartography/` artifacts in each repo are still written; the central store holds a copy per run so history is retained.
+- **Central store (production)**: Each run is persisted so multiple repos/runs do not overwrite each other:
+  - **SQLite** (`cartographer.db`): versioned analyses keyed by `repo_id` and `run_at`; tables `analyses`, `modules`, `import_edges` only (Phase 1). Schema includes full ModuleNode fields (path, language, pagerank, purpose_statement, domain_cluster, complexity_score, change_velocity_30d, is_dead_code_candidate, last_modified). NaN/Inf pagerank values are stored as NULL. Existing DBs are migrated via `_migrate_modules_columns` to add new columns if missing.
+  - **Vector store (Chroma)**: embeddings of module documents (path, language, function/class names, purpose_statement, domain_cluster, last_modified) for semantic search. Collection name `modules`; embedding model `all-MiniLM-L6-v2`. Optional; degrades gracefully if Chroma/sentence-transformers are unavailable (log + stderr warning, run continues).
+  - **Data directory**: Resolved by `get_data_dir(repo_root)`. If `CARTOGRAPHER_DATA_DIR` is set (env or `.env` from repo root or cwd), that path is used. Else if `repo_root` is provided (e.g. when running the surveyor), `repo_root/.cartography` is used (project storage). Else `~/.brownfield-cartographer`. When analyzing a **remote** repo, the orchestrator passes `project_data_dir=Path.cwd()` so SQLite and Chroma are always written to the **invoking project’s** `.cartography/`, not the clone’s.
+  - **JSON artifacts**: Four files are **always overwritten** at the end of each run (via `_write_all_json_artifacts`): `file_hashes.json`, `modules.json`, `module_graph.json`, `git_velocity.json`. When the analyzed path is a remote clone, these are also copied into `cwd/.cartography/` so the project always has the latest artifacts.
+  - **Deduplication**: Files are deduplicated by resolved absolute path before analysis; modules are deduplicated by resolved path so the modules table and JSON outputs contain no duplicate module rows.
+  - **Persistence errors**: SQLite and vector-store writes are in separate try/except blocks; failure of one is logged with full traceback and a warning printed to stderr, but the run completes and JSON artifacts are still written.
 
 ## Success Criteria *(mandatory)*
 
@@ -139,3 +142,41 @@ As an FDE, I want the Surveyor to compute change velocity from version control h
   3) `extract_git_velocity(repo_root, days)` parses git output robustly, returns {} when not a git repo (graceful degradation), and returns deterministic results using a fixture or mocked git output
   4) Module import graph build produces expected edges; PageRank ordering is stable on a small known graph; SCC detects cycles
   5) Ignore & safety: default ignore patterns work; sensitive files (e.g., `.env`, `.env.*`) are skipped by default and never read/parsed
+
+---
+
+## Implementation summary (for future developers)
+
+This section documents how Phase 1 is **actually implemented** so future developers are not confused by the codebase.
+
+### Entry points and flow
+
+- **CLI**: `python -m src.cli analyze <repo>` where `repo` is a local path or Git URL (e.g. `https://github.com/owner/repo`). Options: `--branch`, `--depth` (default 1; 0 = full history).
+- **Orchestrator**: `src/orchestrator.analyze(repo_input, branch, clone_depth)` calls `repo_resolver.resolve_repo()` to get a local path (cloning if remote), then `run_surveyor(repo_path, project_data_dir=Path.cwd())`, then copies the four JSON artifacts from the analyzed repo’s `.cartography/` into `cwd/.cartography/`.
+- **Surveyor**: `src/agents/surveyor.run_surveyor(repo_root, project_data_dir=None)` does: file discovery (ignore/safety) → content-hash-based incremental analysis with `analyze_module(path, router)` → build NetworkX graph, PageRank, SCCs → persist to SQLite and Chroma (using `store_root = project_data_dir or repo_root`) → call `_write_all_json_artifacts()` to overwrite all four JSON files in `repo_root/.cartography/`.
+
+### Language routing
+
+- **Router**: `src/analyzers/tree_sitter_analyzer.LanguageRouter.default()` maps extensions `.py`, `.sql`, `.yml`, `.yaml`, `.js`, `.ts`, `.tsx` to language ids (e.g. `python`, `sql`, `yaml`, `javascript`, `typescript`). Unknown extensions are not routed (caller may treat as `"unknown"`).
+- **analyze_module(path, router=None)**: Uses `router.route(path)` to set `ModuleNode.language`. Only Python (`.py`) gets full AST extraction (imports, public_functions, classes); other supported extensions get a minimal ModuleNode with correct `language` and empty structural lists. So **no file is labeled "unknown"** if its extension is in the router.
+
+### Local vs remote repository
+
+- **Resolver**: `src/repo_resolver.resolve_repo(repo_input, clone_root=None, branch=None, depth=1)`. Local paths must exist and be directories; remote URLs (GitHub HTTPS/SSH or generic `git@`/`https://`) are cloned via `clone_or_update_remote()` into `clone_root` (default `get_data_dir(Path.cwd())/"cloned"`), with slug from URL (e.g. `owner_repo`). Clone directory is under the **project’s** data dir so clones live in `.cartography/cloned/` when using project storage.
+- **Storage location**: For both local and remote analysis, the orchestrator passes `project_data_dir=Path.cwd()`, so `get_data_dir(store_root)` with `store_root=cwd` yields `cwd/.cartography` (unless `CARTOGRAPHER_DATA_DIR` is set). Thus SQLite and Chroma always live in the **project** that ran the command; JSON artifacts are written in the analyzed repo’s `.cartography/` and then copied to `cwd/.cartography/` so the project always has the latest outputs.
+
+### Database integration
+
+- **SQLite**: `src/store/sqlite_store`. `get_data_dir(repo_root)` loads `.env` from repo root or cwd and returns `CARTOGRAPHER_DATA_DIR` if set, else `repo_root/.cartography` if repo_root given, else `~/.brownfield-cartographer`. `init_db(db_path)` creates tables `analyses`, `modules`, `import_edges` and runs `_migrate_modules_columns`. `insert_analysis(repo_root, artifacts_dir, modules, pagerank_by_path, edges, db_path)` inserts one run; pagerank is stored with non-finite values converted to NULL via `_safe_float`.
+- **Chroma**: `src/store/vector_store`. Persist dir is `get_data_dir(repo_root)/"chroma"`. `init_vector_store(persist_dir, repo_root)` creates a persistent client and `modules` collection with `SentenceTransformerEmbeddingFunction("all-MiniLM-L6-v2")`. `add_modules_to_vector_store(analysis_id, repo_id, modules, persist_dir)` adds module documents; IDs include analysis_id for multiple runs. If Chroma or sentence-transformers are missing, the surveyor catches exceptions, logs, and prints a stderr warning without failing the run.
+
+### Artifacts and schema
+
+- **JSON files** (all in `.cartography/`, overwritten each run): `file_hashes.json` (path → SHA256), `modules.json` (list of ModuleNode dicts), `module_graph.json` (Knowledge Graph shape: `nodes` with `type: "module"` and schema fields, `edges` with `type: "IMPORTS"`, `source`, `target`, `weight`), `git_velocity.json` (`days`, `per_file`, `high_velocity_core`).
+- **module_graph.json** is produced by `build_knowledge_graph_payload()` when full module/graph/velocity data is available; otherwise `write_module_graph_json()` can write a graph-only fallback (nodes from graph, edges with weight 1).
+- **Pydantic models**: `src/models/module` (ModuleNode, Evidence, ImportRef, FunctionRef, ClassRef); `src/models/knowledge_graph` (DatasetNode, FunctionNode, TransformationNode, edge types including ImportEdge; Phase 1 only populates module nodes and IMPORTS edges).
+
+### Ignore and safety
+
+- **IgnoreRules.default()** in `src/analyzers/ignore_rules` includes sensitive file/dir patterns (e.g. `.env`, `*.pem`, `id_rsa`, `.venv/`). File discovery uses these so such paths are never read or parsed; when a file is skipped for safety, the system logs `skipped_sensitive_file` (path + reason) and never prints file contents.
+- **.gitignore**: The repo ignores the entire `.cartography/` directory and `/module_graph.json` at repo root so generated outputs and DBs are not committed; re-run the surveyor to regenerate locally.

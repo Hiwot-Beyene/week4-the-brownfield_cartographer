@@ -33,3 +33,4 @@
 
 - Spec is ready for `/speckit.plan` refinement or implementation via `tasks.md`.
 - Constitution constraints are explicitly included; plan and tasks align with them.
+- **Implementation alignment**: The spec, plan, and tasks have been updated to reflect the current Phase 1 implementation: language routing (correct labels for .py, .sql, .yml, .js, .ts/.tsx), local and remote repository support (repo_resolver, CLI --branch/--depth), database integration (SQLite + Chroma in project `.cartography/`, `CARTOGRAPHER_DATA_DIR`, migration, graceful degradation), JSON artifact overwrite and copy-to-cwd for remote runs, deduplication of files and modules, and Knowledge Graph schema for `module_graph.json`. See spec.md “Implementation summary (for future developers)” and plan.md for file-level and behavioral details.

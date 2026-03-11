@@ -15,6 +15,13 @@ description: "Task list for Phase 1 Surveyor Agent"
 
 **Implementation note**: Phase 1 implements `extract_git_velocity(repo_root, days=90)` and writes `.cartography/git_velocity.json` (git velocity map) on each run, answering the challenge question *"What has changed most frequently in the last 90 days?"*.
 
+### Implemented behavior (for future developers)
+
+- **Language routing**: `LanguageRouter` maps `.py`, `.sql`, `.yml`/`.yaml`, `.js`, `.ts`/`.tsx` to language ids. `analyze_module(path, router)` sets `ModuleNode.language` from the router; only Python gets full AST extraction; other extensions get correct language label and empty structural fields (no "unknown" for supported extensions).
+- **Local and remote repos**: CLI `analyze <repo>` accepts local path or Git URL. `repo_resolver.resolve_repo()` clones remotes into `get_data_dir(cwd)/cloned/<slug>`; options `--branch`, `--depth` (default 1; 0 = full history). Orchestrator passes `project_data_dir=Path.cwd()` so SQLite and Chroma are always written to the **project’s** `.cartography/`; JSON artifacts are written in the analyzed repo’s `.cartography/` then copied to `cwd/.cartography/`.
+- **Database integration**: SQLite (`cartographer.db`) and Chroma (`chroma/`) in `get_data_dir(store_root)` — env `CARTOGRAPHER_DATA_DIR` (from `.env`) overrides; else project `repo_root/.cartography` when repo_root given. Tables: `analyses`, `modules`, `import_edges`. Module columns include full KG schema; `_migrate_modules_columns` for existing DBs. Chroma collection `modules`, embedding `all-MiniLM-L6-v2`. Persistence errors are caught separately (log + stderr), run continues; JSON artifacts always written via `_write_all_json_artifacts()`.
+- **Artifacts**: Four JSON files overwritten each run: `file_hashes.json`, `modules.json`, `module_graph.json` (KG schema: nodes with type + schema fields, edges IMPORTS with weight), `git_velocity.json`. Deduplication by resolved file path (files) and resolved module path (modules). `.gitignore` excludes `.cartography/` and root `module_graph.json` so generated output is not committed.
+
 ## Format: `[ID] [P?] [Story] Description`
 
 - **[P]**: Can run in parallel (different files, no dependencies)
