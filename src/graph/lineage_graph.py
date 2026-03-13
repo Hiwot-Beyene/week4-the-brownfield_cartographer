@@ -28,6 +28,20 @@ logger = logging.getLogger(__name__)
 LINEAGE_SCHEMA_VERSION = 2  # nodes/edges with metadata, round-trip
 
 
+def _drop_none(d: dict[str, Any]) -> dict[str, Any]:
+    """Return a copy of the dict with keys whose value is None removed."""
+    return {k: v for k, v in d.items() if v is not None}
+
+
+def _drop_none_and_empty(d: dict[str, Any]) -> dict[str, Any]:
+    """Remove keys that are None, empty list, or empty dict (so we don't store null or [] or {} in JSON)."""
+    return {
+        k: v
+        for k, v in d.items()
+        if v is not None and not (isinstance(v, list) and len(v) == 0) and not (isinstance(v, dict) and len(v) == 0)
+    }
+
+
 def _node_id_from_model(n: DatasetNode | TransformationNode | LineageNodeSchema) -> str:
     if isinstance(n, DatasetNode):
         return n.name
@@ -219,18 +233,24 @@ class DataLineageGraph:
         except (nx.NetworkXNoPath, nx.NodeNotFound):
             return []
 
+    def get_nodes_and_edges(self) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+        """Return (nodes, edges) as list of dicts for persistence (e.g. SQLite). Same shape as JSON.
+        Omits keys whose value is None so JSON/DB don't store null."""
+        nodes = []
+        for n in sorted(self._g.nodes()):
+            attrs = dict(self._g.nodes[n])
+            nodes.append(_drop_none_and_empty(_drop_none({"id": n, **attrs})))
+        edges = []
+        for u, v in sorted(self._g.edges()):
+            data = dict(self._g.edges[u, v])
+            edges.append(_drop_none_and_empty(_drop_none({"source": u, "target": v, **data})))
+        return (nodes, edges)
+
     def write_json(self, out_path: Path) -> None:
         """Write nodes and edges to JSON (schema_version, deterministic). Includes edge metadata."""
         out_path = Path(out_path)
         out_path.parent.mkdir(parents=True, exist_ok=True)
-        nodes = []
-        for n in sorted(self._g.nodes()):
-            attrs = dict(self._g.nodes[n])
-            nodes.append({"id": n, **attrs})
-        edges = []
-        for u, v in sorted(self._g.edges()):
-            data = dict(self._g.edges[u, v])
-            edges.append({"source": u, "target": v, **data})
+        nodes, edges = self.get_nodes_and_edges()
         payload = {
             "schema_version": LINEAGE_SCHEMA_VERSION,
             "nodes": nodes,

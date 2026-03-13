@@ -53,10 +53,10 @@ def analyze(
     repo_path = resolve_repo(repo_input, branch=branch, depth=clone_depth)
     project_dir = Path(output_dir).resolve() if output_dir else Path.cwd().resolve()
     # 1. Surveyor: module graph, PageRank, git velocity, dead-code candidates
-    out = run_surveyor(repo_path, project_data_dir=project_dir)
+    out, analysis_id = run_surveyor(repo_path, project_data_dir=project_dir)
     _copy_json_artifacts(repo_path, project_dir)
     # 2. Hydrologist: DataLineageGraph, blast_radius, find_sources/find_sinks (unless skipped)
     if not skip_lineage:
-        run_hydrologist(repo_path, project_data_dir=project_dir)
+        run_hydrologist(repo_path, project_data_dir=project_dir, analysis_id=analysis_id)
     return str(out)
 

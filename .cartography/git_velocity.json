@@ -242,7 +242,8 @@
     "packages/ol-orchestrate-lib/src/ol_orchestrate/lib/automation_policies.py",
     "packages/ol-orchestrate-lib/src/ol_orchestrate/lib/constants.py",
     "packages/ol-orchestrate-lib/src/ol_orchestrate/lib/dagster_helpers.py",
-    "packages/ol-orchestrate-lib/src/ol_orchestrate/lib/dagster_types/BUILD"
+    "packages/ol-orchestrate-lib/src/ol_orchestrate/lib/dagster_types/BUILD",
+    "packages/ol-orchestrate-lib/src/ol_orchestrate/lib/dagster_types/__init__.py"
   ],
   "per_file": {
     ".dockerignore": 1,
@@ -1447,10 +1448,12 @@
     "src/ol_superset/ol_superset/commands/lock.py": 1,
     "src/ol_superset/ol_superset/commands/promote.py": 1,
     "src/ol_superset/ol_superset/commands/refresh.py": 1,
+    "src/ol_superset/ol_superset/commands/roles.py": 1,
     "src/ol_superset/ol_superset/commands/sync.py": 1,
     "src/ol_superset/ol_superset/commands/validate.py": 1,
     "src/ol_superset/ol_superset/lib/__init__.py": 1,
     "src/ol_superset/ol_superset/lib/database_mapping.py": 1,
+    "src/ol_superset/ol_superset/lib/role_management.py": 1,
     "src/ol_superset/ol_superset/lib/superset_api.py": 1,
     "src/ol_superset/ol_superset/lib/utils.py": 1,
     "src/ol_superset/policies/ol_rls_policies.json": 1,

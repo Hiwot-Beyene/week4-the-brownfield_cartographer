@@ -130,6 +130,58 @@ def mark_dead_code_candidates(
             m.is_dead_code_candidate = True
         elif m.is_dead_code_candidate is None and in_degree > 0:
             m.is_dead_code_candidate = False
+    # Ensure every module has an explicit boolean (no None) for JSON/DB
+    for m in modules:
+        if m.is_dead_code_candidate is None:
+            m.is_dead_code_candidate = False
+
+
+def _enrich_modules_velocity(
+    modules: list[ModuleNode],
+    velocity_counts: dict[str, int],
+    repo_root: Path,
+) -> None:
+    """Set change_velocity_30d on each module from velocity_counts so JSON/DB are populated (not null)."""
+    path_to_velocity: dict[str, int] = dict(velocity_counts)
+    for k in list(path_to_velocity):
+        try:
+            path_to_velocity[str(Path(k).relative_to(repo_root))] = path_to_velocity[k]
+        except ValueError:
+            pass
+    for m in modules:
+        v = path_to_velocity.get(m.path)
+        if v is None:
+            try:
+                v = path_to_velocity.get(str(Path(m.path).relative_to(repo_root)), 0)
+            except ValueError:
+                v = 0
+        m.change_velocity_30d = float(v)
+
+
+def _enrich_last_modified(
+    modules: list[ModuleNode],
+    last_modified_by_path: dict[str, str],
+    repo_root: Path,
+) -> None:
+    """Set last_modified on each module from git (ISO date string)."""
+    path_to_date: dict[str, str] = dict(last_modified_by_path)
+    for k in list(path_to_date):
+        try:
+            path_to_date[str(Path(k).relative_to(repo_root))] = path_to_date[k]
+        except ValueError:
+            pass
+        try:
+            path_to_date[str(repo_root / k)] = path_to_date[k]
+        except Exception:
+            pass
+    for m in modules:
+        date_str = path_to_date.get(m.path)
+        if date_str is None:
+            try:
+                date_str = path_to_date.get(str(Path(m.path).relative_to(repo_root)))
+            except ValueError:
+                pass
+        m.last_modified = date_str or None
 
 
 def survey_summary(
@@ -171,13 +223,51 @@ def survey_summary(
             in_scc.add(p)
     risky = [m.path for m in modules if m.is_dead_code_candidate or m.path in in_scc]
 
-    return {
-        "high_impact": [m.path for m in by_pagerank[:top_n]],
-        "high_velocity": [m.path for m in by_velocity[:top_n]],
+    high_impact_paths = [m.path for m in by_pagerank[:top_n]]
+    high_velocity_paths = [m.path for m in by_velocity[:top_n]]
+    out = {
+        "high_impact": high_impact_paths,
+        "high_velocity": high_velocity_paths,
         "dead_code_candidates": dead[:top_n * 2],
         "in_strongly_connected_components": list(in_scc)[:top_n * 3],
         "risky": list(dict.fromkeys(risky))[:top_n * 2],
     }
+    if high_impact_paths:
+        out["most_connected"] = high_impact_paths[0]
+    return out
+
+
+def extract_last_modified_from_git(repo_root: Path) -> dict[str, str]:
+    """
+    Return path -> last commit date (ISO 8601) from git. Uses a single git log run.
+    Paths are as reported by git (often relative to repo_root). Returns {} if not a git repo.
+    """
+    repo_root = repo_root.resolve()
+    if not (repo_root / ".git").exists():
+        return {}
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(repo_root), "log", "--all", "--name-only", "--format=%cI"],
+            capture_output=True,
+            text=True,
+            timeout=60,
+        )
+        if result.returncode != 0:
+            return {}
+        path_to_date: dict[str, str] = {}
+        current_date: str = ""
+        for line in (result.stdout or "").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            if line[0].isdigit() or line.startswith("20") and "T" in line:
+                current_date = line
+                continue
+            if current_date and line not in path_to_date:
+                path_to_date[line] = current_date
+        return path_to_date
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        return {}
 
 
 def extract_git_velocity(repo_root: Path, days: int = 90) -> dict[str, int]:
@@ -242,6 +332,7 @@ def _module_node_payload(
     except ValueError:
         rel = m.path
     change_velocity = velocity_counts.get(rel) or velocity_counts.get(m.path) or 0
+    raw_complexity = getattr(m, "complexity_score", None)
     out: dict = {
         "type": "module",
         "id": m.path,
@@ -249,17 +340,28 @@ def _module_node_payload(
         "language": m.language,
         "purpose_statement": getattr(m, "purpose_statement", None),
         "domain_cluster": getattr(m, "domain_cluster", None),
-        "complexity_score": getattr(m, "complexity_score", None),
         "change_velocity_30d": change_velocity,
-        "is_dead_code_candidate": getattr(m, "is_dead_code_candidate", None),
+        "is_dead_code_candidate": bool(getattr(m, "is_dead_code_candidate", False)),
         "last_modified": getattr(m, "last_modified", None),
     }
+    if raw_complexity is not None and raw_complexity != 0:
+        out["complexity_score"] = raw_complexity
     if pagerank is not None:
         out["pagerank"] = pagerank
     out["imports"] = [imp.model_dump() for imp in m.imports]
     out["public_functions"] = [f.model_dump() for f in m.public_functions]
     out["classes"] = [c.model_dump() for c in m.classes]
     return out
+
+
+def _drop_none(d: dict) -> dict:
+    """Return a copy of the dict with keys whose value is None removed (so we don't store null in JSON)."""
+    return {k: v for k, v in d.items() if v is not None}
+
+
+def _drop_none_and_empty(d: dict) -> dict:
+    """Remove keys that are None or empty list (so we don't store null or [] in JSON)."""
+    return {k: v for k, v in d.items() if v is not None and not (isinstance(v, list) and len(v) == 0)}
 
 
 def build_knowledge_graph_payload(
@@ -273,12 +375,13 @@ def build_knowledge_graph_payload(
     """
     Build module_graph.json payload per Knowledge Graph schema.
     Nodes: type + schema fields (Phase 1: module only). Edges: type + source/target/weight (Phase 1: IMPORTS only).
+    Omits None values and empty strongly_connected_components so JSON/DB don't store null or [].
     """
     repo_root = Path(repo_root).resolve()
     nodes = []
     for m in modules:
         pr = pagerank_by_path.get(m.path)
-        nodes.append(_module_node_payload(m, repo_root, velocity_counts, pr))
+        nodes.append(_drop_none_and_empty(_drop_none(_module_node_payload(m, repo_root, velocity_counts, pr))))
     # IMPORTS edges with weight = import_count
     import_edges = _import_edge_weights(modules)
     edges = [
@@ -287,12 +390,12 @@ def build_knowledge_graph_payload(
     ]
     # Deterministic ordering
     nodes.sort(key=lambda n: str(n.get("id", "")))
+    graph_meta: dict = {"schema_version": 1}
+    if sccs:
+        graph_meta["strongly_connected_components"] = sccs
     return {
         "directed": True,
-        "graph": {
-            "schema_version": 1,
-            "strongly_connected_components": sccs,
-        },
+        "graph": graph_meta,
         "nodes": nodes,
         "edges": edges,
     }
@@ -321,28 +424,23 @@ def write_module_graph_json(
     else:
         # Fallback: graph-only (e.g. from KnowledgeGraph class)
         graph_meta = g.graph if isinstance(g.graph, dict) else {}
+        sccs_fb = graph_meta.get("strongly_connected_components", [])
+        g_dict: dict = {"schema_version": graph_meta.get("schema_version", 1)}
+        if sccs_fb:
+            g_dict["strongly_connected_components"] = sccs_fb
         data = {
             "directed": True,
-            "graph": {
-                "schema_version": graph_meta.get("schema_version", 1),
-                "strongly_connected_components": graph_meta.get("strongly_connected_components", []),
-            },
+            "graph": g_dict,
             "nodes": [
-                {
+                _drop_none({
                     "type": "module",
                     "id": n,
                     "path": n,
                     "language": "unknown",
-                    "purpose_statement": None,
-                    "domain_cluster": None,
-                    "complexity_score": None,
-                    "change_velocity_30d": None,
-                    "is_dead_code_candidate": None,
-                    "last_modified": None,
                     "imports": [],
                     "public_functions": [],
                     "classes": [],
-                }
+                })
                 for n in sorted(g.nodes())
             ],
             "edges": [
@@ -361,6 +459,7 @@ def _write_all_json_artifacts(
     velocity_days: int,
     velocity_counts: dict[str, int],
     velocity_core: list[str],
+    last_modified_by_path: dict[str, str],
     repo_root: Path,
     pagerank_by_path: dict[str, float],
     sccs: list[list[str]],
@@ -372,9 +471,14 @@ def _write_all_json_artifacts(
     (cartography_dir / "file_hashes.json").write_text(
         json.dumps(new_hashes, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
-    # 2. modules.json
+    # 2. modules.json (exclude null, empty arrays, and complexity_score when 0)
+    def _module_dump(m: ModuleNode) -> dict:
+        d = _drop_none_and_empty(m.model_dump(mode="json", exclude_none=True))
+        if d.get("complexity_score") == 0:
+            d.pop("complexity_score", None)
+        return d
     (cartography_dir / "modules.json").write_text(
-        json.dumps([m.model_dump() for m in modules], indent=2, sort_keys=True) + "\n",
+        json.dumps([_module_dump(m) for m in modules], indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
     # 3. module_graph.json (Knowledge Graph schema: nodes with type + schema fields, edges with type + weight)
@@ -387,16 +491,22 @@ def _write_all_json_artifacts(
         repo_root,
         pagerank_by_path,
     )
-    # 4. git_velocity.json
+    # 4. git_velocity.json (include last_modified per path from git)
     (cartography_dir / "git_velocity.json").write_text(
         json.dumps(
-            {"days": velocity_days, "per_file": velocity_counts, "high_velocity_core": velocity_core},
+            {
+                "days": velocity_days,
+                "per_file": velocity_counts,
+                "last_modified": last_modified_by_path,
+                "high_velocity_core": velocity_core,
+            },
             indent=2,
             sort_keys=True,
-        ) + "\n",
+        )
+        + "\n",
         encoding="utf-8",
     )
-    # 5. survey_summary.json (high-impact, high-velocity, risky modules)
+    # 5. survey_summary.json (caller passes summary with empty-list keys already omitted)
     (cartography_dir / "survey_summary.json").write_text(
         json.dumps(summary, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
@@ -411,14 +521,15 @@ def _hash_file(path: Path) -> str:
     return h.hexdigest()
 
 
-def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> Path:
+def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> tuple[Path, Optional[int]]:
     """
     Phase 1 end-to-end runner:
     - discover files with ignore/safety
     - incremental analysis via content hashes + cached ModuleNodes
     - build module graph + analytics
     - persist to SQLite and vector store (use project_data_dir when analyzing a remote clone so DB lives in project)
-    - always overwrite all four .cartography JSON artifacts: file_hashes.json, modules.json, module_graph.json, git_velocity.json
+    - always overwrite all .cartography JSON artifacts (file_hashes, modules, module_graph, git_velocity, survey_summary).
+    Returns (path to module_graph.json, analysis_id or None if DB persistence failed).
     """
     repo_root = Path(repo_root).resolve()
     cartography_dir = repo_root / ".cartography"
@@ -497,10 +608,19 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> Pa
 
     velocity_days = 90
     velocity_counts = extract_git_velocity(repo_root, days=velocity_days)
+    last_modified_by_path = extract_last_modified_from_git(repo_root)
     velocity_core = high_velocity_core(velocity_counts)
 
     mark_dead_code_candidates(modules, g, pr, velocity_counts, repo_root)
+    # Enrich modules with change_velocity_30d and last_modified so JSON and DB have real values
+    _enrich_modules_velocity(modules, velocity_counts, repo_root)
+    _enrich_last_modified(modules, last_modified_by_path, repo_root)
     summary = survey_summary(modules, g, sccs, velocity_counts, pr, repo_root)
+    # Omit empty-list keys so we don't store [] in JSON or DB
+    summary_for_storage = {
+        k: v for k, v in summary.items()
+        if not (isinstance(v, list) and len(v) == 0)
+    }
 
     # Persist to SQLite then vector store (separate try/except so one can succeed if the other fails)
     from src.store import (
@@ -508,6 +628,9 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> Pa
         get_repo_id,
         init_db,
         insert_analysis,
+        insert_file_hashes,
+        insert_git_velocity,
+        insert_survey_summary,
         add_modules_to_vector_store,
     )
     data_dir = get_data_dir(store_root)
@@ -526,6 +649,13 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> Pa
             db_path=db_path,
         )
         repo_id = get_repo_id(repo_root)
+        # Persist file_hashes, git_velocity, survey_summary to DB (same run)
+        try:
+            insert_file_hashes(analysis_id, new_hashes, db_path=db_path)
+            insert_git_velocity(analysis_id, velocity_counts, last_modified_by_path, db_path=db_path)
+            insert_survey_summary(analysis_id, summary_for_storage, db_path=db_path)
+        except Exception as e:
+            logging.exception("SQLite extra artifacts (file_hashes/git_velocity/survey_summary) failed: %s", e)
     except Exception as e:
         logging.exception("SQLite persistence failed: %s", e)
         print("Warning: Could not save to database (SQLite):", e, file=sys.stderr)
@@ -542,7 +672,7 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> Pa
             logging.exception("Vector store persistence failed: %s", e)
             print("Warning: Could not save to vector store (Chroma):", e, file=sys.stderr)
 
-    # Always overwrite all four JSON files when process is done (ensures export even if DB or later steps fail)
+    # Always overwrite all JSON files when process is done (ensures export even if DB or later steps fail)
     _write_all_json_artifacts(
         cartography_dir,
         new_hashes,
@@ -551,11 +681,12 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> Pa
         velocity_days,
         velocity_counts,
         velocity_core,
+        last_modified_by_path,
         repo_root,
         pr,
         sccs,
-        summary,
+        summary_for_storage,
     )
     out_path = cartography_dir / "module_graph.json"
-    return out_path
+    return (out_path, analysis_id)
 
