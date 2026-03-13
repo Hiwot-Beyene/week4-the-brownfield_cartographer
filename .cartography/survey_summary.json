@@ -45,7 +45,7 @@
     "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/build.yaml",
     "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/dg_deployments/local/dagster.yaml"
   ],
-  "in_strongly_connected_components": [],
+  "most_connected": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/.gemini/config.yaml",
   "risky": [
     "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/bin/dbt-create-staging-models.py",
     "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/mitodl_ol-data-platform/bin/dbt-local-dev.py",
