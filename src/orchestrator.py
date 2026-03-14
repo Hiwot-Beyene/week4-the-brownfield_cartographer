@@ -10,6 +10,7 @@ from pathlib import Path
 
 from src.agents.surveyor import run_surveyor
 from src.agents.hydrologist import run_hydrologist
+from src.agents.semanticist import run_semanticist
 from src.repo_resolver import resolve_repo
 
 _CARTOGRAPHY_JSON_ARTIFACTS = (
@@ -44,11 +45,13 @@ def analyze(
     skip_lineage: bool = False,
 ) -> str:
     """
-    Run Surveyor then Hydrologist in sequence on a local path or remote repository (e.g. GitHub URL).
+    Run Surveyor, Hydrologist, then Semanticist in sequence on a local path or remote repository.
     All outputs are serialized to output_dir/.cartography/ (default: cwd), including:
-    - module_graph.json (Surveyor)
-    - lineage_graph.json (Hydrologist; at least SQL lineage via sqlglot).
-    skip_lineage: if True, run only Surveyor (no lineage).
+    - module_graph.json, modules.json (Surveyor)
+    - lineage_graph.json (Hydrologist; at least SQL lineage via sqlglot)
+    - domain_architecture_map.json, day_one_answers.json (Semanticist).
+
+    skip_lineage: if True, run only Surveyor+Semanticist (no lineage).
     """
     repo_path = resolve_repo(repo_input, branch=branch, depth=clone_depth)
     project_dir = Path(output_dir).resolve() if output_dir else Path.cwd().resolve()
@@ -58,5 +61,7 @@ def analyze(
     # 2. Hydrologist: DataLineageGraph, blast_radius, find_sources/find_sinks (unless skipped)
     if not skip_lineage:
         run_hydrologist(repo_path, project_data_dir=project_dir, analysis_id=analysis_id)
+    # 3. Semanticist: purpose statements, domains, Day-One answers
+    run_semanticist(repo_path, artifacts_dir=project_dir / ".cartography")
     return str(out)
 

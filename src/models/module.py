@@ -62,6 +62,8 @@ class ModuleNode(BaseModel):
     # Extended semantic / analytic fields (populated by later agents).
     purpose_statement: Optional[str] = None
     domain_cluster: Optional[str] = None
+    documentation_drift: Optional[bool] = None  # True when docstring contradicts LLM-generated purpose (Semanticist)
+    docstring_snippet: Optional[str] = None  # When drift is True, store docstring for traceability (Semanticist)
     complexity_score: Optional[float] = None
     change_velocity_30d: Optional[float] = None
     is_dead_code_candidate: Optional[bool] = None

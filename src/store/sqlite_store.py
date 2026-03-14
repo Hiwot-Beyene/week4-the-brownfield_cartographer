@@ -246,7 +246,7 @@ def insert_analysis(
     artifacts_dir: Path,
     modules: list[ModuleNode],
     pagerank_by_path: dict[str, float],
-    edges: list[tuple[str, str]],
+    edges: list[tuple[str, str] | tuple[str, str, int] | dict[str, Any]],
     db_path: Optional[Path] = None,
 ) -> int:
     """
@@ -286,10 +286,32 @@ def insert_analysis(
                     getattr(m, "last_modified", None) or None,
                 ),
             )
-        for src, tgt in edges:
+        for e in edges:
+            src: str
+            tgt: str
+            weight: int = 1
+            if isinstance(e, dict):
+                src = str(e.get("source") or e.get("from") or "")
+                tgt = str(e.get("target") or e.get("to") or "")
+                try:
+                    weight = int(e.get("weight") or 1)
+                except (TypeError, ValueError):
+                    weight = 1
+            else:
+                if len(e) >= 2:
+                    src, tgt = str(e[0]), str(e[1])
+                    if len(e) >= 3:
+                        try:
+                            weight = int(e[2] or 1)
+                        except (TypeError, ValueError):
+                            weight = 1
+                else:
+                    continue
+            if not src or not tgt:
+                continue
             conn.execute(
-                "INSERT INTO import_edges (analysis_id, source_module, target_module, weight) VALUES (?, ?, ?, 1)",
-                (analysis_id, src, tgt),
+                "INSERT INTO import_edges (analysis_id, source_module, target_module, weight) VALUES (?, ?, ?, ?)",
+                (analysis_id, src, tgt, max(1, weight)),
             )
         conn.commit()
         return analysis_id
@@ -414,15 +436,40 @@ def get_high_velocity(
     conn = sqlite3.connect(str(path))
     conn.row_factory = sqlite3.Row
     try:
-        cur = conn.execute(
-            """SELECT path, commit_count, last_modified FROM git_velocity WHERE analysis_id = ?
-               ORDER BY commit_count DESC LIMIT ?""",
-            (analysis_id, limit),
-        )
-        return [
-            {"path": row["path"], "commit_count": row["commit_count"], "last_modified": row["last_modified"], "rank": i}
-            for i, row in enumerate(cur.fetchall())
-        ]
+        # Detect whether last_modified column exists for backwards-compatible reads
+        cur = conn.execute("PRAGMA table_info(git_velocity)")
+        columns = {row[1] for row in cur.fetchall()}
+        if "last_modified" in columns:
+            cur = conn.execute(
+                """SELECT path, commit_count, last_modified FROM git_velocity WHERE analysis_id = ?
+                   ORDER BY commit_count DESC LIMIT ?""",
+                (analysis_id, limit),
+            )
+            rows = [
+                {
+                    "path": row["path"],
+                    "commit_count": row["commit_count"],
+                    "last_modified": row["last_modified"],
+                    "rank": i,
+                }
+                for i, row in enumerate(cur.fetchall())
+            ]
+        else:
+            cur = conn.execute(
+                """SELECT path, commit_count FROM git_velocity WHERE analysis_id = ?
+                   ORDER BY commit_count DESC LIMIT ?""",
+                (analysis_id, limit),
+            )
+            rows = [
+                {
+                    "path": row["path"],
+                    "commit_count": row["commit_count"],
+                    "last_modified": None,
+                    "rank": i,
+                }
+                for i, row in enumerate(cur.fetchall())
+            ]
+        return rows
     finally:
         conn.close()
 
@@ -615,5 +662,334 @@ def get_import_edges(analysis_id: int, db_path: Optional[Path] = None, repo_root
         return [dict(row) for row in cur.fetchall()]
     finally:
         conn.close()
+
+
+def get_module_graph_payload(
+    analysis_id: int,
+    db_path: Optional[Path] = None,
+    repo_root: Optional[Path] = None,
+) -> dict[str, Any]:
+    """Build module graph for visualization from SQLite (modules + import_edges).
+
+    Important: import_edges.target_module can be an import name (e.g. "json" or
+    "ol_orchestrate.lib.utils"), not always a file path. For architecture graphing
+    we resolve those names to *internal module file paths* when possible, then keep
+    only internal module-to-module edges.
+
+    Returns { nodes, edges, hubs } where nodes are repository modules and edges are
+    resolved internal dependencies.
+    """
+    modules = get_modules(analysis_id, db_path=db_path, repo_root=repo_root)
+    edges_raw = get_import_edges(analysis_id, db_path=db_path, repo_root=repo_root)
+
+    module_by_path: dict[str, dict] = {m["path"]: m for m in modules if isinstance(m.get("path"), str)}
+    module_paths = set(module_by_path)
+
+    # Build lookup from import-like names -> module file path using all dotted suffixes.
+    # This supports monorepo layouts where import roots vary by package.
+    name_to_path: dict[str, str] = {}
+    for raw_path in module_paths:
+        path_norm = raw_path.replace("\\", "/")
+        if not path_norm.endswith(".py"):
+            continue
+
+        no_ext = path_norm[:-3]
+        segments = [s for s in no_ext.split("/") if s]
+        if not segments:
+            continue
+        if segments[-1] == "__init__":
+            segments = segments[:-1]
+            if not segments:
+                continue
+
+        # Add all dotted suffixes so imports like "pkg.mod" can map even when
+        # file path has extra leading monorepo/package segments.
+        for i in range(len(segments)):
+            dotted = ".".join(segments[i:])
+            if dotted:
+                name_to_path.setdefault(dotted, raw_path)
+        # Also support basename-only imports.
+        name_to_path.setdefault(segments[-1], raw_path)
+
+    def _resolve_internal_module(ref: str) -> Optional[str]:
+        """Resolve a source/target reference to an internal module path if possible."""
+        value = (ref or "").strip()
+        if not value:
+            return None
+        if value in module_paths:
+            return value
+        return name_to_path.get(value)
+
+    # Keep only internal module-to-module edges for architecture connectivity.
+    edges: list[dict[str, Any]] = []
+    degree_by_path: dict[str, int] = {}
+    seen_pairs: set[tuple[str, str]] = set()
+    for e in edges_raw:
+        src = _resolve_internal_module(str(e.get("source_module") or ""))
+        tgt = _resolve_internal_module(str(e.get("target_module") or ""))
+        if not src or not tgt:
+            continue
+        # Drop self-import loops from visualization payload to reduce noise.
+        if src == tgt:
+            continue
+        pair = (src, tgt)
+        if pair in seen_pairs:
+            continue
+        seen_pairs.add(pair)
+        edges.append({"from": src, "to": tgt, "weight": int(e.get("weight") or 1)})
+        degree_by_path[src] = degree_by_path.get(src, 0) + 1
+        degree_by_path[tgt] = degree_by_path.get(tgt, 0) + 1
+
+    # Keep all modules from the database (including isolated ones).
+    all_ids = set(module_by_path)
+    nodes: list[dict[str, Any]] = []
+    for path in sorted(all_ids):
+        m = module_by_path.get(path)
+        degree = degree_by_path.get(path, 0)
+        pagerank = _safe_float(m.get("pagerank")) if m else 0.0
+        pagerank = pagerank if pagerank is not None else 0.0
+        dead_code = bool(m.get("is_dead_code_candidate")) if m else False
+        base_size = 10
+        size_from_degree = min(degree * 3, 24)
+        size_from_pagerank = min(pagerank * 80, 30) if pagerank else 0
+        size = base_size + size_from_degree + size_from_pagerank
+        # Dead code candidates should never be marked "important" in visualization semantics.
+        important = (not dead_code) and ((pagerank and pagerank >= 0.08) or degree >= 4)
+        label = path.replace("\\", "/").split("/")[-1] if path else path
+        nodes.append({
+            "id": path,
+            "label": label,
+            "node_type": "module",
+            "language": m.get("language", "unknown") if m else "unknown",
+            "purpose_statement": m.get("purpose_statement") if m else None,
+            "domain_cluster": m.get("domain_cluster") if m else None,
+            "dead_code": dead_code,
+            "last_modified": m.get("last_modified") if m else None,
+            "degree": degree,
+            "pagerank": pagerank,
+            "size": size,
+            "important": important,
+        })
+
+    # Hubs ("most connected"): rank by degree (connection count), excluding dead-code candidates.
+    # Pagerank is kept only as a tie-breaker.
+    live_nodes = [n for n in nodes if not n.get("dead_code")]
+    sorted_nodes = sorted(live_nodes, key=lambda n: (-(n.get("degree") or 0), -(n.get("pagerank") or 0), n.get("id", "")))
+    hubs = [n["id"] for n in sorted_nodes[:8]]
+
+    return {
+        "nodes": nodes,
+        "edges": edges,
+        "hubs": hubs,
+        "filtered_isolated_regular_modules": 0,
+    }
+
+
+def get_lineage_nodes(
+    analysis_id: int,
+    db_path: Optional[Path] = None,
+    repo_root: Optional[Path] = None,
+) -> list[dict[str, Any]]:
+    """Return all lineage_nodes rows for an analysis."""
+    path = db_path or _get_db_path(repo_root)
+    if not path.exists():
+        return []
+    conn = sqlite3.connect(str(path))
+    conn.row_factory = sqlite3.Row
+    try:
+        cur = conn.execute(
+            """SELECT node_id, type, name, storage_type, extra
+               FROM lineage_nodes WHERE analysis_id = ?""",
+            (analysis_id,),
+        )
+        return [dict(row) for row in cur.fetchall()]
+    finally:
+        conn.close()
+
+
+def get_lineage_edges(
+    analysis_id: int,
+    db_path: Optional[Path] = None,
+    repo_root: Optional[Path] = None,
+) -> list[dict[str, Any]]:
+    """Return all lineage_edges rows for an analysis."""
+    path = db_path or _get_db_path(repo_root)
+    if not path.exists():
+        return []
+    conn = sqlite3.connect(str(path))
+    conn.row_factory = sqlite3.Row
+    try:
+        cur = conn.execute(
+            """SELECT source, target, edge_type, transformation_type, source_file, line_start, line_end, is_write
+               FROM lineage_edges WHERE analysis_id = ?""",
+            (analysis_id,),
+        )
+        return [dict(row) for row in cur.fetchall()]
+    finally:
+        conn.close()
+
+
+def get_lineage_graph_payload(
+    analysis_id: int,
+    db_path: Optional[Path] = None,
+    repo_root: Optional[Path] = None,
+) -> dict[str, Any]:
+    """Build lineage graph for visualization from SQLite (lineage_nodes + lineage_edges).
+    Returns { nodes, edges } with node_type (dataset/transformation), so every edge source/target has a node.
+    """
+    raw_nodes = get_lineage_nodes(analysis_id, db_path=db_path, repo_root=repo_root)
+    raw_edges = get_lineage_edges(analysis_id, db_path=db_path, repo_root=repo_root)
+
+    node_by_id: dict[str, dict[str, Any]] = {}
+    for r in raw_nodes:
+        nid = (r.get("node_id") or "").strip()
+        if not nid:
+            continue
+        ntype = (r.get("type") or "dataset").lower()
+        name = r.get("name") or nid
+        node_by_id[nid] = {
+            "id": nid,
+            "label": name if isinstance(name, str) else nid,
+            "node_type": "dataset" if ntype == "dataset" else "transformation",
+            "name": name,
+            "storage_type": r.get("storage_type"),
+            "extra": r.get("extra"),
+        }
+
+    # Ensure every edge endpoint has a node
+    for e in raw_edges:
+        src = (e.get("source") or "").strip()
+        tgt = (e.get("target") or "").strip()
+        if src and src not in node_by_id:
+            node_by_id[src] = {"id": src, "label": src, "node_type": "dataset", "name": src}
+        if tgt and tgt not in node_by_id:
+            node_by_id[tgt] = {"id": tgt, "label": tgt, "node_type": "dataset", "name": tgt}
+
+    nodes: list[dict[str, Any]] = []
+    for nid, data in sorted(node_by_id.items()):
+        ntype = data.get("node_type", "dataset")
+        nodes.append({
+            **data,
+            "size": 12 if ntype == "transformation" else 10,
+            "important": ntype == "transformation",
+        })
+
+    edges: list[dict[str, Any]] = []
+    node_ids = set(node_by_id)
+    for e in raw_edges:
+        src = (e.get("source") or "").strip()
+        tgt = (e.get("target") or "").strip()
+        if src and tgt and src in node_ids and tgt in node_ids:
+            edges.append({
+                "from": src,
+                "to": tgt,
+                "edge_type": e.get("edge_type"),
+                "transformation_type": e.get("transformation_type"),
+                "source_file": e.get("source_file"),
+                "is_write": bool(e.get("is_write")),
+            })
+
+    # Remove truly isolated nodes (degree=0) to reduce graph clutter.
+    in_deg: dict[str, int] = {}
+    out_deg: dict[str, int] = {}
+    for n in nodes:
+        nid = str(n.get("id") or "")
+        if nid:
+            in_deg[nid] = 0
+            out_deg[nid] = 0
+    for e in edges:
+        src = str(e.get("from") or "")
+        tgt = str(e.get("to") or "")
+        if src in out_deg:
+            out_deg[src] += 1
+        if tgt in in_deg:
+            in_deg[tgt] += 1
+
+    kept_node_ids = set(in_deg)
+    # Explicit lineage boundaries from full graph.
+    sources = [
+        nid for nid in kept_node_ids
+        if in_deg.get(nid, 0) == 0 and out_deg.get(nid, 0) > 0
+    ]
+    sinks = [
+        nid for nid in kept_node_ids
+        if out_deg.get(nid, 0) == 0 and in_deg.get(nid, 0) > 0
+    ]
+
+    return {
+        "nodes": nodes,
+        "edges": edges,
+        "sources": sorted(sources),
+        "sinks": sorted(sinks),
+        "filtered_isolated_nodes": 0,
+    }
+
+
+def get_lineage_upstream_dependencies(
+    analysis_id: int,
+    node_id: str,
+    max_depth: int = 25,
+    db_path: Optional[Path] = None,
+    repo_root: Optional[Path] = None,
+) -> list[str]:
+    """DB-backed upstream dependency query for a lineage node."""
+    edges = get_lineage_edges(analysis_id, db_path=db_path, repo_root=repo_root)
+    if not node_id:
+        return []
+
+    reverse_adj: dict[str, set[str]] = {}
+    for e in edges:
+        src = str(e.get("source") or "").strip()
+        tgt = str(e.get("target") or "").strip()
+        if not src or not tgt:
+            continue
+        reverse_adj.setdefault(tgt, set()).add(src)
+
+    visited: set[str] = set()
+    frontier: list[tuple[str, int]] = [(node_id, 0)]
+    while frontier:
+        cur, depth = frontier.pop(0)
+        if depth >= max_depth:
+            continue
+        for prev in sorted(reverse_adj.get(cur, set())):
+            if prev in visited:
+                continue
+            visited.add(prev)
+            frontier.append((prev, depth + 1))
+    return sorted(visited)
+
+
+def get_lineage_blast_radius(
+    analysis_id: int,
+    node_id: str,
+    max_depth: int = 25,
+    db_path: Optional[Path] = None,
+    repo_root: Optional[Path] = None,
+) -> list[str]:
+    """DB-backed downstream impact query (blast radius) for a lineage node."""
+    edges = get_lineage_edges(analysis_id, db_path=db_path, repo_root=repo_root)
+    if not node_id:
+        return []
+
+    forward_adj: dict[str, set[str]] = {}
+    for e in edges:
+        src = str(e.get("source") or "").strip()
+        tgt = str(e.get("target") or "").strip()
+        if not src or not tgt:
+            continue
+        forward_adj.setdefault(src, set()).add(tgt)
+
+    visited: set[str] = set()
+    frontier: list[tuple[str, int]] = [(node_id, 0)]
+    while frontier:
+        cur, depth = frontier.pop(0)
+        if depth >= max_depth:
+            continue
+        for nxt in sorted(forward_adj.get(cur, set())):
+            if nxt in visited:
+                continue
+            visited.add(nxt)
+            frontier.append((nxt, depth + 1))
+    return sorted(visited)
 
 

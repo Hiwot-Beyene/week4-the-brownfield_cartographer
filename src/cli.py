@@ -19,7 +19,10 @@ def main(argv: list[str] | None = None) -> int:
     )
     sub = parser.add_subparsers(dest="cmd", required=True)
 
-    analyze_p = sub.add_parser("analyze", help="Run Phase 1 Surveyor analysis")
+    analyze_p = sub.add_parser(
+        "analyze",
+        help="Run full analysis pipeline (Surveyor → Hydrologist → Semanticist)",
+    )
     analyze_p.add_argument(
         "repo",
         help="Local path or GitHub (e.g. https://github.com/owner/repo) to analyze",

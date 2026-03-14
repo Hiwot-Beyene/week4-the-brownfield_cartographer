@@ -81,25 +81,39 @@ def _analyze_dbt_schema(path: Path) -> tuple[list[Any], list[Any]]:
         return [], []
 
     path_str = str(path)
-    # Sources
-    for s in data.get("sources", []):
-        name = s.get("name", "")
-        for t in s.get("tables", []):
-            table_name = t.get("name", name)
-            full = f"{name}.{table_name}" if name else table_name
-            nodes.append(DatasetNode(name=full, storage_type="table"))
-            trans_id = f"dbt_source:{path_str}:{full}"
+    # Sources: dbt schema.yml expects list[dict], but dbt_project.yml may be dict.
+    sources = data.get("sources", [])
+    if isinstance(sources, list):
+        for s in sources:
+            if not isinstance(s, dict):
+                continue
+            name = s.get("name", "")
+            tables = s.get("tables", [])
+            if not isinstance(tables, list):
+                continue
+            for t in tables:
+                if not isinstance(t, dict):
+                    continue
+                table_name = t.get("name", name)
+                full = f"{name}.{table_name}" if name else table_name
+                nodes.append(DatasetNode(name=full, storage_type="table"))
+                trans_id = f"dbt_source:{path_str}:{full}"
+                nodes.append({"id": trans_id, "type": "transformation"})
+                edges.append({"source": full, "target": trans_id})
+
+    # Models: dbt schema.yml expects list[dict], but dbt_project.yml can be nested dict.
+    models = data.get("models", [])
+    if isinstance(models, list):
+        for m in models:
+            if not isinstance(m, dict):
+                continue
+            model_name = m.get("name", "")
+            if not model_name:
+                continue
+            nodes.append(DatasetNode(name=model_name, storage_type="table"))
+            trans_id = f"dbt_model:{path_str}:{model_name}"
             nodes.append({"id": trans_id, "type": "transformation"})
-            edges.append({"source": full, "target": trans_id})
-    # Models
-    for m in data.get("models", []):
-        model_name = m.get("name", "")
-        if not model_name:
-            continue
-        nodes.append(DatasetNode(name=model_name, storage_type="table"))
-        trans_id = f"dbt_model:{path_str}:{model_name}"
-        nodes.append({"id": trans_id, "type": "transformation"})
-        edges.append({"source": trans_id, "target": model_name})
+            edges.append({"source": trans_id, "target": model_name})
 
     return nodes, edges
 

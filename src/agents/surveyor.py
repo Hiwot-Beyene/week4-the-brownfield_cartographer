@@ -247,7 +247,7 @@ def extract_last_modified_from_git(repo_root: Path) -> dict[str, str]:
         return {}
     try:
         result = subprocess.run(
-            ["git", "-C", str(repo_root), "log", "--all", "--name-only", "--format=%cI"],
+            ["git", "-C", str(repo_root), "log", "--name-only", "--format=%cI"],
             capture_output=True,
             text=True,
             timeout=60,
@@ -270,17 +270,59 @@ def extract_last_modified_from_git(repo_root: Path) -> dict[str, str]:
         return {}
 
 
-def extract_git_velocity(repo_root: Path, days: int = 90) -> dict[str, int]:
+def _is_shallow_repo(repo_root: Path) -> bool:
+    """Return True when repository is shallow-cloned."""
+    try:
+        r = subprocess.run(
+            ["git", "-C", str(repo_root), "rev-parse", "--is-shallow-repository"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        return r.returncode == 0 and (r.stdout or "").strip().lower() == "true"
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        return False
+
+
+def _ensure_full_history(repo_root: Path) -> None:
+    """
+    Best-effort upgrade shallow clones so git velocity/last_modified are accurate.
+    Safe no-op for full-history repositories.
+    """
+    if not _is_shallow_repo(repo_root):
+        return
+    try:
+        # Fetch complete history for the current remote/branch.
+        r = subprocess.run(
+            ["git", "-C", str(repo_root), "fetch", "--unshallow", "--tags"],
+            capture_output=True,
+            text=True,
+            timeout=300,
+        )
+        if r.returncode != 0:
+            logger = logging.getLogger(__name__)
+            logger.warning(
+                "git history remains shallow for %s (fetch --unshallow failed): %s",
+                repo_root,
+                (r.stderr or r.stdout or "").strip(),
+            )
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError) as e:
+        logger = logging.getLogger(__name__)
+        logger.warning("git history unshallow failed for %s: %s", repo_root, e)
+
+
+def extract_git_velocity(repo_root: Path, days: int = 30) -> dict[str, int]:
     """
     Compute per-file change frequency for the last `days` days via git log --numstat.
 
-    Answers the challenge question: "What has changed most frequently in the last 90 days?"
+    Answers the challenge question: "What has changed most frequently in the last N days?"
     If the path is not a git repo or git fails, returns {} (graceful degradation).
     """
     repo_root = repo_root.resolve()
     git_dir = repo_root / ".git"
     if not git_dir.exists() or not git_dir.is_dir():
         return {}
+    _ensure_full_history(repo_root)
     try:
         result = subprocess.run(
             [
@@ -606,8 +648,10 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> tu
     g.graph["strongly_connected_components"] = sccs
     g.graph["schema_version"] = 1
 
-    velocity_days = 90
+    # Product requirement: 30-day velocity window.
+    velocity_days = 30
     velocity_counts = extract_git_velocity(repo_root, days=velocity_days)
+    _ensure_full_history(repo_root)
     last_modified_by_path = extract_last_modified_from_git(repo_root)
     velocity_core = high_velocity_core(velocity_counts)
 
@@ -640,12 +684,13 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> tu
 
     try:
         init_db(db_path=db_path)
+        weighted_edges = _import_edge_weights(modules)
         analysis_id = insert_analysis(
             repo_root=repo_root,
             artifacts_dir=cartography_dir,
             modules=modules,
             pagerank_by_path=pr,
-            edges=list(g.edges()),
+            edges=weighted_edges,
             db_path=db_path,
         )
         repo_id = get_repo_id(repo_root)
