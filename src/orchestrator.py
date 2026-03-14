@@ -12,6 +12,7 @@ from src.agents.surveyor import run_surveyor
 from src.agents.hydrologist import run_hydrologist
 from src.agents.semanticist import run_semanticist
 from src.repo_resolver import resolve_repo
+from src.store import sqlite_store
 
 _CARTOGRAPHY_JSON_ARTIFACTS = (
     "file_hashes.json",
@@ -62,6 +63,24 @@ def analyze(
     if not skip_lineage:
         run_hydrologist(repo_path, project_data_dir=project_dir, analysis_id=analysis_id)
     # 3. Semanticist: purpose statements, domains, Day-One answers
-    run_semanticist(repo_path, artifacts_dir=project_dir / ".cartography")
+    sem_modules, sem_domain_map, sem_day_one = run_semanticist(
+        repo_path, artifacts_dir=project_dir / ".cartography"
+    )
+
+    # Persist Semanticist outputs into SQLite for API/frontend DB-backed reads.
+    if analysis_id is not None:
+        db_path = sqlite_store.get_data_dir(project_dir) / "cartographer.db"
+        sqlite_store.init_db(db_path=db_path)
+        sqlite_store.upsert_modules_semantic_fields(
+            analysis_id,
+            [m.model_dump(mode="json") for m in sem_modules],
+            db_path=db_path,
+        )
+        sqlite_store.insert_domain_architecture_map(
+            analysis_id, sem_domain_map, db_path=db_path
+        )
+        sqlite_store.insert_day_one_answers(
+            analysis_id, sem_day_one, db_path=db_path
+        )
     return str(out)
 

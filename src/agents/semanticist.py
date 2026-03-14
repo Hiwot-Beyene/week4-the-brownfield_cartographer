@@ -58,6 +58,90 @@ def _timeout_seconds_from_env(var_name: str, default_seconds: float) -> float:
     raw = (os.environ.get(var_name) or "").strip()
     if not raw:
         return default_seconds
+
+
+def _openrouter_headers(cfg: Any) -> dict[str, str]:
+    """Build OpenRouter auth headers from config/env."""
+    api_key = (cfg.openrouter_api_key or "").strip()
+    if not api_key:
+        raise ValueError("OPENROUTER_API_KEY is required when using openrouter provider")
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+    }
+    site_url = (os.environ.get("OPENROUTER_SITE_URL") or "").strip()
+    app_name = (os.environ.get("OPENROUTER_APP_NAME") or "Brownfield Cartographer").strip()
+    if site_url:
+        headers["HTTP-Referer"] = site_url
+    if app_name:
+        headers["X-Title"] = app_name
+    return headers
+
+
+def _extract_openrouter_text(payload: dict[str, Any]) -> str:
+    """Extract text from OpenRouter chat completion response."""
+    choices = payload.get("choices")
+    if not isinstance(choices, list) or not choices:
+        return ""
+    message = (choices[0] or {}).get("message") or {}
+    content = message.get("content")
+    if isinstance(content, str):
+        return content.strip()
+    if isinstance(content, list):
+        parts: list[str] = []
+        for item in content:
+            if isinstance(item, dict):
+                txt = item.get("text")
+                if isinstance(txt, str):
+                    parts.append(txt)
+        return "\n".join(parts).strip()
+    return ""
+
+
+def _call_openrouter_chat(
+    prompt: str,
+    model_id: str,
+    *,
+    timeout_seconds: float,
+    temperature: float,
+    max_tokens: int,
+) -> str:
+    """Call OpenRouter chat-completions endpoint with retries."""
+    import httpx
+
+    cfg = get_semantic_config()
+    url = f"{cfg.openrouter_base_url}/chat/completions"
+    headers = _openrouter_headers(cfg)
+    body = {
+        "model": model_id,
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": temperature,
+        "max_tokens": max_tokens,
+    }
+    with httpx.Client(timeout=timeout_seconds) as client:
+        last_error: Optional[Exception] = None
+        for attempt in range(3):
+            try:
+                resp = client.post(url, headers=headers, json=body)
+                resp.raise_for_status()
+                data = resp.json()
+                return _extract_openrouter_text(data)
+            except httpx.HTTPStatusError as e:
+                last_error = e
+                status = e.response.status_code if e.response is not None else 0
+                if status >= 500 and attempt < 2:
+                    time.sleep(1.0 * (attempt + 1))
+                    continue
+                raise
+            except (httpx.TimeoutException, httpx.TransportError) as e:
+                last_error = e
+                if attempt < 2:
+                    time.sleep(1.0 * (attempt + 1))
+                    continue
+                raise
+        if last_error:
+            raise last_error
+    return ""
     try:
         parsed = float(raw)
         return parsed if parsed > 0 else default_seconds
@@ -151,6 +235,7 @@ def run_semanticist(
     from src.agents.semanticist_cluster import cluster_into_domains
 
     domain_map_model: DomainArchitectureMap = cluster_into_domains(modules)
+    _write_domain_architecture_map(artifacts_dir, domain_map_model.model_dump(mode="json"))
     _write_enriched_modules(artifacts_dir, modules)
     # Day-One synthesis (may fail gracefully)
     day_one_answers: list[DayOneAnswer] = answer_day_one_questions(artifacts_dir, budget=budget)
@@ -160,14 +245,25 @@ def run_semanticist(
 
 
 def _call_llm_bulk(prompt: str) -> str:
-    """Call semantic_bulk LLM with retries for transient Ollama 5xx/timeout errors."""
+    """Call semantic_bulk LLM with provider-specific backend."""
     import httpx
     cfg = get_semantic_config()
-    if cfg.bulk_provider != "ollama":
-        raise ValueError("Only ollama provider is implemented")
-    url = f"{cfg.ollama_base_url}/api/generate"
+    provider = (cfg.bulk_provider or "").strip().lower()
     bulk_fallback_model = (os.environ.get("SEMANTIC_BULK_FALLBACK_MODEL") or "").strip()
     bulk_timeout_seconds = _timeout_seconds_from_env("SEMANTIC_BULK_TIMEOUT_SECONDS", 3600.0)
+
+    if provider == "openrouter":
+        return _call_openrouter_chat(
+            prompt,
+            cfg.bulk_model_id,
+            timeout_seconds=bulk_timeout_seconds,
+            temperature=0.2,
+            max_tokens=220,
+        )
+    if provider != "ollama":
+        raise ValueError(f"Unsupported semantic_bulk provider: {cfg.bulk_provider}")
+
+    url = f"{cfg.ollama_base_url}/api/generate"
 
     def _request_with_model(client: httpx.Client, model_id: str) -> str:
         body = {
@@ -217,15 +313,26 @@ def _call_llm_bulk(prompt: str) -> str:
 
 
 def _call_llm_synthesis(prompt: str) -> str:
-    """Call the semantic_synthesis LLM with the given prompt. Raises on network/timeout error."""
+    """Call semantic_synthesis LLM with provider-specific backend."""
     import httpx
 
     cfg = get_semantic_config()
-    if cfg.synthesis_provider != "ollama":
-        raise ValueError("Only ollama provider is implemented")
-    url = f"{cfg.ollama_base_url}/api/generate"
+    provider = (cfg.synthesis_provider or "").strip().lower()
     synthesis_fallback_model = (os.environ.get("SEMANTIC_SYNTHESIS_FALLBACK_MODEL") or "").strip()
     synthesis_timeout_seconds = _timeout_seconds_from_env("SEMANTIC_SYNTHESIS_TIMEOUT_SECONDS", 3600.0)
+
+    if provider == "openrouter":
+        return _call_openrouter_chat(
+            prompt,
+            cfg.synthesis_model_id,
+            timeout_seconds=synthesis_timeout_seconds,
+            temperature=0.15,
+            max_tokens=1200,
+        )
+    if provider != "ollama":
+        raise ValueError(f"Unsupported semantic_synthesis provider: {cfg.synthesis_provider}")
+
+    url = f"{cfg.ollama_base_url}/api/generate"
 
     def _request_with_model(client: httpx.Client, model_id: str) -> str:
         body = {
@@ -381,6 +488,16 @@ def _write_enriched_modules(artifacts_dir: Path, modules: list[ModuleNode]) -> N
         logger.info("Wrote %s modules to %s", len(modules), path)
     except Exception as e:
         logger.warning("Failed to write modules to %s: %s", path, e)
+
+
+def _write_domain_architecture_map(artifacts_dir: Path, domain_map: dict[str, Any]) -> None:
+    """Write domain architecture mapping to .cartography/domain_architecture_map.json."""
+    path = artifacts_dir / "domain_architecture_map.json"
+    try:
+        path.write_text(json.dumps(domain_map, indent=2), encoding="utf-8")
+        logger.info("Wrote domain architecture map to %s", path)
+    except Exception as e:
+        logger.warning("Failed to write domain architecture map to %s: %s", path, e)
 
 
 def _load_json_if_exists(path: Path) -> Any:
