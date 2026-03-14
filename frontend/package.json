@@ -1,0 +1,28 @@
+{
+  "name": "brownfield-cartographer-frontend",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "autoprefixer": "latest",
+    "d3-force": "^3.0.0",
+    "next": "latest",
+    "postcss": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-force-graph": "^1.48.2",
+    "react-force-graph-2d": "^1.29.1",
+    "tailwindcss": "latest",
+    "typescript": "latest"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/d3-force": "^3.0.10",
+    "@types/node": "25.5.0",
+    "@types/react": "19.2.14"
+  }
+}
