@@ -18,6 +18,10 @@ dependencies = [
   "chromadb",
   "sentence-transformers",
   "python-dotenv",
+  "httpx",
+  "scikit-learn",
+  "fastapi",
+  "uvicorn[standard]",
 ]
 
 [tool.pytest.ini_options]

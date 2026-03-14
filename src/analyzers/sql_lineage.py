@@ -18,12 +18,20 @@ from src.models.knowledge_graph import DatasetNode
 
 logger = logging.getLogger(__name__)
 
-DIALECTS = {"postgres", "postgresql", "bigquery", "snowflake", "duckdb", "redshift", "spark"}
+DIALECTS = {"postgres", "postgresql", "bigquery", "snowflake", "duckdb", "redshift", "spark", "trino"}
 DEFAULT_DIALECT = "postgres"
 
 # dbt-style ref('model_name') and source('source_name','table_name') for logical model mapping
 _DBT_REF = re.compile(r"\bref\s*\(\s*['\"]([^'\"]+)['\"]\s*\)", re.IGNORECASE)
 _DBT_SOURCE = re.compile(r"\bsource\s*\(\s*['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]+)['\"]\s*\)", re.IGNORECASE)
+_DBT_REF_BLOCK = re.compile(r"\{\{\s*ref\s*\(\s*['\"]([^'\"]+)['\"]\s*\)\s*\}\}", re.IGNORECASE)
+_DBT_SOURCE_BLOCK = re.compile(
+    r"\{\{\s*source\s*\(\s*['\"]([^'\"]+)['\"]\s*,\s*['\"]([^'\"]+)['\"]\s*\)\s*\}\}",
+    re.IGNORECASE,
+)
+_DBT_CONFIG_BLOCK = re.compile(r"\{\{\s*config\s*\((?s:.*?)\)\s*\}\}", re.IGNORECASE)
+_JINJA_BLOCK = re.compile(r"\{\{.*?\}\}", re.DOTALL)
+_JINJA_TAG = re.compile(r"\{%.*?%\}", re.DOTALL)
 
 
 def _offset_to_line(sql: str, offset: int) -> int:
@@ -73,6 +81,166 @@ def _extract_dbt_refs_sources_with_lines(sql: str) -> tuple[list[dict], list[dic
         line_end = _offset_to_line(sql, m.end())
         sources.append({"source_name": src_name, "table_name": tbl_name, "line_start": line_start, "line_end": line_end})
     return refs, sources
+
+
+def _sanitize_templated_sql(sql: str) -> tuple[str, bool]:
+    """
+    Replace dbt/Jinja templating with SQL-safe placeholders so sqlglot can parse.
+    Keeps line structure intact (no newline removal) to preserve rough line numbers.
+    """
+    changed = False
+    out = sql
+
+    # Remove dbt config macros entirely (not lineage-relevant).
+    out2 = _DBT_CONFIG_BLOCK.sub(" ", out)
+    if out2 != out:
+        changed = True
+        out = out2
+
+    # Resolve ref/source to stable table-like identifiers.
+    out2 = _DBT_REF_BLOCK.sub(lambda m: m.group(1), out)
+    if out2 != out:
+        changed = True
+        out = out2
+    out2 = _DBT_SOURCE_BLOCK.sub(lambda m: f"{m.group(1)}.{m.group(2)}", out)
+    if out2 != out:
+        changed = True
+        out = out2
+
+    # Replace remaining Jinja expressions/tags with neutral SQL values.
+    # Prefer NULL instead of identifier to avoid fake column errors.
+    out2 = _JINJA_BLOCK.sub(" NULL ", out)
+    if out2 != out:
+        changed = True
+        out = out2
+    out2 = _JINJA_TAG.sub(" ", out)
+    if out2 != out:
+        changed = True
+        out = out2
+
+    # Remove placeholder-only lines often produced by stripped macro calls between CTEs.
+    cleaned_lines: list[str] = []
+    for line in out.splitlines():
+        if re.fullmatch(r"\s*NULL\s*[;,]?\s*", line):
+            changed = True
+            continue
+        cleaned_lines.append(line)
+    out = "\n".join(cleaned_lines)
+
+    # Clean common artifacts after replacement.
+    out = re.sub(r"\(\s*NULL\s*\)", "(SELECT 1)", out)
+    out = re.sub(r",\s*NULL\s*,", ",", out)
+    out = re.sub(r"\)\s*NULL\s*,", "),", out)
+    out = re.sub(r"\bNULL\s+as\s+([A-Za-z_][A-Za-z0-9_]*)", r"NULL as \1", out)
+
+    return out, changed
+
+
+def _fallback_lineage_from_dbt_refs_sources(path: Path, sql: str, dialect: str, parse_error: str) -> tuple[list[Any], list[Any], dict[str, Any]]:
+    """
+    Build minimal lineage when full SQL parse fails:
+    - Consume dbt ref()/source() calls found in text
+    - Produce to model name inferred from filename
+    This avoids dropping dbt-templated files entirely.
+    """
+    refs, sources = _extract_dbt_refs_sources_with_lines(sql)
+    path_str = str(path)
+    trans_id = f"sql:{path_str}"
+    posix = path.as_posix().lower()
+    is_dbt_model_path = "/models/" in posix or "dbt" in posix
+    if not (is_dbt_model_path or refs or sources):
+        return [], [], {}
+
+    nodes: list[Any] = []
+    edges: list[Any] = []
+    seen_tables: set[str] = set()
+
+    def _add_dataset(name: str) -> None:
+        if name and name not in seen_tables:
+            seen_tables.add(name)
+            nodes.append(DatasetNode(name=name, storage_type="table"))
+
+    # refs/source() as upstream datasets
+    for r in refs:
+        model = str(r.get("model") or "").strip()
+        if not model:
+            continue
+        _add_dataset(model)
+        line_range = (int(r["line_start"]), int(r["line_end"])) if r.get("line_start") and r.get("line_end") else None
+        e = {
+            "source": model,
+            "target": trans_id,
+            "edge_type": "CONSUMES",
+            "is_write": False,
+            "transformation_type": "sql_template_fallback",
+            "source_file": path_str,
+        }
+        if line_range:
+            e["line_range"] = line_range
+        edges.append(e)
+
+    for s in sources:
+        src_name = str(s.get("source_name") or "").strip()
+        tbl_name = str(s.get("table_name") or "").strip()
+        if not src_name or not tbl_name:
+            continue
+        logical = f"source:{src_name}.{tbl_name}"
+        _add_dataset(logical)
+        line_range = (int(s["line_start"]), int(s["line_end"])) if s.get("line_start") and s.get("line_end") else None
+        e = {
+            "source": logical,
+            "target": trans_id,
+            "edge_type": "CONSUMES",
+            "is_write": False,
+            "transformation_type": "sql_template_fallback",
+            "source_file": path_str,
+        }
+        if line_range:
+            e["line_range"] = line_range
+        edges.append(e)
+
+    # Infer output model from sql filename for dbt model files.
+    model_name = path.stem
+    if model_name:
+        _add_dataset(model_name)
+        edges.append(
+            {
+                "source": trans_id,
+                "target": model_name,
+                "edge_type": "PRODUCES",
+                "is_write": True,
+                "transformation_type": "sql_template_fallback",
+                "source_file": path_str,
+            }
+        )
+
+    if nodes or edges:
+        nodes.append({"id": trans_id, "type": "transformation"})
+
+    summary: dict[str, Any] = {
+        "path": path_str,
+        "dialect_used": dialect,
+        "templated_sql_sanitized": True,
+        "statement_count": 1 if (refs or sources or model_name) else 0,
+        "statement_types": ["sql_template_fallback"],
+        "tables_read": len({e["source"] for e in edges if e.get("edge_type") == "CONSUMES"}),
+        "tables_written": len({e["target"] for e in edges if e.get("edge_type") == "PRODUCES"}),
+        "queries": [
+            {
+                "statement_type": "sql_template_fallback",
+                "line_range": None,
+                "sources": [],
+                "targets": [{"table": model_name, "line_start": 0, "line_end": 0}] if model_name else [],
+                "dbt_refs": refs,
+                "dbt_sources": sources,
+            }
+        ],
+        "dbt_refs": refs,
+        "dbt_sources": sources,
+        "error": parse_error,
+        "fallback_mode": "dbt_ref_source_only",
+    }
+    return nodes, edges, summary
 
 
 def _tables_from_from_join_with_subqueries(stmt: exp.Expression) -> list[tuple[str, int, int]]:
@@ -191,15 +359,52 @@ def analyze_sql_lineage(
     if read_dialect not in DIALECTS:
         read_dialect = DEFAULT_DIALECT
 
-    try:
-        parsed = sqlglot.parse(sql, read=read_dialect)
-    except Exception as e:
-        err_msg = str(e)
-        if hasattr(e, "errors") and e.errors:
-            err_msg = "; ".join(str(x) for x in e.errors[:3])
+    used_sanitized = False
+    parsed = None
+    dialect_used = read_dialect
+    parse_errors: list[str] = []
+
+    candidate_dialects: list[str] = []
+    for d in [read_dialect, "trino", "duckdb", "spark", "bigquery", "snowflake", "redshift", "postgres"]:
+        d_norm = "postgres" if d in ("postgres", "postgresql") else d
+        if d_norm in DIALECTS and d_norm not in candidate_dialects:
+            candidate_dialects.append(d_norm)
+
+    # First pass: raw SQL across dialects.
+    for d in candidate_dialects:
+        try:
+            parsed = sqlglot.parse(sql, read=d)
+            dialect_used = d
+            break
+        except Exception as e:
+            parse_errors.append(f"{d}: {e}")
+
+    # Second pass: sanitized SQL across dialects.
+    if parsed is None:
+        sanitized_sql, changed = _sanitize_templated_sql(sql)
+        if changed:
+            for d in candidate_dialects:
+                try:
+                    parsed = sqlglot.parse(sanitized_sql, read=d)
+                    dialect_used = d
+                    used_sanitized = True
+                    logger.info("SQLLineage parsed with templating sanitizer path=%s dialect=%s", path, d)
+                    break
+                except Exception as e:
+                    parse_errors.append(f"{d} (sanitized): {e}")
+
+    if parsed is None:
+        err_msg = "; ".join(parse_errors[-3:]) if parse_errors else "unknown parse failure"
+        # Fallback: retain partial lineage from dbt refs/source calls instead of skipping file.
+        fb_nodes, fb_edges, fb_summary = _fallback_lineage_from_dbt_refs_sources(path, sql, read_dialect, err_msg)
+        if fb_nodes or fb_edges:
+            logger.info("SQLLineage fallback path=%s dialect=%s mode=%s", path, read_dialect, fb_summary.get("fallback_mode"))
+            return fb_nodes, fb_edges, fb_summary
         logger.warning(
             "SQLLineage unparseable path=%s dialect=%s diagnostic=%s (file skipped)",
-            path, read_dialect, err_msg,
+            path,
+            read_dialect,
+            err_msg,
         )
         empty_summary["dialect_used"] = read_dialect
         empty_summary["error"] = err_msg
@@ -317,7 +522,8 @@ def analyze_sql_lineage(
 
     summary: dict[str, Any] = {
         "path": path_str,
-        "dialect_used": read_dialect,
+        "dialect_used": dialect_used,
+        "templated_sql_sanitized": used_sanitized,
         "statement_count": len(statement_types),
         "statement_types": statement_types,
         "tables_read": len(tables_read_set),

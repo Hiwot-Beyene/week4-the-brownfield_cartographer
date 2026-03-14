@@ -65,6 +65,10 @@ def run_hydrologist(
                     exc_info=False,
                 )
         elif path.suffix.lower() == ".sql":
+            # dbt macros are templated helper SQL, not concrete lineage models.
+            # Skip them to avoid noisy unparseable warnings.
+            if "/macros/" in path.as_posix().lower():
+                continue
             try:
                 nodes, edges, summary = analyze_sql_lineage(path)
                 all_nodes.extend(nodes)
