@@ -24,6 +24,11 @@ from src.store.sqlite_store import (
     get_high_velocity,
     get_dead_code_candidates,
     get_survey_summary_json,
+    get_domain_architecture_map,
+    get_day_one_answers,
+    insert_domain_architecture_map,
+    insert_day_one_answers,
+    upsert_modules_semantic_fields,
 )
 from src.store.vector_store import (
     init_vector_store,
@@ -46,6 +51,11 @@ __all__ = [
     "get_high_velocity",
     "get_dead_code_candidates",
     "get_survey_summary_json",
+    "get_domain_architecture_map",
+    "get_day_one_answers",
+    "insert_domain_architecture_map",
+    "insert_day_one_answers",
+    "upsert_modules_semantic_fields",
     "get_analyses",
     "get_modules",
     "get_import_edges",

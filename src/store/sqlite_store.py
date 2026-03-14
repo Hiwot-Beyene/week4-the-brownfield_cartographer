@@ -232,6 +232,47 @@ def init_db(db_path: Optional[Path] = None, repo_root: Optional[Path] = None) ->
                 FOREIGN KEY (analysis_id) REFERENCES analyses(id)
             );
             CREATE INDEX IF NOT EXISTS idx_sql_lineage_summary_analysis_id ON sql_lineage_summary(analysis_id);
+
+            CREATE TABLE IF NOT EXISTS semantic_domain_map (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                analysis_id INTEGER NOT NULL,
+                module_path TEXT NOT NULL,
+                domain_name TEXT NOT NULL,
+                cluster_id INTEGER,
+                FOREIGN KEY (analysis_id) REFERENCES analyses(id)
+            );
+            CREATE INDEX IF NOT EXISTS idx_semantic_domain_map_analysis_id ON semantic_domain_map(analysis_id);
+            CREATE INDEX IF NOT EXISTS idx_semantic_domain_map_module_path ON semantic_domain_map(analysis_id, module_path);
+
+            CREATE TABLE IF NOT EXISTS semantic_clusters (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                analysis_id INTEGER NOT NULL,
+                cluster_id INTEGER NOT NULL,
+                domain_name TEXT NOT NULL,
+                FOREIGN KEY (analysis_id) REFERENCES analyses(id)
+            );
+            CREATE INDEX IF NOT EXISTS idx_semantic_clusters_analysis_id ON semantic_clusters(analysis_id);
+
+            CREATE TABLE IF NOT EXISTS day_one_answers (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                analysis_id INTEGER NOT NULL,
+                question_id TEXT NOT NULL,
+                answer TEXT NOT NULL,
+                FOREIGN KEY (analysis_id) REFERENCES analyses(id)
+            );
+            CREATE INDEX IF NOT EXISTS idx_day_one_answers_analysis_id ON day_one_answers(analysis_id);
+            CREATE INDEX IF NOT EXISTS idx_day_one_answers_question ON day_one_answers(analysis_id, question_id);
+
+            CREATE TABLE IF NOT EXISTS day_one_citations (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                analysis_id INTEGER NOT NULL,
+                question_id TEXT NOT NULL,
+                file TEXT NOT NULL,
+                line INTEGER,
+                FOREIGN KEY (analysis_id) REFERENCES analyses(id)
+            );
+            CREATE INDEX IF NOT EXISTS idx_day_one_citations_analysis_id ON day_one_citations(analysis_id);
+            CREATE INDEX IF NOT EXISTS idx_day_one_citations_question ON day_one_citations(analysis_id, question_id);
         """)
         _migrate_modules_columns(conn)
         _migrate_git_velocity_last_modified(conn)
@@ -991,5 +1032,206 @@ def get_lineage_blast_radius(
             visited.add(nxt)
             frontier.append((nxt, depth + 1))
     return sorted(visited)
+
+
+def upsert_modules_semantic_fields(
+    analysis_id: int,
+    modules: list[dict[str, Any]],
+    db_path: Optional[Path] = None,
+    repo_root: Optional[Path] = None,
+) -> None:
+    """
+    Update semantic fields on modules table for a run.
+    Matches by (analysis_id, path).
+    """
+    path = db_path or _get_db_path(repo_root)
+    conn = sqlite3.connect(str(path))
+    try:
+        for m in modules:
+            module_path = str(m.get("path") or "").strip()
+            if not module_path:
+                continue
+            conn.execute(
+                """UPDATE modules
+                   SET purpose_statement = ?, domain_cluster = ?, is_dead_code_candidate = ?,
+                       complexity_score = ?, change_velocity_30d = ?, last_modified = ?
+                   WHERE analysis_id = ? AND path = ?""",
+                (
+                    m.get("purpose_statement"),
+                    m.get("domain_cluster"),
+                    1 if bool(m.get("is_dead_code_candidate")) else 0 if m.get("is_dead_code_candidate") is not None else None,
+                    _safe_float(m.get("complexity_score")),
+                    _safe_float(m.get("change_velocity_30d")),
+                    m.get("last_modified"),
+                    analysis_id,
+                    module_path,
+                ),
+            )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def insert_domain_architecture_map(
+    analysis_id: int,
+    domain_map: dict[str, Any],
+    db_path: Optional[Path] = None,
+    repo_root: Optional[Path] = None,
+) -> None:
+    """
+    Persist Semanticist domain architecture map into semantic_domain_map + semantic_clusters.
+    Overwrites prior rows for analysis_id.
+    """
+    path = db_path or _get_db_path(repo_root)
+    module_to_domain = domain_map.get("module_to_domain") or {}
+    cluster_to_domain = domain_map.get("cluster_to_domain") or {}
+    conn = sqlite3.connect(str(path))
+    try:
+        conn.execute("DELETE FROM semantic_domain_map WHERE analysis_id = ?", (analysis_id,))
+        conn.execute("DELETE FROM semantic_clusters WHERE analysis_id = ?", (analysis_id,))
+        for module_path, domain_name in module_to_domain.items():
+            conn.execute(
+                """INSERT INTO semantic_domain_map (analysis_id, module_path, domain_name, cluster_id)
+                   VALUES (?, ?, ?, NULL)""",
+                (analysis_id, str(module_path), str(domain_name)),
+            )
+        for cluster_id, domain_name in cluster_to_domain.items():
+            try:
+                cid = int(cluster_id)
+            except (TypeError, ValueError):
+                continue
+            conn.execute(
+                """INSERT INTO semantic_clusters (analysis_id, cluster_id, domain_name)
+                   VALUES (?, ?, ?)""",
+                (analysis_id, cid, str(domain_name)),
+            )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def get_domain_architecture_map(
+    analysis_id: int,
+    db_path: Optional[Path] = None,
+    repo_root: Optional[Path] = None,
+) -> dict[str, Any]:
+    """Read Semanticist domain map from DB."""
+    path = db_path or _get_db_path(repo_root)
+    if not path.exists():
+        return {"module_to_domain": {}, "cluster_to_domain": {}, "skipped_modules": []}
+    conn = sqlite3.connect(str(path))
+    conn.row_factory = sqlite3.Row
+    try:
+        module_to_domain: dict[str, str] = {}
+        try:
+            cur = conn.execute(
+                "SELECT module_path, domain_name FROM semantic_domain_map WHERE analysis_id = ?",
+                (analysis_id,),
+            )
+        except sqlite3.OperationalError:
+            return {"module_to_domain": {}, "cluster_to_domain": {}, "skipped_modules": []}
+        for row in cur.fetchall():
+            module_to_domain[str(row["module_path"])] = str(row["domain_name"])
+
+        cluster_to_domain: dict[int, str] = {}
+        cur = conn.execute(
+            "SELECT cluster_id, domain_name FROM semantic_clusters WHERE analysis_id = ?",
+            (analysis_id,),
+        )
+        for row in cur.fetchall():
+            cluster_to_domain[int(row["cluster_id"])] = str(row["domain_name"])
+
+        return {
+            "module_to_domain": module_to_domain,
+            "cluster_to_domain": cluster_to_domain,
+            "skipped_modules": [],
+        }
+    finally:
+        conn.close()
+
+
+def insert_day_one_answers(
+    analysis_id: int,
+    answers: list[dict[str, Any]],
+    db_path: Optional[Path] = None,
+    repo_root: Optional[Path] = None,
+) -> None:
+    """Persist Day-One answers and citations. Overwrites prior rows for analysis_id."""
+    path = db_path or _get_db_path(repo_root)
+    conn = sqlite3.connect(str(path))
+    try:
+        conn.execute("DELETE FROM day_one_answers WHERE analysis_id = ?", (analysis_id,))
+        conn.execute("DELETE FROM day_one_citations WHERE analysis_id = ?", (analysis_id,))
+        for a in answers:
+            qid = str(a.get("question_id") or "").strip()
+            answer = str(a.get("answer") or "").strip()
+            if not qid:
+                continue
+            conn.execute(
+                "INSERT INTO day_one_answers (analysis_id, question_id, answer) VALUES (?, ?, ?)",
+                (analysis_id, qid, answer),
+            )
+            for c in a.get("citations") or []:
+                file_path = str((c or {}).get("file") or "").strip()
+                if not file_path:
+                    continue
+                line = (c or {}).get("line")
+                try:
+                    line_val = int(line) if line is not None else None
+                except (TypeError, ValueError):
+                    line_val = None
+                conn.execute(
+                    """INSERT INTO day_one_citations (analysis_id, question_id, file, line)
+                       VALUES (?, ?, ?, ?)""",
+                    (analysis_id, qid, file_path, line_val),
+                )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def get_day_one_answers(
+    analysis_id: int,
+    db_path: Optional[Path] = None,
+    repo_root: Optional[Path] = None,
+) -> list[dict[str, Any]]:
+    """Read Day-One answers from DB, including citations."""
+    path = db_path or _get_db_path(repo_root)
+    if not path.exists():
+        return []
+    conn = sqlite3.connect(str(path))
+    conn.row_factory = sqlite3.Row
+    try:
+        try:
+            cur = conn.execute(
+                "SELECT question_id, answer FROM day_one_answers WHERE analysis_id = ? ORDER BY id ASC",
+                (analysis_id,),
+            )
+        except sqlite3.OperationalError:
+            return []
+        answers = [dict(row) for row in cur.fetchall()]
+        if not answers:
+            return []
+        cur = conn.execute(
+            "SELECT question_id, file, line FROM day_one_citations WHERE analysis_id = ? ORDER BY id ASC",
+            (analysis_id,),
+        )
+        cits_by_q: dict[str, list[dict[str, Any]]] = {}
+        for row in cur.fetchall():
+            q = str(row["question_id"])
+            cits_by_q.setdefault(q, []).append({"file": row["file"], "line": row["line"]})
+        out: list[dict[str, Any]] = []
+        for a in answers:
+            qid = str(a.get("question_id") or "")
+            out.append(
+                {
+                    "question_id": qid,
+                    "answer": a.get("answer") or "",
+                    "citations": cits_by_q.get(qid, []),
+                }
+            )
+        return out
+    finally:
+        conn.close()
 
 

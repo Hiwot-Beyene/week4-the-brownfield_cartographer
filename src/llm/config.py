@@ -20,6 +20,7 @@ DEFAULT_BULK_MODEL = "deepseek-coder:6.7b"
 DEFAULT_SYNTHESIS_PROVIDER = "ollama"
 DEFAULT_SYNTHESIS_MODEL = "deepseek-r1"
 DEFAULT_OLLAMA_BASE_URL = "http://localhost:11434"
+DEFAULT_OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 
 
 @dataclass
@@ -30,6 +31,8 @@ class SemanticConfig:
     synthesis_provider: str
     synthesis_model: str
     ollama_base_url: str
+    openrouter_base_url: str
+    openrouter_api_key: Optional[str] = None
     budget_cap_total: Optional[int] = None
     budget_cap_bulk: Optional[int] = None
     truncate_lines: int = 500
@@ -62,6 +65,8 @@ def get_semantic_config() -> SemanticConfig:
     synthesis_provider = os.environ.get("SEMANTIC_SYNTHESIS_PROVIDER") or DEFAULT_SYNTHESIS_PROVIDER
     synthesis_model = os.environ.get("SEMANTIC_SYNTHESIS_MODEL") or DEFAULT_SYNTHESIS_MODEL
     ollama_base_url = os.environ.get("OLLAMA_BASE_URL") or DEFAULT_OLLAMA_BASE_URL
+    openrouter_base_url = os.environ.get("OPENROUTER_BASE_URL") or DEFAULT_OPENROUTER_BASE_URL
+    openrouter_api_key = os.environ.get("OPENROUTER_API_KEY")
 
     cap_total = None
     if os.environ.get("SEMANTIC_BUDGET_CAP_TOTAL"):
@@ -88,6 +93,8 @@ def get_semantic_config() -> SemanticConfig:
         synthesis_provider=synthesis_provider,
         synthesis_model=synthesis_model,
         ollama_base_url=ollama_base_url.rstrip("/"),
+        openrouter_base_url=openrouter_base_url.rstrip("/"),
+        openrouter_api_key=openrouter_api_key,
         budget_cap_total=cap_total,
         budget_cap_bulk=cap_bulk,
         truncate_lines=truncate_lines,

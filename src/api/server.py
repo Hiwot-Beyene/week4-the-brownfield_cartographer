@@ -96,10 +96,13 @@ async def get_domain_architecture(analysis_id: int) -> dict[str, Any]:
     analysis = next((a for a in analyses if a["id"] == analysis_id), None)
     if not analysis:
         raise HTTPException(status_code=404, detail="Analysis not found")
+    # DB-first for production API reads.
+    db_map = sqlite_store.get_domain_architecture_map(analysis_id, repo_root=REPO_ROOT)
+    if db_map.get("module_to_domain") or db_map.get("cluster_to_domain"):
+        return db_map
     artifacts_dir = _get_artifacts_dir(analysis)
     path = artifacts_dir / "domain_architecture_map.json"
     if not path.exists():
-        # Graceful degradation: empty map
         return {"module_to_domain": {}, "cluster_to_domain": {}, "skipped_modules": []}
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -113,14 +116,16 @@ async def get_day_one_answers(analysis_id: int) -> list[dict[str, Any]]:
     analysis = next((a for a in analyses if a["id"] == analysis_id), None)
     if not analysis:
         raise HTTPException(status_code=404, detail="Analysis not found")
+    # DB-first for production API reads.
+    db_answers = sqlite_store.get_day_one_answers(analysis_id, repo_root=REPO_ROOT)
+    if db_answers:
+        return db_answers
     artifacts_dir = _get_artifacts_dir(analysis)
     path = artifacts_dir / "day_one_answers.json"
     if not path.exists():
-        # Graceful degradation: no answers yet
         return []
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
-        # Expecting a list; if wrapper dict present, unwrap
         if isinstance(data, dict) and "answers" in data:
             return list(data["answers"])
         if isinstance(data, list):

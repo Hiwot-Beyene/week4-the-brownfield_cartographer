@@ -25,6 +25,12 @@ interface DayOneAnswer {
   citations: DayOneCitation[];
 }
 
+interface DomainMapPayload {
+  module_to_domain: Record<string, string>;
+  cluster_to_domain: Record<string, string>;
+  skipped_modules?: string[];
+}
+
 type WorkspaceTab = "surveyor" | "hydrologist" | "semanticist";
 
 const AGENTS: { id: WorkspaceTab; label: string; description: string }[] = [
@@ -49,6 +55,7 @@ export default function AnalysisDetailPage() {
   const [moduleGraph, setModuleGraph] = useState<GraphPayload | null>(null);
   const [lineageGraph, setLineageGraph] = useState<GraphPayload | null>(null);
   const [dayOneAnswers, setDayOneAnswers] = useState<DayOneAnswer[]>([]);
+  const [domainMap, setDomainMap] = useState<DomainMapPayload | null>(null);
   const [activeTab, setActiveTab] = useState<WorkspaceTab>("surveyor");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -97,10 +104,11 @@ export default function AnalysisDetailPage() {
     setLoading(true);
     async function load() {
       try {
-        const [modGraphRes, linGraphRes, answersRes] = await Promise.all([
+        const [modGraphRes, linGraphRes, answersRes, domainsRes] = await Promise.all([
           fetch(`${API_BASE}/analyses/${analysisId}/module-graph`),
           fetch(`${API_BASE}/analyses/${analysisId}/lineage-graph`),
           fetch(`${API_BASE}/analyses/${analysisId}/day-one-answers`),
+          fetch(`${API_BASE}/analyses/${analysisId}/domains`),
         ]);
         if (cancelled) return;
         const modPayload: GraphPayload | null = modGraphRes.ok ? await modGraphRes.json() : null;
@@ -110,9 +118,11 @@ export default function AnalysisDetailPage() {
           const raw = await answersRes.json();
           answers = Array.isArray(raw) ? raw : raw?.answers ?? [];
         }
+        const domains: DomainMapPayload | null = domainsRes.ok ? await domainsRes.json() : null;
         setModuleGraph(modPayload);
         setLineageGraph(linPayload);
         setDayOneAnswers(answers);
+        setDomainMap(domains);
       } catch (e: unknown) {
         if (!cancelled) setError(e instanceof Error ? e.message : String(e));
       } finally {
@@ -243,6 +253,31 @@ export default function AnalysisDetailPage() {
           <section className="rounded-2xl border border-red-900/70 bg-gradient-to-br from-zinc-900/90 to-zinc-900/60 p-5 shadow-[0_18px_45px_rgba(0,0,0,0.45)]">
             <h2 className="font-serif text-2xl font-semibold text-red-100">{activeAgent?.label ?? "Semanticist"}</h2>
             <p className="mt-1 text-sm text-zinc-300">{activeAgent?.description ?? ""}</p>
+            {!loading && domainMap && (
+              <div className="mt-4 rounded-xl border border-red-950/70 bg-gradient-to-b from-zinc-950 to-zinc-900 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-red-300">Domain Architecture Map</p>
+                <div className="mt-2 flex flex-wrap gap-2 text-xs text-zinc-300">
+                  <span className="rounded-full border border-red-900/70 bg-zinc-950/80 px-3 py-1">
+                    Domains: {Object.keys(domainMap.cluster_to_domain || {}).length}
+                  </span>
+                  <span className="rounded-full border border-red-900/70 bg-zinc-950/80 px-3 py-1">
+                    Mapped modules: {Object.keys(domainMap.module_to_domain || {}).length}
+                  </span>
+                  <span className="rounded-full border border-red-900/70 bg-zinc-950/80 px-3 py-1">
+                    Skipped: {domainMap.skipped_modules?.length ?? 0}
+                  </span>
+                </div>
+                {Object.keys(domainMap.cluster_to_domain || {}).length > 0 && (
+                  <ul className="mt-3 grid gap-2 md:grid-cols-2">
+                    {Object.entries(domainMap.cluster_to_domain).map(([cid, name]) => (
+                      <li key={cid} className="rounded-lg border border-red-900/60 bg-zinc-950/70 px-3 py-2 text-xs text-zinc-200">
+                        <span className="text-red-300">Cluster {cid}:</span> {name}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
             {loading ? (
               <p className="mt-4 text-sm text-zinc-400">Loading...</p>
             ) : dayOneAnswers.length === 0 ? (
