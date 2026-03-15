@@ -5,6 +5,7 @@ import json
 import logging
 import subprocess
 import sys
+import time
 from pathlib import Path
 from typing import Optional
 
@@ -427,7 +428,16 @@ def build_knowledge_graph_payload(
     # IMPORTS edges with weight = import_count
     import_edges = _import_edge_weights(modules)
     edges = [
-        {"type": "IMPORTS", "source": src, "target": tgt, "weight": w}
+        {
+            "type": "IMPORTS",
+            # Schema-aligned keys:
+            "source_module": src,
+            "target_module": tgt,
+            # Back-compat aliases used by existing readers:
+            "source": src,
+            "target": tgt,
+            "weight": w,
+        }
         for src, tgt, w in sorted(import_edges, key=lambda x: (x[0], x[1]))
     ]
     # Deterministic ordering
@@ -486,7 +496,14 @@ def write_module_graph_json(
                 for n in sorted(g.nodes())
             ],
             "edges": [
-                {"type": "IMPORTS", "source": u, "target": v, "weight": 1}
+                {
+                    "type": "IMPORTS",
+                    "source_module": u,
+                    "target_module": v,
+                    "source": u,
+                    "target": v,
+                    "weight": 1,
+                }
                 for u, v in sorted(g.edges())
             ],
         }
@@ -574,6 +591,8 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> tu
     Returns (path to module_graph.json, analysis_id or None if DB persistence failed).
     """
     repo_root = Path(repo_root).resolve()
+    t0 = time.perf_counter()
+    logger = logging.getLogger(__name__)
     cartography_dir = repo_root / ".cartography"
     cartography_dir.mkdir(parents=True, exist_ok=True)
     # When analyzing a remote clone, store DB/chroma in the project so the user sees the analysis in project/.cartography
@@ -589,6 +608,7 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> tu
 
     rules = IgnoreRules.default()
     files = discover_files(repo_root, rules)
+    logger.info("surveyor: discovered %d files", len(files))
 
     cache_hashes_path = cartography_dir / "file_hashes.json"
     cache_modules_path = cartography_dir / "modules.json"
@@ -620,11 +640,13 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> tu
         seen_paths.add(key)
         unique_files.append(f)
     files = unique_files
+    logger.info("surveyor: normalized to %d unique files", len(files))
 
     new_hashes: dict[str, str] = {}
     modules: list[ModuleNode] = []
     seen_module_paths: set[str] = set()
-    for f in sorted(files):
+    total_files = len(files)
+    for idx, f in enumerate(sorted(files), start=1):
         h = _hash_file(f)
         new_hashes[str(f)] = h
         if old_hashes.get(str(f)) == h and str(f) in cached_modules:
@@ -640,6 +662,13 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> tu
             continue
         seen_module_paths.add(path_key)
         modules.append(m)
+        if idx % 200 == 0 or idx == total_files:
+            logger.info(
+                "surveyor: parsed %d/%d files (modules=%d)",
+                idx,
+                total_files,
+                len(modules),
+            )
 
     g = build_module_graph(modules)
     pr = compute_pagerank(g)
@@ -665,6 +694,12 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> tu
         k: v for k, v in summary.items()
         if not (isinstance(v, list) and len(v) == 0)
     }
+    logger.info(
+        "surveyor: graph nodes=%d edges=%d scc=%d",
+        g.number_of_nodes(),
+        g.number_of_edges(),
+        len(sccs),
+    )
 
     # Persist to SQLite then vector store (separate try/except so one can succeed if the other fails)
     from src.store import (
@@ -733,5 +768,6 @@ def run_surveyor(repo_root: Path, project_data_dir: Optional[Path] = None) -> tu
         summary_for_storage,
     )
     out_path = cartography_dir / "module_graph.json"
+    logger.info("surveyor: completed in %.1fs -> %s", time.perf_counter() - t0, out_path)
     return (out_path, analysis_id)
 

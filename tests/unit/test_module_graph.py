@@ -33,5 +33,7 @@ def test_build_module_graph_edges(tmp_path: Path) -> None:
     assert "edges" in data
     assert data["nodes"][0]["type"] == "module"
     assert data["edges"][0]["type"] == "IMPORTS"
+    assert "source_module" in data["edges"][0]
+    assert "target_module" in data["edges"][0]
     assert data["edges"][0]["weight"] == 1
 

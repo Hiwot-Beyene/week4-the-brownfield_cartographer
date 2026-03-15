@@ -243,7 +243,13 @@ class DataLineageGraph:
         edges = []
         for u, v in sorted(self._g.edges()):
             data = dict(self._g.edges[u, v])
-            edges.append(_drop_none_and_empty(_drop_none({"source": u, "target": v, **data})))
+            payload = _drop_none_and_empty(_drop_none({"source": u, "target": v, **data}))
+            edge_type = str(payload.get("edge_type") or "")
+            # Schema-aligned aliases while preserving existing source/target consumers.
+            if edge_type in ("PRODUCES", "CONSUMES"):
+                payload["transformation"] = u
+                payload["dataset"] = v
+            edges.append(payload)
         return (nodes, edges)
 
     def write_json(self, out_path: Path) -> None:

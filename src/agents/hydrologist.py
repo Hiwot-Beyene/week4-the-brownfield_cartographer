@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import logging
+import time
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -29,6 +30,7 @@ def run_hydrologist(
     repo_root: Path,
     project_data_dir: Path | None = None,
     analysis_id: int | None = None,
+    changed_files: list[str] | None = None,
 ) -> "DataLineageGraph":
     """
     Run all lineage analyzers on repo_root using Phase 1 file discovery.
@@ -38,11 +40,17 @@ def run_hydrologist(
     When analysis_id is None (e.g. lineage-only CLI), creates an analysis row for this run.
     """
     repo_root = Path(repo_root).resolve()
+    t0 = time.perf_counter()
     project_data_dir = Path(project_data_dir).resolve() if project_data_dir else None
     rules = IgnoreRules.default()
     files = discover_files(repo_root, rules, exts=HYDROLOGIST_EXTS)
     # Filter to Hydrologist-relevant extensions only (discover_files already applied ignore/sensitive)
     hydrologist_files = [f for f in files if f.suffix.lower() in HYDROLOGIST_EXTS]
+    if changed_files:
+        changed_norm = {str(Path(p)).replace("\\", "/") for p in changed_files}
+        hydrologist_files = [
+            f for f in hydrologist_files if str(f.relative_to(repo_root)).replace("\\", "/") in changed_norm
+        ]
     logger.info("lineage: discovered %d files to analyze", len(hydrologist_files))
 
     all_nodes: list = []
@@ -50,7 +58,8 @@ def run_hydrologist(
     sql_summaries: list = []
     skipped = 0
 
-    for path in hydrologist_files:
+    total = len(hydrologist_files)
+    for idx, path in enumerate(hydrologist_files, start=1):
         if path.suffix.lower() == ".py":
             try:
                 nodes, edges = analyze_python_data_flow(path)
@@ -95,6 +104,16 @@ def run_hydrologist(
                     e,
                     exc_info=False,
                 )
+
+        if idx % 100 == 0 or idx == total:
+            logger.info(
+                "lineage: processed %d/%d files (nodes=%d edges=%d skipped=%d)",
+                idx,
+                total,
+                len(all_nodes),
+                len(all_edges),
+                skipped,
+            )
 
     if skipped:
         logger.info("lineage: skipped %d file(s) due to errors", skipped)
@@ -181,6 +200,12 @@ def run_hydrologist(
         except Exception as e:
             logger.warning("could not persist lineage to SQLite: %s", e)
 
+    logger.info(
+        "lineage: completed in %.1fs (graph_nodes=%d graph_edges=%d)",
+        time.perf_counter() - t0,
+        graph._g.number_of_nodes(),
+        graph._g.number_of_edges(),
+    )
     return graph
 
 

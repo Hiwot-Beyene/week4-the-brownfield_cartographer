@@ -102,3 +102,5 @@ def test_write_json_deterministic_and_valid(tmp_path: Path) -> None:
     assert raw.get("schema_version") >= 1
     assert len(raw["nodes"]) >= 2
     assert len(raw["edges"]) >= 1
+    assert "transformation" in raw["edges"][0]
+    assert "dataset" in raw["edges"][0]
