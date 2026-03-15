@@ -14,3 +14,4 @@ python-dotenv
 # Phase 2 Hydrologist: SQL lineage, DAG config
 sqlglot
 pyyaml
+langgraph

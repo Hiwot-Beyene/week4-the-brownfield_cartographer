@@ -22,6 +22,7 @@ dependencies = [
   "scikit-learn",
   "fastapi",
   "uvicorn[standard]",
+  "langgraph",
 ]
 
 [tool.pytest.ini_options]
