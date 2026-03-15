@@ -1,0 +1,74 @@
+{
+  "answers": [
+    {
+      "question_id": "fde_q1_business_capability",
+      "answer": "The system appears to support software/data platform capabilities across 37 modules with 3 dependency links.",
+      "citations": [
+        {
+          "file": "module_graph.json",
+          "line": 1
+        },
+        {
+          "file": "lineage_graph.json",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "question_id": "fde_q2_key_data_flow",
+      "answer": "Detected lineage spans 62 nodes and 62 edges, indicating active upstream-to-downstream data movement.",
+      "citations": [
+        {
+          "file": "module_graph.json",
+          "line": 1
+        },
+        {
+          "file": "lineage_graph.json",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "question_id": "fde_q3_change_risk",
+      "answer": "Highest structural risk concentrates around /home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/cd_prod.yml, /home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/cd_staging.yml, /home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/ci.yml with additional change pressure in /home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/cd_prod.yml, /home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/cd_staging.yml, /home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/ci.yml.",
+      "citations": [
+        {
+          "file": "module_graph.json",
+          "line": 1
+        },
+        {
+          "file": "lineage_graph.json",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "question_id": "fde_q4_operational_hotspots",
+      "answer": "Operational hotspots likely include /home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py based on static and history signals.",
+      "citations": [
+        {
+          "file": "module_graph.json",
+          "line": 1
+        },
+        {
+          "file": "lineage_graph.json",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "question_id": "fde_q5_first_90_days",
+      "answer": "Prioritize stabilizing high-impact modules, validating lineage-critical transformations, and improving documentation for rapidly changing code paths.",
+      "citations": [
+        {
+          "file": "module_graph.json",
+          "line": 1
+        },
+        {
+          "file": "lineage_graph.json",
+          "line": 1
+        }
+      ]
+    }
+  ]
+}
