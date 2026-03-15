@@ -10,7 +10,11 @@ from unittest.mock import patch, MagicMock
 import pytest
 
 from src.models.module import ModuleNode
-from src.agents.semanticist import generate_purpose_statement, ContextWindowBudget
+from src.agents.semanticist import (
+    generate_purpose_statement,
+    ContextWindowBudget,
+    _batch_generate_purposes,
+)
 
 
 def _make_module(path: str = "src/foo.py", language: str = "python") -> ModuleNode:
@@ -69,3 +73,23 @@ def test_skip_module_on_llm_failure(mock_llm):
         _make_module(), code_slice="x", docstring=None, budget=budget
     )
     assert result is None
+
+
+@patch("src.agents.semanticist._call_llm_bulk")
+def test_batch_generate_purposes_tolerates_string_rows(mock_llm):
+    """Small local models may return mixed rows; parser should skip bad rows without failing batch."""
+    mock_llm.return_value = """
+    {
+      "results": [
+        "noise row",
+        {"module_name": "src/a.py", "purpose_statement": "Handles ingestion."},
+        "src/b.py: Serves API responses."
+      ]
+    }
+    """
+    mods = [_make_module("src/a.py"), _make_module("src/b.py")]
+    contexts = {"src/a.py": "MODULE: src/a.py", "src/b.py": "MODULE: src/b.py"}
+    out, doc_match = _batch_generate_purposes(mods, contexts, ContextWindowBudget(), batch_size=2)
+    assert out["src/a.py"] == "Handles ingestion."
+    assert out["src/b.py"] == "Serves API responses."
+    assert doc_match.get("src/a.py") is None

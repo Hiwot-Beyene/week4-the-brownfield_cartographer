@@ -47,3 +47,28 @@ def test_answer_day_one_questions_parses_five_answers(mock_llm, tmp_path: Path) 
         assert a.citations
         assert a.citations[0].file == "src/app.py"
 
+
+def test_answer_day_one_questions_heuristic_mode(tmp_path: Path) -> None:
+    artifacts = tmp_path / ".cartography"
+    artifacts.mkdir()
+    _write_json(artifacts / "module_graph.json", {"nodes": [{"id": "a"}], "edges": [{"source": "a", "target": "b"}]})
+    _write_json(artifacts / "lineage_graph.json", {"nodes": [{"id": "raw.a"}], "edges": []})
+    _write_json(artifacts / "survey_summary.json", {"high_impact": ["src/a.py"], "high_velocity": ["src/b.py"], "risky": []})
+
+    out = answer_day_one_questions(artifacts, use_llm=False)
+    assert len(out) == 5
+    assert out[0].question_id.startswith("fde_")
+
+
+@patch("src.agents.semanticist._call_llm_synthesis")
+def test_answer_day_one_questions_falls_back_when_llm_output_invalid(mock_llm, tmp_path: Path) -> None:
+    artifacts = tmp_path / ".cartography"
+    artifacts.mkdir()
+    _write_json(artifacts / "module_graph.json", {"nodes": [{"id": "a"}], "edges": []})
+    _write_json(artifacts / "lineage_graph.json", {"nodes": [{"id": "raw.a"}], "edges": []})
+    _write_json(artifacts / "survey_summary.json", {"high_impact": [], "high_velocity": [], "dead_code_candidates": []})
+    mock_llm.return_value = "not-json"
+    out = answer_day_one_questions(artifacts, use_llm=True)
+    assert len(out) == 5
+    assert out[0].question_id.startswith("fde_")
+
