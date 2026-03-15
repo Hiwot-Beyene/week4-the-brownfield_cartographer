@@ -31,12 +31,13 @@ interface DomainMapPayload {
   skipped_modules?: string[];
 }
 
-type WorkspaceTab = "surveyor" | "hydrologist" | "semanticist";
+type WorkspaceTab = "surveyor" | "hydrologist" | "semanticist" | "archivist";
 
 const AGENTS: { id: WorkspaceTab; label: string; description: string }[] = [
   { id: "surveyor", label: "Surveyor", description: "Module topology, centrality, and dead-code hotspots." },
   { id: "hydrologist", label: "Hydrologist", description: "Data lineage: tables, transformations, and flows." },
   { id: "semanticist", label: "Semanticist", description: "Purpose statements, domains, and Day-One answers." },
+  { id: "archivist", label: "Archivist", description: "Living context artifacts and Navigator query interface." },
 ];
 
 function repoDisplayName(repoPath: string): string {
@@ -57,6 +58,13 @@ export default function AnalysisDetailPage() {
   const [dayOneAnswers, setDayOneAnswers] = useState<DayOneAnswer[]>([]);
   const [domainMap, setDomainMap] = useState<DomainMapPayload | null>(null);
   const [activeTab, setActiveTab] = useState<WorkspaceTab>("surveyor");
+  const [codebaseMd, setCodebaseMd] = useState<string>("");
+  const [onboardingBrief, setOnboardingBrief] = useState<string>("");
+  const [semanticManifest, setSemanticManifest] = useState<{ record_count?: number } | null>(null);
+  const [traceItems, setTraceItems] = useState<any[]>([]);
+  const [navigatorQuery, setNavigatorQuery] = useState<string>("");
+  const [navigatorAnswer, setNavigatorAnswer] = useState<{ answer: string; citations: any[]; tool_used?: string; confidence?: number } | null>(null);
+  const [navigatorLoading, setNavigatorLoading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -104,11 +112,15 @@ export default function AnalysisDetailPage() {
     setLoading(true);
     async function load() {
       try {
-        const [modGraphRes, linGraphRes, answersRes, domainsRes] = await Promise.all([
+        const [modGraphRes, linGraphRes, answersRes, domainsRes, codebaseRes, briefRes, semanticRes, traceRes] = await Promise.all([
           fetch(`${API_BASE}/analyses/${analysisId}/module-graph`),
           fetch(`${API_BASE}/analyses/${analysisId}/lineage-graph`),
           fetch(`${API_BASE}/analyses/${analysisId}/day-one-answers`),
           fetch(`${API_BASE}/analyses/${analysisId}/domains`),
+          fetch(`${API_BASE}/analyses/${analysisId}/archivist/codebase`),
+          fetch(`${API_BASE}/analyses/${analysisId}/archivist/onboarding-brief`),
+          fetch(`${API_BASE}/analyses/${analysisId}/archivist/semantic-index/manifest`),
+          fetch(`${API_BASE}/analyses/${analysisId}/archivist/trace?limit=100`),
         ]);
         if (cancelled) return;
         const modPayload: GraphPayload | null = modGraphRes.ok ? await modGraphRes.json() : null;
@@ -119,10 +131,18 @@ export default function AnalysisDetailPage() {
           answers = Array.isArray(raw) ? raw : raw?.answers ?? [];
         }
         const domains: DomainMapPayload | null = domainsRes.ok ? await domainsRes.json() : null;
+        const codebasePayload = codebaseRes.ok ? await codebaseRes.json() : null;
+        const briefPayload = briefRes.ok ? await briefRes.json() : null;
+        const semanticPayload = semanticRes.ok ? await semanticRes.json() : null;
+        const tracePayload = traceRes.ok ? await traceRes.json() : null;
         setModuleGraph(modPayload);
         setLineageGraph(linPayload);
         setDayOneAnswers(answers);
         setDomainMap(domains);
+        setCodebaseMd(codebasePayload?.content ?? "");
+        setOnboardingBrief(briefPayload?.content ?? "");
+        setSemanticManifest(semanticPayload);
+        setTraceItems(Array.isArray(tracePayload?.items) ? tracePayload.items : []);
       } catch (e: unknown) {
         if (!cancelled) setError(e instanceof Error ? e.message : String(e));
       } finally {
@@ -141,6 +161,28 @@ export default function AnalysisDetailPage() {
   };
 
   const activeAgent = AGENTS.find((a) => a.id === activeTab);
+
+  const runNavigator = async () => {
+    if (!analysisId || !navigatorQuery.trim()) return;
+    setNavigatorLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/analyses/${analysisId}/navigator/query`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: navigatorQuery }),
+      });
+      if (!res.ok) throw new Error(`Navigator query failed: ${res.status}`);
+      const payload = await res.json();
+      setNavigatorAnswer(payload);
+    } catch (e: unknown) {
+      setNavigatorAnswer({
+        answer: e instanceof Error ? e.message : String(e),
+        citations: [],
+      });
+    } finally {
+      setNavigatorLoading(false);
+    }
+  };
 
   return (
     <div className="flex min-h-screen flex-col text-zinc-100">
@@ -305,6 +347,71 @@ export default function AnalysisDetailPage() {
                 ))}
               </ul>
             )}
+          </section>
+        )}
+
+        {activeTab === "archivist" && (
+          <section className="rounded-2xl border border-red-900/70 bg-gradient-to-br from-zinc-900/90 to-zinc-900/60 p-5 shadow-[0_18px_45px_rgba(0,0,0,0.45)]">
+            <h2 className="font-serif text-2xl font-semibold text-red-100">Archivist</h2>
+            <p className="mt-1 text-sm text-zinc-300">Living context files, semantic index stats, and Navigator Q&A.</p>
+
+            <div className="mt-4 grid gap-3 md:grid-cols-3">
+              <div className="rounded-xl border border-red-900/70 bg-zinc-950/80 px-4 py-3 text-sm text-zinc-200">
+                Semantic index records: <span className="text-red-200">{semanticManifest?.record_count ?? 0}</span>
+              </div>
+              <div className="rounded-xl border border-red-900/70 bg-zinc-950/80 px-4 py-3 text-sm text-zinc-200">
+                Trace events loaded: <span className="text-red-200">{traceItems.length}</span>
+              </div>
+              <div className="rounded-xl border border-red-900/70 bg-zinc-950/80 px-4 py-3 text-sm text-zinc-200">
+                Navigator confidence: <span className="text-red-200">{navigatorAnswer?.confidence?.toFixed(2) ?? "-"}</span>
+              </div>
+            </div>
+
+            <div className="mt-4 rounded-xl border border-red-950/70 bg-gradient-to-b from-zinc-950 to-zinc-900 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-red-300">Navigator Query</p>
+              <div className="mt-2 flex gap-2">
+                <input
+                  value={navigatorQuery}
+                  onChange={(e) => setNavigatorQuery(e.target.value)}
+                  placeholder="Ask: Where is the revenue calculation logic?"
+                  className="w-full rounded-lg border border-red-800/60 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 outline-none ring-red-500 transition focus:ring-2"
+                />
+                <button
+                  type="button"
+                  onClick={runNavigator}
+                  disabled={navigatorLoading}
+                  className="rounded-lg bg-gradient-to-r from-red-700 to-red-600 px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
+                >
+                  {navigatorLoading ? "Querying..." : "Ask"}
+                </button>
+              </div>
+              {navigatorAnswer && (
+                <div className="mt-3 rounded-lg border border-red-900/60 bg-zinc-950/70 p-3">
+                  <p className="text-xs uppercase tracking-wide text-red-300">Tool: {navigatorAnswer.tool_used ?? "-"}</p>
+                  <p className="mt-2 text-sm text-zinc-200 whitespace-pre-wrap">{navigatorAnswer.answer}</p>
+                  {navigatorAnswer.citations?.length > 0 && (
+                    <ul className="mt-2 grid gap-1">
+                      {navigatorAnswer.citations.map((c, idx) => (
+                        <li key={`nav-cit-${idx}`} className="font-mono text-xs text-zinc-400">
+                          {c.source_file} [{(c.line_range || [1, 1])[0]}-{(c.line_range || [1, 1])[1]}] ({c.method})
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <div className="rounded-xl border border-red-950/70 bg-gradient-to-b from-zinc-950 to-zinc-900 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-red-300">CODEBASE.md</p>
+                <pre className="mt-2 max-h-[380px] overflow-auto whitespace-pre-wrap text-xs text-zinc-300">{codebaseMd || "No CODEBASE.md available."}</pre>
+              </div>
+              <div className="rounded-xl border border-red-950/70 bg-gradient-to-b from-zinc-950 to-zinc-900 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-red-300">onboarding_brief.md</p>
+                <pre className="mt-2 max-h-[380px] overflow-auto whitespace-pre-wrap text-xs text-zinc-300">{onboardingBrief || "No onboarding brief available."}</pre>
+              </div>
+            </div>
           </section>
         )}
       </main>
