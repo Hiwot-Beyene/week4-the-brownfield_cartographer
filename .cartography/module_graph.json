@@ -1,0 +1,462 @@
+{
+  "directed": true,
+  "edges": [
+    {
+      "source": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py",
+      "source_module": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py",
+      "target": "os",
+      "target_module": "os",
+      "type": "IMPORTS",
+      "weight": 1
+    },
+    {
+      "source": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py",
+      "source_module": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py",
+      "target": "requests",
+      "target_module": "requests",
+      "type": "IMPORTS",
+      "weight": 1
+    },
+    {
+      "source": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py",
+      "source_module": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py",
+      "target": "time",
+      "target_module": "time",
+      "type": "IMPORTS",
+      "weight": 1
+    }
+  ],
+  "graph": {
+    "schema_version": 1
+  },
+  "nodes": [
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/cd_prod.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2024-04-18T18:47:38-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/cd_prod.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/cd_staging.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2024-04-18T18:47:38-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/cd_staging.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/ci.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2024-04-18T18:47:38-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/ci.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py",
+      "imports": [
+        {
+          "evidence": {
+            "end_line": 1,
+            "method": "static",
+            "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py",
+            "start_line": 1
+          },
+          "raw": "import os"
+        },
+        {
+          "evidence": {
+            "end_line": 2,
+            "method": "static",
+            "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py",
+            "start_line": 2
+          },
+          "raw": "import time"
+        },
+        {
+          "evidence": {
+            "end_line": 3,
+            "method": "static",
+            "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py",
+            "start_line": 3
+          },
+          "raw": "import requests"
+        }
+      ],
+      "is_dead_code_candidate": true,
+      "language": "python",
+      "last_modified": "2024-04-04T18:26:44-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py",
+      "public_functions": [
+        {
+          "evidence": {
+            "end_line": 81,
+            "method": "static",
+            "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py",
+            "start_line": 54
+          },
+          "name": "run_job"
+        },
+        {
+          "evidence": {
+            "end_line": 92,
+            "method": "static",
+            "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py",
+            "start_line": 84
+          },
+          "name": "get_run_status"
+        },
+        {
+          "evidence": {
+            "end_line": 130,
+            "method": "static",
+            "source_file": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.github/workflows/scripts/dbt_cloud_run_job.py",
+            "start_line": 95
+          },
+          "name": "main"
+        }
+      ],
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.pre-commit-config.yaml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2025-12-30T12:15:38+02:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/.pre-commit-config.yaml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/Taskfile.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2025-05-22T17:37:16-06:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/Taskfile.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/dbt_project.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2025-05-22T17:37:16-06:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/dbt_project.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/macros/cents_to_dollars.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2024-05-08T16:04:42+07:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/macros/cents_to_dollars.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/macros/generate_schema_name.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2023-09-06T21:18:12-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/macros/generate_schema_name.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/customers.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2024-04-09T18:58:09-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/customers.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/customers.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2025-07-01T08:58:01-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/customers.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/locations.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2023-08-31T13:24:44-07:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/locations.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/locations.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2025-07-01T08:58:01-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/locations.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/metricflow_time_spine.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2023-09-07T10:37:59-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/metricflow_time_spine.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/order_items.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2024-04-09T18:58:09-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/order_items.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/order_items.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2025-07-01T08:58:01-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/order_items.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/orders.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2024-04-09T18:58:09-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/orders.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/orders.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2024-04-23T13:38:48-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/orders.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/products.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2023-08-31T13:51:40-07:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/products.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/products.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2023-08-31T16:58:18-07:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/products.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/supplies.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2023-08-31T13:51:40-07:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/supplies.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/supplies.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2023-08-31T13:24:44-07:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/supplies.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/__sources.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2025-05-22T15:23:56-06:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/__sources.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_customers.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2023-08-30T16:34:22-07:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_customers.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_customers.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2024-04-23T13:38:48-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_customers.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_locations.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2024-04-04T18:26:44-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_locations.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_locations.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2024-04-23T13:38:48-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_locations.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_order_items.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2023-09-07T10:37:59-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_order_items.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_order_items.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2024-04-23T13:38:48-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_order_items.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_orders.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2024-04-04T18:26:44-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_orders.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_orders.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2024-04-23T13:38:48-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_orders.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_products.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2024-04-04T18:26:44-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_products.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_products.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2024-04-23T13:38:48-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_products.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_supplies.sql",
+      "is_dead_code_candidate": false,
+      "language": "sql",
+      "last_modified": "2024-04-04T18:26:44-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_supplies.sql",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_supplies.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2024-04-23T13:38:48-05:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_supplies.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/package-lock.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2025-03-22T18:23:45+01:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/package-lock.yml",
+      "type": "module"
+    },
+    {
+      "change_velocity_30d": 0,
+      "id": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/packages.yml",
+      "is_dead_code_candidate": false,
+      "language": "yaml",
+      "last_modified": "2026-01-20T15:38:12+00:00",
+      "pagerank": 0.024479799169921913,
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/packages.yml",
+      "type": "module"
+    }
+  ]
+}

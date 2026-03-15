@@ -1,0 +1,461 @@
+{
+  "summary": {
+    "total_files_analyzed": 13,
+    "files_with_lineage": 13
+  },
+  "files": [
+    {
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/orders.sql",
+      "dialect_used": "postgres",
+      "templated_sql_sanitized": true,
+      "statement_count": 1,
+      "statement_types": [
+        "sql_select"
+      ],
+      "tables_read": 6,
+      "queries": [
+        {
+          "statement_type": "sql_select",
+          "line_range": null,
+          "sources": [
+            {
+              "table": "customer_order_count",
+              "line_start": 0,
+              "line_end": 0
+            }
+          ],
+          "targets": [],
+          "dbt_refs": [],
+          "dbt_sources": []
+        }
+      ],
+      "dbt_refs": [
+        {
+          "model": "stg_orders",
+          "line_start": 5,
+          "line_end": 5
+        },
+        {
+          "model": "order_items",
+          "line_start": 11,
+          "line_end": 11
+        }
+      ]
+    },
+    {
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/order_items.sql",
+      "dialect_used": "postgres",
+      "templated_sql_sanitized": true,
+      "statement_count": 1,
+      "statement_types": [
+        "sql_select"
+      ],
+      "tables_read": 10,
+      "queries": [
+        {
+          "statement_type": "sql_select",
+          "line_range": null,
+          "sources": [
+            {
+              "table": "joined",
+              "line_start": 0,
+              "line_end": 0
+            }
+          ],
+          "targets": [],
+          "dbt_refs": [],
+          "dbt_sources": []
+        }
+      ],
+      "dbt_refs": [
+        {
+          "model": "stg_order_items",
+          "line_start": 5,
+          "line_end": 5
+        },
+        {
+          "model": "stg_orders",
+          "line_start": 12,
+          "line_end": 12
+        },
+        {
+          "model": "stg_products",
+          "line_start": 18,
+          "line_end": 18
+        },
+        {
+          "model": "stg_supplies",
+          "line_start": 24,
+          "line_end": 24
+        }
+      ]
+    },
+    {
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/locations.sql",
+      "dialect_used": "postgres",
+      "templated_sql_sanitized": true,
+      "statement_count": 1,
+      "statement_types": [
+        "sql_select"
+      ],
+      "tables_read": 2,
+      "queries": [
+        {
+          "statement_type": "sql_select",
+          "line_range": null,
+          "sources": [
+            {
+              "table": "locations",
+              "line_start": 0,
+              "line_end": 0
+            }
+          ],
+          "targets": [],
+          "dbt_refs": [],
+          "dbt_sources": []
+        }
+      ],
+      "dbt_refs": [
+        {
+          "model": "stg_locations",
+          "line_start": 5,
+          "line_end": 5
+        }
+      ]
+    },
+    {
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/customers.sql",
+      "dialect_used": "postgres",
+      "templated_sql_sanitized": true,
+      "statement_count": 1,
+      "statement_types": [
+        "sql_select"
+      ],
+      "tables_read": 5,
+      "queries": [
+        {
+          "statement_type": "sql_select",
+          "line_range": null,
+          "sources": [
+            {
+              "table": "joined",
+              "line_start": 0,
+              "line_end": 0
+            }
+          ],
+          "targets": [],
+          "dbt_refs": [],
+          "dbt_sources": []
+        }
+      ],
+      "dbt_refs": [
+        {
+          "model": "stg_customers",
+          "line_start": 5,
+          "line_end": 5
+        },
+        {
+          "model": "orders",
+          "line_start": 11,
+          "line_end": 11
+        }
+      ]
+    },
+    {
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/metricflow_time_spine.sql",
+      "dialect_used": "postgres",
+      "templated_sql_sanitized": false,
+      "statement_count": 1,
+      "statement_types": [
+        "sql_select"
+      ],
+      "tables_read": 2,
+      "queries": [
+        {
+          "statement_type": "sql_select",
+          "line_range": null,
+          "sources": [
+            {
+              "table": "cast_to_date",
+              "line_start": 0,
+              "line_end": 0
+            }
+          ],
+          "targets": [],
+          "dbt_refs": [],
+          "dbt_sources": []
+        }
+      ]
+    },
+    {
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/products.sql",
+      "dialect_used": "postgres",
+      "templated_sql_sanitized": true,
+      "statement_count": 1,
+      "statement_types": [
+        "sql_select"
+      ],
+      "tables_read": 2,
+      "queries": [
+        {
+          "statement_type": "sql_select",
+          "line_range": null,
+          "sources": [
+            {
+              "table": "products",
+              "line_start": 0,
+              "line_end": 0
+            }
+          ],
+          "targets": [],
+          "dbt_refs": [],
+          "dbt_sources": []
+        }
+      ],
+      "dbt_refs": [
+        {
+          "model": "stg_products",
+          "line_start": 5,
+          "line_end": 5
+        }
+      ]
+    },
+    {
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/marts/supplies.sql",
+      "dialect_used": "postgres",
+      "templated_sql_sanitized": true,
+      "statement_count": 1,
+      "statement_types": [
+        "sql_select"
+      ],
+      "tables_read": 2,
+      "queries": [
+        {
+          "statement_type": "sql_select",
+          "line_range": null,
+          "sources": [
+            {
+              "table": "supplies",
+              "line_start": 0,
+              "line_end": 0
+            }
+          ],
+          "targets": [],
+          "dbt_refs": [],
+          "dbt_sources": []
+        }
+      ],
+      "dbt_refs": [
+        {
+          "model": "stg_supplies",
+          "line_start": 5,
+          "line_end": 5
+        }
+      ]
+    },
+    {
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_products.sql",
+      "dialect_used": "postgres",
+      "templated_sql_sanitized": true,
+      "statement_count": 1,
+      "statement_types": [
+        "sql_select"
+      ],
+      "tables_read": 3,
+      "queries": [
+        {
+          "statement_type": "sql_select",
+          "line_range": null,
+          "sources": [
+            {
+              "table": "renamed",
+              "line_start": 0,
+              "line_end": 0
+            }
+          ],
+          "targets": [],
+          "dbt_refs": [],
+          "dbt_sources": []
+        }
+      ],
+      "dbt_sources": [
+        {
+          "source_name": "ecom",
+          "table_name": "raw_products",
+          "line_start": 5,
+          "line_end": 5
+        }
+      ]
+    },
+    {
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_locations.sql",
+      "dialect_used": "postgres",
+      "templated_sql_sanitized": true,
+      "statement_count": 1,
+      "statement_types": [
+        "sql_select"
+      ],
+      "tables_read": 3,
+      "queries": [
+        {
+          "statement_type": "sql_select",
+          "line_range": null,
+          "sources": [
+            {
+              "table": "renamed",
+              "line_start": 0,
+              "line_end": 0
+            }
+          ],
+          "targets": [],
+          "dbt_refs": [],
+          "dbt_sources": []
+        }
+      ],
+      "dbt_sources": [
+        {
+          "source_name": "ecom",
+          "table_name": "raw_stores",
+          "line_start": 5,
+          "line_end": 5
+        }
+      ]
+    },
+    {
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_supplies.sql",
+      "dialect_used": "postgres",
+      "templated_sql_sanitized": true,
+      "statement_count": 1,
+      "statement_types": [
+        "sql_select"
+      ],
+      "tables_read": 3,
+      "queries": [
+        {
+          "statement_type": "sql_select",
+          "line_range": null,
+          "sources": [
+            {
+              "table": "renamed",
+              "line_start": 0,
+              "line_end": 0
+            }
+          ],
+          "targets": [],
+          "dbt_refs": [],
+          "dbt_sources": []
+        }
+      ],
+      "dbt_sources": [
+        {
+          "source_name": "ecom",
+          "table_name": "raw_supplies",
+          "line_start": 5,
+          "line_end": 5
+        }
+      ]
+    },
+    {
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_customers.sql",
+      "dialect_used": "postgres",
+      "templated_sql_sanitized": true,
+      "statement_count": 1,
+      "statement_types": [
+        "sql_select"
+      ],
+      "tables_read": 3,
+      "queries": [
+        {
+          "statement_type": "sql_select",
+          "line_range": null,
+          "sources": [
+            {
+              "table": "renamed",
+              "line_start": 0,
+              "line_end": 0
+            }
+          ],
+          "targets": [],
+          "dbt_refs": [],
+          "dbt_sources": []
+        }
+      ],
+      "dbt_sources": [
+        {
+          "source_name": "ecom",
+          "table_name": "raw_customers",
+          "line_start": 5,
+          "line_end": 5
+        }
+      ]
+    },
+    {
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_orders.sql",
+      "dialect_used": "postgres",
+      "templated_sql_sanitized": true,
+      "statement_count": 1,
+      "statement_types": [
+        "sql_select"
+      ],
+      "tables_read": 3,
+      "queries": [
+        {
+          "statement_type": "sql_select",
+          "line_range": null,
+          "sources": [
+            {
+              "table": "renamed",
+              "line_start": 0,
+              "line_end": 0
+            }
+          ],
+          "targets": [],
+          "dbt_refs": [],
+          "dbt_sources": []
+        }
+      ],
+      "dbt_sources": [
+        {
+          "source_name": "ecom",
+          "table_name": "raw_orders",
+          "line_start": 5,
+          "line_end": 5
+        }
+      ]
+    },
+    {
+      "path": "/home/hiwot/Desktop/tenacious-academy-project/week4-the-brownfield_cartographer/.cartography/cloned/dbt-labs_jaffle-shop/models/staging/stg_order_items.sql",
+      "dialect_used": "postgres",
+      "templated_sql_sanitized": true,
+      "statement_count": 1,
+      "statement_types": [
+        "sql_select"
+      ],
+      "tables_read": 3,
+      "queries": [
+        {
+          "statement_type": "sql_select",
+          "line_range": null,
+          "sources": [
+            {
+              "table": "renamed",
+              "line_start": 0,
+              "line_end": 0
+            }
+          ],
+          "targets": [],
+          "dbt_refs": [],
+          "dbt_sources": []
+        }
+      ],
+      "dbt_sources": [
+        {
+          "source_name": "ecom",
+          "table_name": "raw_items",
+          "line_start": 5,
+          "line_end": 5
+        }
+      ]
+    }
+  ]
+}
