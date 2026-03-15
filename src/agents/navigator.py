@@ -295,6 +295,90 @@ def _execute_tool(state: NavigatorState, repo_root: Path, artifacts_dir: Path) -
     }
 
 
+def find_implementation(
+    analysis_id: int,
+    concept: str,
+    *,
+    repo_root: Path,
+    artifacts_dir: Path,
+) -> dict[str, Any]:
+    """
+    Library API: find modules implementing a concept (semantic or token match).
+    Returns dict with keys: answer, citations, confidence.
+    """
+    repo_root = Path(repo_root).resolve()
+    artifacts_dir = Path(artifacts_dir).resolve()
+    answer, citations, confidence = _find_implementation(
+        analysis_id=analysis_id,
+        concept=concept,
+        artifacts_dir=artifacts_dir,
+        repo_root=repo_root,
+    )
+    return {"answer": answer, "citations": citations, "confidence": confidence}
+
+
+def trace_lineage(
+    analysis_id: int,
+    dataset: str,
+    direction: str,
+    *,
+    repo_root: Path,
+) -> dict[str, Any]:
+    """
+    Library API: trace lineage upstream or downstream for a dataset.
+    Returns dict with keys: answer, citations, confidence.
+    """
+    repo_root = Path(repo_root).resolve()
+    answer, citations, confidence = _trace_lineage(
+        analysis_id=analysis_id,
+        dataset=dataset,
+        direction=direction,
+        repo_root=repo_root,
+    )
+    return {"answer": answer, "citations": citations, "confidence": confidence}
+
+
+def blast_radius(
+    analysis_id: int,
+    module_path: str,
+    *,
+    repo_root: Path,
+) -> dict[str, Any]:
+    """
+    Library API: compute downstream import blast radius for a module.
+    Returns dict with keys: answer, citations, confidence.
+    """
+    repo_root = Path(repo_root).resolve()
+    answer, citations, confidence = _blast_radius(
+        analysis_id=analysis_id,
+        module_path=module_path,
+        repo_root=repo_root,
+    )
+    return {"answer": answer, "citations": citations, "confidence": confidence}
+
+
+def explain_module(
+    analysis_id: int,
+    path: str,
+    *,
+    repo_root: Path,
+    artifacts_dir: Path,
+) -> dict[str, Any]:
+    """
+    Library API: explain a module (purpose, imports, functions, classes).
+    Returns dict with keys: answer, citations, confidence.
+    """
+    repo_root = Path(repo_root).resolve()
+    artifacts_dir = Path(artifacts_dir).resolve()
+    answer, citations, confidence = _explain_module(
+        analysis_id=analysis_id,
+        path=path,
+        artifacts_dir=artifacts_dir,
+        repo_root=repo_root,
+    )
+    return {"answer": answer, "citations": citations, "confidence": confidence}
+
+
 def ask_navigator(
     analysis_id: int,
     query: str,

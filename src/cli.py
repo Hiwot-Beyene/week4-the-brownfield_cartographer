@@ -7,12 +7,18 @@ import sys
 from pathlib import Path
 
 from src.agents.navigator import ask_navigator
-from src.orchestrator import analyze
+from src.orchestrator import analyze, AnalysisResult
 from src.agents.hydrologist import run_hydrologist
 from src.repo_resolver import resolve_repo
 from src.store import sqlite_store
 
 logger = logging.getLogger("cartographer.cli")
+
+# Exit codes: 0 success, 1 input/usage, 2 agent failure, 3 partial (later stage failed)
+EXIT_SUCCESS = 0
+EXIT_INPUT_ERROR = 1
+EXIT_AGENT_FAILURE = 2
+EXIT_PARTIAL = 3
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -123,7 +129,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "analyze":
         depth = args.depth if args.depth > 0 else None
         try:
-            out = analyze(
+            result = analyze(
                 args.repo,
                 branch=args.branch,
                 clone_depth=depth,
@@ -133,11 +139,23 @@ def main(argv: list[str] | None = None) -> int:
             )
         except ValueError as e:
             logger.error("analyze: %s", e)
-            return 1
+            return EXIT_INPUT_ERROR
+        if not result.success:
+            if result.failed_stage:
+                logger.error("analyze failed at stage: %s — %s", result.failed_stage, result.error or "")
+                if result.partial_artifacts and args.verbose:
+                    logger.info("Partial artifacts written: %s", ", ".join(result.partial_artifacts))
+            print(result.output or "")
+            # Resolve failure is input error; Surveyor failure is full failure; later stages are partial
+            if result.failed_stage == "resolve":
+                return EXIT_INPUT_ERROR
+            if result.failed_stage == "Surveyor":
+                return EXIT_AGENT_FAILURE
+            return EXIT_PARTIAL
         if args.verbose:
-            logger.info("Survey complete. Output: %s", out)
-        print(out)
-        return 0
+            logger.info("Survey complete. Output: %s", result.output)
+        print(result.output)
+        return EXIT_SUCCESS
 
     if args.cmd == "lineage":
         from pathlib import Path

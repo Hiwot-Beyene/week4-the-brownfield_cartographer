@@ -25,7 +25,8 @@ from src.llm.config import get_semantic_config
 logger = logging.getLogger(__name__)
 
 # Prompt template: code only, no docstring (docstring used only for comparison after)
-PURPOSE_PROMPT_TEMPLATE = """Given the following module source code, output only a 2-3 sentence purpose statement that describes what this module does (business function), not implementation detail. Output nothing else.
+# Tightened for consistent output: business/functional intent only, no implementation detail.
+PURPOSE_PROMPT_TEMPLATE = """You are a semantic code analyst. From the module source below, output exactly one purpose statement (1-2 sentences) describing what this module does from a business or functional perspective. Do not describe implementation details, file structure, or code patterns. Output only the purpose statement, no prefix or JSON.
 
 Code:
 """
@@ -289,6 +290,10 @@ def run_semanticist(
     )
     _write_semantic_modules_json(artifacts_dir, modules)
     day_one_dump = [a.model_dump(mode="json") for a in day_one_answers]
+    summary_stats = _compute_semantic_summary_stats(
+        modules,
+        domain_map_model.model_dump(mode="json"),
+    )
     _write_semantic_index_outputs(
         artifacts_dir,
         modules=modules,
@@ -296,7 +301,16 @@ def run_semanticist(
         day_one=day_one_dump,
         input_hash=input_hash,
         mode=mode,
+        summary_stats=summary_stats,
     )
+    if summary_stats:
+        logger.info(
+            "semanticist: summary_stats drift_rate=%.2f%% ambiguous=%d clusters=%d coherence_avg=%.1f",
+            (summary_stats.get("drift_rate") or 0) * 100,
+            summary_stats.get("ambiguous_count", 0),
+            summary_stats.get("cluster_count", 0),
+            summary_stats.get("cluster_coherence_avg_size", 0),
+        )
     logger.info(
         "semanticist: completed in %.1fs (modules=%d answers=%d input_tokens=%d output_tokens=%d)",
         time.perf_counter() - run_started,
@@ -806,9 +820,9 @@ def _batch_generate_purposes(
                 ctx = ctx[:MAX_BULK_PROMPT_CHARS]
             sections.append(f"### {m.path}\n{ctx}")
         prompt = (
-            "You are a semantic code analyst. For each module below, return JSON only.\n"
-            "Output shape: {\"results\": [{\"module_name\": \"<path>\", \"purpose_statement\": \"...\", \"docstring_match\": true|false|null}]}\n"
-            "Purpose must be 1-2 sentences focused on business/functional intent.\n\n"
+            "You are a semantic code analyst. For each module below return valid JSON only, no other text.\n"
+            "Required shape: {\"results\": [{\"module_name\": \"<exact path>\", \"purpose_statement\": \"<1-2 sentences, business/functional intent only>\", \"docstring_match\": true|false|null}]}\n"
+            "Rules: purpose_statement must describe what the module does, not how; one entry per module in order; docstring_match is true if module docstring aligns with purpose, false if they contradict.\n\n"
             + "\n\n".join(sections)
         )
         budget.consume_input_tokens(budget.estimate_tokens(prompt))
@@ -1058,6 +1072,47 @@ def _load_cached_semantic_outputs(artifacts_dir: Path, expected_hash: str) -> tu
         return None
 
 
+def _compute_semantic_summary_stats(
+    modules: list[ModuleNode],
+    domains: dict[str, Any],
+) -> dict[str, Any]:
+    """Compute drift rate, ambiguous-module count, and cluster coherence for artifact logging."""
+    n_total = len(modules)
+    n_drift = sum(1 for m in modules if m.documentation_drift is True)
+    ambiguous_phrases = (
+        "no determinable purpose",
+        "no purpose",
+        "no purpose statement yet",
+        "unknown",
+        "n/a",
+    )
+    n_ambiguous = sum(
+        1
+        for m in modules
+        if not (m.purpose_statement or "").strip()
+        or (m.purpose_statement or "").strip().lower().rstrip(".") in ambiguous_phrases
+    )
+    module_to_domain = domains.get("module_to_domain") or {}
+    cluster_sizes: dict[str, int] = {}
+    for _path, domain in module_to_domain.items():
+        cluster_sizes[domain] = cluster_sizes.get(domain, 0) + 1
+    sizes = list(cluster_sizes.values()) if cluster_sizes else [0]
+    n_clusters = len(cluster_sizes)
+    avg_per_cluster = sum(sizes) / n_clusters if n_clusters else 0
+    # Coherence: lower variance = more even/coherent; also report min cluster size (singletons = weak).
+    variance = sum((s - avg_per_cluster) ** 2 for s in sizes) / n_clusters if n_clusters else 0
+    return {
+        "total_modules": n_total,
+        "drift_count": n_drift,
+        "drift_rate": round(n_drift / n_total, 4) if n_total else 0.0,
+        "ambiguous_count": n_ambiguous,
+        "cluster_count": n_clusters,
+        "cluster_sizes": cluster_sizes,
+        "cluster_coherence_avg_size": round(avg_per_cluster, 2),
+        "cluster_coherence_variance": round(variance, 2),
+    }
+
+
 def _write_semantic_index_outputs(
     artifacts_dir: Path,
     *,
@@ -1066,6 +1121,7 @@ def _write_semantic_index_outputs(
     day_one: list[Any],
     input_hash: str,
     mode: str,
+    summary_stats: Optional[dict[str, Any]] = None,
 ) -> None:
     idx = _semantic_index_dir(artifacts_dir)
     modules_payload = []
@@ -1084,17 +1140,14 @@ def _write_semantic_index_outputs(
     # Keep backward-compatible root artifact and semantic_index copy.
     day_one_payload = {"answers": day_one} if isinstance(day_one, list) else day_one
     (idx / "day_one_answers.json").write_text(json.dumps(day_one_payload, indent=2), encoding="utf-8")
-    (idx / "run_meta.json").write_text(
-        json.dumps(
-            {
-                "input_hash": input_hash,
-                "mode": mode,
-                "generated_at": time.time(),
-            },
-            indent=2,
-        ),
-        encoding="utf-8",
-    )
+    run_meta: dict[str, Any] = {
+        "input_hash": input_hash,
+        "mode": mode,
+        "generated_at": time.time(),
+    }
+    if summary_stats:
+        run_meta["summary_stats"] = summary_stats
+    (idx / "run_meta.json").write_text(json.dumps(run_meta, indent=2), encoding="utf-8")
 
 
 def _normalize_fde_answers(raw_answers: list[DayOneAnswer]) -> list[DayOneAnswer]:
@@ -1175,11 +1228,10 @@ def answer_day_one_questions(
             return answers
 
         prompt = (
-            "You are the Semanticist agent for the Brownfield Cartographer.\n"
-            "Given the module graph, lineage graph, and survey summary, answer the Five FDE Day-One questions.\n"
-            f"Use these exact question_id values: {', '.join(FDE_DAY_ONE_QUESTION_IDS)}.\n"
-            "Return a JSON array of exactly five objects with fields: question_id, answer, citations[]. "
-            "Each citation has file and optional line.\n\n"
+            "You are the Semanticist agent. Answer exactly the Five FDE Day-One questions using only the provided graphs and survey.\n"
+            f"Return valid JSON only: an array of exactly 5 objects with keys question_id, answer, citations. "
+            f"question_id must be one of: {', '.join(FDE_DAY_ONE_QUESTION_IDS)}. "
+            "answer: 1-3 concise sentences with concrete file/module names. citations: list of {file, line?} from the evidence.\n\n"
             f"MODULE_GRAPH:\n{json.dumps(module_graph or {}, indent=2)}\n\n"
             f"LINEAGE_GRAPH:\n{json.dumps(lineage_graph or {}, indent=2)}\n\n"
             f"SURVEY_SUMMARY:\n{json.dumps(survey_summary or {}, indent=2)}\n"

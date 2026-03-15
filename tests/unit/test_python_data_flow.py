@@ -40,3 +40,22 @@ def test_analyze_invalid_python_skipped_no_crash() -> None:
     assert isinstance(edges, list)
     assert len(nodes) == 0
     assert len(edges) == 0
+
+
+def test_complex_dynamic_query_no_literal_no_edge() -> None:
+    """Format(), % formatting, and string concatenation for table names produce no lineage edges (dynamic)."""
+    path = FIXTURES / "dynamic_query_complex.py"
+    nodes, edges = analyze_python_data_flow(path)
+    names = [getattr(n, "name", n.get("name", "")) for n in nodes]
+    # No literal "users" or "events" in read_sql/execute; all dynamic
+    assert "users" not in names
+    assert "events" not in names
+    assert isinstance(edges, list)
+
+
+def test_complex_dynamic_query_logs_dynamic_reference(caplog: pytest.LogCaptureFixture) -> None:
+    """Complex dynamic query construction logs dynamic reference / cannot resolve."""
+    caplog.set_level(logging.INFO)
+    path = FIXTURES / "dynamic_query_complex.py"
+    analyze_python_data_flow(path)
+    assert "dynamic reference" in caplog.text.lower() or "cannot resolve" in caplog.text.lower()

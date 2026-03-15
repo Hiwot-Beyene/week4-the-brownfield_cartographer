@@ -17,6 +17,21 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+# Schema versions for programmatic detection and backward compatibility.
+CODEBASE_SCHEMA_VERSION = 1
+TRACE_SCHEMA_VERSION = 1
+
+# Stable section order for CODEBASE.md; do not reorder so tools can rely on headings.
+CODEBASE_SECTION_ORDER = (
+    "Architecture Overview",
+    "Critical Path",
+    "Data Sources & Sinks",
+    "Known Debt",
+    "High-Velocity Files",
+    "Recent Change Velocity",
+    "Module Purpose Index",
+)
+
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -364,6 +379,7 @@ class CartographyTraceLogger:
         details: dict[str, Any] | None = None,
     ) -> None:
         payload = {
+            "schema_version": TRACE_SCHEMA_VERSION,
             "timestamp": _now_iso(),
             "agent": self.agent,
             "action": action,
@@ -506,6 +522,7 @@ def generate_CODEBASE_md(
 
     repo_name = _repo_display_name(repo_root)
     lines: list[str] = []
+    lines.append(f"<!-- cartography_codebase_schema={CODEBASE_SCHEMA_VERSION} -->")
     lines.append("# CODEBASE")
     lines.append("")
     lines.append(f"**Repository:** {repo_name}")
@@ -645,8 +662,10 @@ def generate_onboarding_brief_md(
             lines.append("- No citation provided.")
         lines.append("")
 
+    # Schema tag for programmatic detection (same version as trace).
+    brief_lines = [f"<!-- cartography_onboarding_schema={TRACE_SCHEMA_VERSION} -->", ""] + lines
     out_path = artifacts_dir / "onboarding_brief.md"
-    out_path.write_text("\n".join(lines).strip() + "\n", encoding="utf-8")
+    out_path.write_text("\n".join(brief_lines).strip() + "\n", encoding="utf-8")
     if trace:
         trace.log(
             "generate_onboarding_brief",

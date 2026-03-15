@@ -3,7 +3,11 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from src.agents.archivist import run_archivist
+from src.agents.archivist import (
+    run_archivist,
+    CODEBASE_SCHEMA_VERSION,
+    TRACE_SCHEMA_VERSION,
+)
 
 
 def _write_json(path: Path, payload: object) -> None:
@@ -67,9 +71,13 @@ def test_run_archivist_generates_living_artifacts(tmp_path: Path) -> None:
     assert (artifacts / "onboarding_brief.md").exists()
     assert (artifacts / "semantic_index" / "manifest.json").exists()
     assert (artifacts / "cartography_trace.jsonl").exists()
+    trace_line = (artifacts / "cartography_trace.jsonl").read_text(encoding="utf-8").strip().split("\n")[0]
+    trace_obj = json.loads(trace_line)
+    assert trace_obj.get("schema_version") == TRACE_SCHEMA_VERSION
     assert "codebase" in out and out["codebase"].endswith("CODEBASE.md")
 
     codebase = (artifacts / "CODEBASE.md").read_text(encoding="utf-8")
+    assert f"cartography_codebase_schema={CODEBASE_SCHEMA_VERSION}" in codebase
     assert "## Architecture Overview" in codebase
     assert "## Critical Path" in codebase
     assert "## Data Sources & Sinks" in codebase
